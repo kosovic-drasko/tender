@@ -24,6 +24,8 @@
 
   <jhi-alert></jhi-alert>
 
+  <jhi-filter [filters]="filters"></jhi-filter>
+
   <div class="alert alert-warning" id="no-result" *ngIf="ponudes?.length === 0">
     <span jhiTranslate="tenderApp.ponude.home.notFound">No Ponudes found</span>
   </div>
@@ -144,5 +146,23 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="ponudes && ponudes.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

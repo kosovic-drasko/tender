@@ -13,7 +13,7 @@
   ],
   "jpaMetamodelFiltering": true,
   "name": "ViewPonudjaci",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": true,
   "relationships": [],
   "service": "serviceClass"

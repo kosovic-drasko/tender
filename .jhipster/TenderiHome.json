@@ -7,7 +7,7 @@
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "TenderiHome",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": true,
   "relationships": [],
   "service": "no"

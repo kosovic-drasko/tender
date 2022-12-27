@@ -25,7 +25,7 @@
   "fluentMethods": true,
   "jpaMetamodelFiltering": true,
   "name": "Ponudjaci",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
   "service": "serviceClass"

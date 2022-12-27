@@ -8,9 +8,14 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import tender.domain.ViewPonudjaci;
 import tender.repository.ViewPonudjaciRepository;
@@ -47,14 +52,19 @@ public class ViewPonudjaciResource {
     /**
      * {@code GET  /view-ponudjacis} : get all the viewPonudjacis.
      *
+     * @param pageable the pagination information.
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of viewPonudjacis in body.
      */
     @GetMapping("/view-ponudjacis")
-    public ResponseEntity<List<ViewPonudjaci>> getAllViewPonudjacis(ViewPonudjaciCriteria criteria) {
+    public ResponseEntity<List<ViewPonudjaci>> getAllViewPonudjacis(
+        ViewPonudjaciCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
         log.debug("REST request to get ViewPonudjacis by criteria: {}", criteria);
-        List<ViewPonudjaci> entityList = viewPonudjaciQueryService.findByCriteria(criteria);
-        return ResponseEntity.ok().body(entityList);
+        Page<ViewPonudjaci> page = viewPonudjaciQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

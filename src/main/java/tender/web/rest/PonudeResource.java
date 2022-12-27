@@ -10,9 +10,14 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import tender.domain.Ponude;
 import tender.repository.PonudeRepository;
@@ -140,14 +145,19 @@ public class PonudeResource {
     /**
      * {@code GET  /ponudes} : get all the ponudes.
      *
+     * @param pageable the pagination information.
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ponudes in body.
      */
     @GetMapping("/ponudes")
-    public ResponseEntity<List<Ponude>> getAllPonudes(PonudeCriteria criteria) {
+    public ResponseEntity<List<Ponude>> getAllPonudes(
+        PonudeCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
         log.debug("REST request to get Ponudes by criteria: {}", criteria);
-        List<Ponude> entityList = ponudeQueryService.findByCriteria(criteria);
-        return ResponseEntity.ok().body(entityList);
+        Page<Ponude> page = ponudeQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
