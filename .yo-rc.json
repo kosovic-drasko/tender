@@ -32,6 +32,9 @@
       "ViewPonudjaci"
     ],
     "entitySuffix": "",
+    "herokuAppName": "tender",
+    "herokuDeployType": "git",
+    "herokuJavaVersion": "18",
     "jhiPrefix": "jhi",
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "MWI4YWVjMzgyMGQ4MWRhN2IxZjUwMzNkN2Y4YWMyY2I2NWQyNjg5NjIwNGFkN2Q3Y2JiN2Q5YjQ4YzRjMDZlZjFjNmI3YmYwMmJjZDNjNzIxYTEzMTIzNzNjMTI3ZTc1YWZmNzc4ZDZlYTMyOWMwNmEyNjUzNGEwMDg5ZTVjOTA=",
