@@ -1,0 +1,20 @@
+{
+  "changelogDate": "20221227173222",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "nazivPonudjaca",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sifraPostupka",
+      "fieldType": "Integer"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "ViewPonudjaci",
+  "pagination": "no",
+  "readOnly": true,
+  "relationships": [],
+  "service": "serviceClass"
+}

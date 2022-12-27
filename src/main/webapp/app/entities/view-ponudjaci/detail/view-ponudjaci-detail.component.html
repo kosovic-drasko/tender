@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="viewPonudjaci">
+      <h2 data-cy="viewPonudjaciDetailsHeading"><span jhiTranslate="tenderApp.viewPonudjaci.detail.title">View Ponudjaci</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ viewPonudjaci.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="tenderApp.viewPonudjaci.nazivPonudjaca">Naziv Ponudjaca</span></dt>
+        <dd>
+          <span>{{ viewPonudjaci.nazivPonudjaca }}</span>
+        </dd>
+        <dt><span jhiTranslate="tenderApp.viewPonudjaci.sifraPostupka">Sifra Postupka</span></dt>
+        <dd>
+          <span>{{ viewPonudjaci.sifraPostupka }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Nazad</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,18 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entiteti",
+        "ponudjaci": "Ponudjaci",
+        "hvalePonude": "Hvale Ponude",
+        "ponude": "Ponude",
+        "postupci": "Postupci",
+        "viewPonude": "View Ponude",
+        "specifikacije": "Specifikacije",
+        "tenderiHome": "Tenderi Home",
+        "vrednovanje": "Vrednovanje",
+        "prvorangirani": "Prvorangirani",
+        "viewVrednovanje": "View Vrednovanje",
+        "viewPrvorangirani": "View Prvorangirani",
+        "viewPonudjaci": "View Ponudjaci",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
