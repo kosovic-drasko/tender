@@ -7,6 +7,7 @@
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="tenderApp.prvorangirani.home.refreshListLabel">Refresh list</span>
       </button>
+      <button type="button" class="btn btn-primary" (click)="exportTable()">Excel</button>
     </div>
   </h2>
 
@@ -20,7 +21,7 @@
     <span jhiTranslate="tenderApp.prvorangirani.home.notFound">No Prvorangiranis found</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="prvorangiranis && prvorangiranis.length > 0">
+  <div id="ExampleTable" class="table-responsive table-entities" id="entities" *ngIf="prvorangiranis && prvorangiranis.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">

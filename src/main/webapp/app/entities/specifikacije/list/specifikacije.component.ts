@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
@@ -11,6 +11,7 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, SpecifikacijeService } from '../service/specifikacije.service';
 import { SpecifikacijeDeleteDialogComponent } from '../delete/specifikacije-delete-dialog.component';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
+import { TableUtil } from '../../../tableUtil';
 
 @Component({
   selector: 'jhi-specifikacije',
@@ -19,15 +20,18 @@ import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/
 export class SpecifikacijeComponent implements OnInit {
   specifikacijes?: ISpecifikacije[];
   isLoading = false;
-
+  message: string | undefined;
   predicate = 'id';
   ascending = true;
   filters: IFilterOptions = new FilterOptions();
-
+  brojObrazac?: number = 0;
+  ukupno_procjenjeno?: number;
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-
+  @ViewChild('fileInput') fileInput: any;
+  @Input() postupak: any;
+  public resourceUrlExcelDownload = SERVER_API_URL + 'api/specifikacije/file';
   constructor(
     protected specifikacijeService: SpecifikacijeService,
     protected activatedRoute: ActivatedRoute,
@@ -38,9 +42,12 @@ export class SpecifikacijeComponent implements OnInit {
   trackId = (_index: number, item: ISpecifikacije): number => this.specifikacijeService.getSpecifikacijeIdentifier(item);
 
   ngOnInit(): void {
-    this.load();
-
-    this.filters.filterChanges.subscribe(filterOptions => this.handleNavigation(1, this.predicate, this.ascending, filterOptions));
+    if (this.postupak !== undefined) {
+      this.loadSifraPostupka();
+    } else {
+      this.load();
+      console.log('Postupak je >>>>>>>>', this.postupak);
+    }
   }
 
   delete(specifikacije: ISpecifikacije): void {
@@ -148,5 +155,56 @@ export class SpecifikacijeComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+
+  loadSifraPostupka(): void {
+    this.loadFromBackendWithRouteInformationsPostupak().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+        this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
+      },
+    });
+  }
+
+  protected loadFromBackendWithRouteInformationsPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupak(this.predicate, this.ascending))
+    );
+  }
+  protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
+    return this.specifikacijeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+  obrazacExcel(): void {
+    window.location.href = `${this.resourceUrlExcelDownload}/${this.brojObrazac}`;
+  }
+  exportArray() {
+    // @ts-ignore
+    const onlyNameAndSymbolArr: Partial<ISpecifikacije>[] = this.specifikacijes.map(x => ({
+      'sifra postupka': x.sifraPostupka,
+      broj_partije: x.brojPartije,
+      atc: x.atc,
+      inn: x.inn,
+      'farmaceutski oblik': x.farmaceutskiOblikLijeka,
+      karakteristika: x.karakteristika,
+      'jacina lijeka': x.jacinaLijeka,
+      'trazena kolicina': x.trazenaKolicina,
+      pakovanje: x.pakovanje,
+      'jedinica mjere': x.jedinicaMjere,
+      'procijenjena vrijednost': x.procijenjenaVrijednost,
+      'jedinicna cijena': x.jedinicnaCijena,
+    }));
+    TableUtil.exportArrayToExcel(onlyNameAndSymbolArr, 'Specifikacija');
+  }
+  uploadFile(): any {
+    const formData = new FormData();
+    formData.append('files', this.fileInput.nativeElement.files[0]);
+
+    this.specifikacijeService.UploadExcel(formData).subscribe((result: { toString: () => string | undefined }) => {
+      this.message = result.toString();
+      this.load();
+    });
   }
 }

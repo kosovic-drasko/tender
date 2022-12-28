@@ -15,6 +15,7 @@ import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/
 @Component({
   selector: 'jhi-postupci',
   templateUrl: './postupci.component.html',
+  styleUrls: ['./postupci.component.scss'],
 })
 export class PostupciComponent implements OnInit {
   postupcis?: IPostupci[];
