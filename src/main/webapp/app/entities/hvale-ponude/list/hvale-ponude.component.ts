@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Observable, switchMap, tap } from 'rxjs';
@@ -25,7 +25,7 @@ export class HvalePonudeComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-
+  @Input() postupak: any;
   constructor(protected hvalePonudeService: HvalePonudeService, protected activatedRoute: ActivatedRoute, public router: Router) {}
 
   trackId = (_index: number, item: IHvalePonude): number => this.hvalePonudeService.getHvalePonudeIdentifier(item);
