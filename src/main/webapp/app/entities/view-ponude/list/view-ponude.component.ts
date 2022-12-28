@@ -13,6 +13,8 @@ import { ViewPonudeDeleteDialogComponent } from '../delete/view-ponude-delete-di
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
 import { TableUtil } from '../../../tableUtil';
 import { PonudeService } from '../../ponude/service/ponude.service';
+import { PonudeDeleteDialogComponent } from '../../ponude/delete/ponude-delete-dialog.component';
+import { IPonude } from '../../ponude/ponude.model';
 
 @Component({
   selector: 'jhi-view-ponude',
@@ -47,22 +49,15 @@ export class ViewPonudeComponent implements OnInit {
 
   trackId = (_index: number, item: IViewPonude): number => this.viewPonudeService.getViewPonudeIdentifier(item);
 
-  delete(viewPonude: IViewPonude): void {
-    const modalRef = this.modalService.open(ViewPonudeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.viewPonude = viewPonude;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
-      .pipe(
-        filter(reason => reason === ITEM_DELETED_EVENT),
-        switchMap(() => this.loadFromBackendWithRouteInformations())
-      )
-      .subscribe({
-        next: (res: EntityArrayResponseType) => {
-          this.onResponseSuccess(res);
-        },
-      });
+  delete(ponude: IPonude): void {
+    const modalRef = this.modalService.open(PonudeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.ponude = ponude;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'deleted') {
+        this.load();
+      }
+    });
   }
-
   load(): void {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
