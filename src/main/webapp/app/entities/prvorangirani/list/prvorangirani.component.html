@@ -25,12 +25,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="id">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span jhiTranslate="global.field.id">ID</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
           <th scope="col" jhiSortBy="sifraPostupka">
             <div class="d-flex">
               <span jhiTranslate="tenderApp.prvorangirani.sifraPostupka">Sifra Postupka</span>
@@ -132,9 +132,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let prvorangirani of prvorangiranis; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/prvorangirani', prvorangirani.id, 'view']">{{ prvorangirani.id }}</a>
-          </td>
+          <!--          <td>-->
+          <!--            <a [routerLink]="['/prvorangirani', prvorangirani.id, 'view']">{{ prvorangirani.id }}</a>-->
+          <!--          </td>-->
           <td>{{ prvorangirani.sifraPostupka }}</td>
           <td>{{ prvorangirani.nazivPonudjaca }}</td>
           <td>{{ prvorangirani.sifraPonude }}</td>
@@ -166,6 +166,26 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Ukupno procjenjeno:</td>
+          <td>{{ ukupno_procjenjeno }}</td>
+          <td></td>
+          <td></td>
+          <td>Ukupno ponudjeno:</td>
+          <td>{{ ukupno_ponudjeno }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 

@@ -39,12 +39,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="id">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span jhiTranslate="global.field.id">ID</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
           <th scope="col" jhiSortBy="sifraPostupka">
             <div class="d-flex">
               <span jhiTranslate="tenderApp.specifikacije.sifraPostupka">Sifra Postupka</span>
@@ -122,9 +122,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let specifikacije of specifikacijes; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/specifikacije', specifikacije.id, 'view']">{{ specifikacije.id }}</a>
-          </td>
+          <!--          <td>-->
+          <!--            <a [routerLink]="['/specifikacije', specifikacije.id, 'view']">{{ specifikacije.id }}</a>-->
+          <!--          </td>-->
           <td>{{ specifikacije.sifraPostupka }}</td>
           <td>{{ specifikacije.brojPartije }}</td>
           <td>{{ specifikacije.atc }}</td>
@@ -167,6 +167,23 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Ukupno procijenjeno:</td>
+          <td>{{ ukupno_procjenjeno }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 

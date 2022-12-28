@@ -19,10 +19,6 @@ select `ponude`.`id`                   AS `id`,
 `ponude`.`selected`             AS `selected`,
 `ponude`.`sifra_ponudjaca`      AS `sifra_ponudjaca`,
 `ponude`.`karakteristika`       AS `karakteristika`,
-`ponude`.`created_by`           AS `created_by`,
-`ponude`.`created_date`         AS `created_date`,
-`ponude`.`last_modified_by`     AS `last_modified_by`,
-`ponude`.`last_modified_date`   AS `last_modified_date`,
 `ponudjaci`.`naziv_ponudjaca`   AS `naziv_ponudjaca`
 from (`ponude` join `ponudjaci`
 on ((`ponude`.`sifra_ponudjaca` = `ponudjaci`.`id`)));
@@ -86,4 +82,17 @@ on ((`ponude`.`sifra_postupka` = `postupci`.`sifra_postupka`))) join `ponudjaci`
 on ((`ponude`.`sifra_ponudjaca` = `ponudjaci`.`id`))) join `specifikacije`
 on (((`ponude`.`sifra_postupka` = `specifikacije`.`sifra_postupka`) and
 (`ponude`.`broj_partije` = `specifikacije`.`broj_partije`))));
+
+create view view_hvale_ponude as
+select `specifikacije`.`id`                        AS `id`,
+`specifikacije`.`broj_partije`              AS `broj_partije`,
+`specifikacije`.`inn`                       AS `inn`,
+`specifikacije`.`farmaceutski_oblik_lijeka` AS `farmaceutski_oblik_lijeka`,
+`specifikacije`.`pakovanje`                 AS `pakovanje`,
+`specifikacije`.`trazena_kolicina`          AS `trazena_kolicina`,
+`specifikacije`.`procijenjena_vrijednost`   AS `procijenjena_vrijednost`,
+`specifikacije`.`sifra_postupka`            AS `sifra_postupka`
+from `specifikacije`
+where `specifikacije`.`broj_partije` in
+(select `view_prvorangirani`.`broj_partije` from `view_prvorangirani`) is false;
 

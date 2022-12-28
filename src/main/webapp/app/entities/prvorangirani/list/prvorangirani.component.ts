@@ -26,6 +26,8 @@ export class PrvorangiraniComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  ukupno_procjenjeno?: number;
+  ukupno_ponudjeno?: number;
   @Input() postupak: any;
 
   constructor(protected prvorangiraniService: PrvorangiraniService, protected activatedRoute: ActivatedRoute, public router: Router) {}
@@ -136,6 +138,8 @@ export class PrvorangiraniComponent implements OnInit {
     this.loadFromBackendWithRouteInformationsPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        this.ukupno_procjenjeno = res.body?.reduce((acc, vrednovanje) => acc + vrednovanje.procijenjenaVrijednost!, 0);
+        this.ukupno_ponudjeno = res.body?.reduce((acc, vrednovanje) => acc + vrednovanje.ponudjenaVrijednost!, 0);
       },
     });
   }

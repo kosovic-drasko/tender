@@ -17,6 +17,8 @@ import { TableUtil } from '../../../tableUtil';
 })
 export class VrednovanjeComponent implements OnInit {
   vrednovanjes?: IVrednovanje[];
+  ukupno_procjenjeno?: number;
+  ukupno_ponudjeno?: number;
   isLoading = false;
 
   predicate = 'id';
@@ -135,6 +137,8 @@ export class VrednovanjeComponent implements OnInit {
     this.loadFromBackendWithRouteInformationsPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        this.ukupno_procjenjeno = res.body?.reduce((acc, vrednovanje) => acc + vrednovanje.procijenjenaVrijednost!, 0);
+        this.ukupno_ponudjeno = res.body?.reduce((acc, vrednovanje) => acc + vrednovanje.ponudjenaVrijednost!, 0);
       },
     });
   }
