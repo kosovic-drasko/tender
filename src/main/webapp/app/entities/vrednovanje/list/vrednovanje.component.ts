@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Observable, switchMap, tap } from 'rxjs';
@@ -9,6 +9,7 @@ import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/co
 import { ASC, DESC, SORT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, VrednovanjeService } from '../service/vrednovanje.service';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
+import { TableUtil } from '../../../tableUtil';
 
 @Component({
   selector: 'jhi-vrednovanje',
@@ -25,15 +26,18 @@ export class VrednovanjeComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-
+  @Input() postupak: any;
   constructor(protected vrednovanjeService: VrednovanjeService, protected activatedRoute: ActivatedRoute, public router: Router) {}
 
   trackId = (_index: number, item: IVrednovanje): number => this.vrednovanjeService.getVrednovanjeIdentifier(item);
 
   ngOnInit(): void {
-    this.load();
-
-    this.filters.filterChanges.subscribe(filterOptions => this.handleNavigation(1, this.predicate, this.ascending, filterOptions));
+    if (this.postupak !== undefined) {
+      this.loadSifraPostupka();
+    } else {
+      this.load();
+      console.log('Postupak je >>>>>>>>', this.postupak);
+    }
   }
 
   load(): void {
@@ -125,5 +129,28 @@ export class VrednovanjeComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+
+  loadSifraPostupka(): void {
+    this.loadFromBackendWithRouteInformationsPostupak().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+      },
+    });
+  }
+  protected loadFromBackendWithRouteInformationsPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupak(this.predicate, this.ascending))
+    );
+  }
+  protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
+    return this.vrednovanjeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+
+  exportTable() {
+    TableUtil.exportTableToExcel('ExampleTable');
   }
 }

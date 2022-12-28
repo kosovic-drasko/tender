@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
@@ -11,6 +11,8 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, ViewPonudeService } from '../service/view-ponude.service';
 import { ViewPonudeDeleteDialogComponent } from '../delete/view-ponude-delete-dialog.component';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
+import { TableUtil } from '../../../tableUtil';
+import { PonudeService } from '../../ponude/service/ponude.service';
 
 @Component({
   selector: 'jhi-view-ponude',
@@ -19,9 +21,16 @@ import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/
 export class ViewPonudeComponent implements OnInit {
   viewPonudes?: IViewPonude[];
   isLoading = false;
-
+  sifraPonude?: number;
   predicate = 'id';
   ascending = true;
+  brojObrazac?: number = 0;
+  ponudjaci?: [];
+  ukupno_ponudjeno?: number;
+  @Input() postupak: any;
+  @ViewChild('fileInput') fileInput: any;
+  public resourceUrlExcelDownloadPostupak = SERVER_API_URL + 'api/ponude/file';
+
   filters: IFilterOptions = new FilterOptions();
 
   itemsPerPage = ITEMS_PER_PAGE;
@@ -32,16 +41,11 @@ export class ViewPonudeComponent implements OnInit {
     protected viewPonudeService: ViewPonudeService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected ponudeService: PonudeService
   ) {}
 
   trackId = (_index: number, item: IViewPonude): number => this.viewPonudeService.getViewPonudeIdentifier(item);
-
-  ngOnInit(): void {
-    this.load();
-
-    this.filters.filterChanges.subscribe(filterOptions => this.handleNavigation(1, this.predicate, this.ascending, filterOptions));
-  }
 
   delete(viewPonude: IViewPonude): void {
     const modalRef = this.modalService.open(ViewPonudeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
@@ -147,6 +151,90 @@ export class ViewPonudeComponent implements OnInit {
       return [];
     } else {
       return [predicate + ',' + ascendingQueryParam];
+    }
+  }
+
+  exportArray() {
+    // @ts-ignore
+    const onlyNameAndSymbolArr: {
+      'naziv proizvodjaca': string | null | undefined;
+      'jedinicna cijena': number | null | undefined;
+      'ponudjana vrijednost': number | null | undefined;
+      'rok isporuke': number | null | undefined;
+      'naziv ponudjaca': string | null | undefined;
+      'sifra ponude': number | null | undefined;
+      'sifra postupka': number | null | undefined;
+      'zasticeni naziv': string | null | undefined;
+      'broj partije': number | null | undefined;
+    }[] = this.viewPonudes?.map(x => ({
+      'sifra postupka': x.sifraPostupka,
+      'broj partije': x.brojPartije,
+      'sifra ponude': x.sifraPonude,
+      'zasticeni naziv': x.zasticeniNaziv,
+      'naziv proizvodjaca': x.nazivProizvodjaca,
+      'naziv ponudjaca': x.nazivPonudjaca,
+      'ponudjana vrijednost': x.ponudjenaVrijednost,
+      'jedinicna cijena': x.jedinicnaCijena,
+      'rok isporuke': x.rokIsporuke,
+      'karakteristike ponude': x.karakteristika,
+    }));
+    TableUtil.exportArrayToExcel(onlyNameAndSymbolArr, 'Ponude');
+  }
+  obrazacExcel(): void {
+    window.location.href = `${this.resourceUrlExcelDownloadPostupak}/${this.brojObrazac}`;
+  }
+  uploadFile(): any {
+    const formData = new FormData();
+    formData.append('files', this.fileInput.nativeElement.files[0]);
+    this.ponudeService.UploadExcel(formData).subscribe(() => {
+      this.load();
+    });
+  }
+  loadSifraPonude(): void {
+    this.loadPonude().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+        this.ukupno_ponudjeno = res.body?.reduce((acc, ponude) => acc + ponude.ponudjenaVrijednost!, 0);
+      },
+    });
+  }
+  loadSifraPostupka(): void {
+    this.loadPostupak().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+        this.ukupno_ponudjeno = res.body?.reduce((acc, ponude) => acc + ponude.ponudjenaVrijednost!, 0);
+      },
+    });
+  }
+  protected loadPonude(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPonude(this.predicate, this.ascending))
+    );
+  }
+  protected loadPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupak(this.predicate, this.ascending))
+    );
+  }
+  protected queryBackendPonude(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { 'sifraPonude.in': this.sifraPonude, sort: this.getSortQueryParam(predicate, ascending) };
+    return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+  protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
+    return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+  ngOnInit(): void {
+    // this.accountService.identity().subscribe(account => (this.currentAccount = account));
+    if (this.postupak !== undefined) {
+      this.loadSifraPostupka();
+    } else {
+      this.load();
+      console.log('Postupak je >>>>>>>>', this.postupak);
     }
   }
 }

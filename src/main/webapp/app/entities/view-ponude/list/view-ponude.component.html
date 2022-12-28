@@ -17,6 +17,11 @@
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="tenderApp.viewPonude.home.createLabel"> Kreiraj novi View Ponude </span>
       </button>
+
+      <button type="button" class="btn btn-primary" (click)="obrazacExcel()">Napravi</button>
+      <button type="button" class="btn btn-primary" (click)="fileInput.click()">Nadji</button>
+      <button type="button" class="btn btn-primary" (click)="uploadFile()">Unesi</button>
+      <button type="button" class="btn btn-primary" (click)="exportArray()">Excel</button>
     </div>
   </h2>
 
@@ -112,7 +117,7 @@
       <tbody>
         <tr *ngFor="let viewPonude of viewPonudes; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/view-ponude', viewPonude.id, 'view']">{{ viewPonude.id }}</a>
+            <a [routerLink]="['/ponude', viewPonude.id, 'view']">{{ viewPonude.id }}</a>
           </td>
           <td>{{ viewPonude.sifraPostupka }}</td>
           <td>{{ viewPonude.sifraPonude }}</td>
@@ -129,7 +134,7 @@
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/view-ponude', viewPonude.id, 'view']"
+                [routerLink]="['/ponude', viewPonude.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"
               >
@@ -139,7 +144,7 @@
 
               <button
                 type="submit"
-                [routerLink]="['/view-ponude', viewPonude.id, 'edit']"
+                [routerLink]="['/ponude', viewPonude.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
