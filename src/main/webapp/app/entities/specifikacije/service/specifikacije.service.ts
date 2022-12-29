@@ -62,6 +62,7 @@ export class SpecifikacijeService {
 
     return this.http.post(this.resourceUrlExcelUpload, formData, { headers });
   }
+
   addSpecifikacijeToCollectionIfMissing<Type extends Pick<ISpecifikacije, 'id'>>(
     specifikacijeCollection: Type[],
     ...specifikacijesToCheck: (Type | null | undefined)[]
