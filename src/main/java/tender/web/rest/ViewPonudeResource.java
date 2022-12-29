@@ -204,4 +204,10 @@ public class ViewPonudeResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/ponude-ponudjaci/{sifra}")
+    public ResponseEntity<ViewPonude> getPonudePonudjaci(@PathVariable Integer sifra) {
+        List<ViewPonude> viewPonude = viewPonudeRepository.findBySifraPostupkaPonudjaci(sifra);
+        return (ResponseEntity<ViewPonude>) viewPonude;
+    }
 }
