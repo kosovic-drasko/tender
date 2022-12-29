@@ -7,6 +7,8 @@ import { finalize } from 'rxjs/operators';
 import { PonudeFormService, PonudeFormGroup } from './ponude-form.service';
 import { IPonude } from '../ponude.model';
 import { PonudeService } from '../service/ponude.service';
+import { IPonudjaci } from '../../ponudjaci/ponudjaci.model';
+import { PonudjaciService } from '../../ponudjaci/service/ponudjaci.service';
 
 @Component({
   selector: 'jhi-ponude-update',
@@ -15,24 +17,33 @@ import { PonudeService } from '../service/ponude.service';
 export class PonudeUpdateComponent implements OnInit {
   isSaving = false;
   ponude: IPonude | null = null;
-
+  ponudjaci: IPonudjaci[] = [];
   editForm: PonudeFormGroup = this.ponudeFormService.createPonudeFormGroup();
 
   constructor(
     protected ponudeService: PonudeService,
     protected ponudeFormService: PonudeFormService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected ponudjaciService: PonudjaciService
   ) {}
 
   ngOnInit(): void {
+    this.loadAllPonudjaci();
+
     this.activatedRoute.data.subscribe(({ ponude }) => {
       this.ponude = ponude;
       if (ponude) {
         this.updateForm(ponude);
+        this.loadAllPonudjaci();
       }
     });
   }
-
+  loadAllPonudjaci(): void {
+    this.ponudjaciService.query().subscribe((res: HttpResponse<IPonudjaci[]>) => {
+      this.ponudjaci = res.body ?? [];
+      console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
+    });
+  }
   previousState(): void {
     window.history.back();
   }

@@ -4,15 +4,15 @@
       "home": {
         "title": "Specifikacije",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Specifikacije",
+        "createLabel": "Kreiraj novu Specifikaciju",
         "createOrEditLabel": "Kreirajte ili izmenite Specifikacije",
-        "notFound": "No Specifikacijes found"
+        "notFound": "Nema Specifikacija"
       },
-      "created": "Kreiran je novi Specifikacije pod nazivom {{ param }}",
-      "updated": "Specifikacije pod nazivom {{ param }} je ažuriran",
-      "deleted": "Specifikacije pod nazivom {{ param }} je obrisan",
+      "created": "Kreirana je nova Specifikacija pod nazivom {{ param }}",
+      "updated": "Specifikacija pod nazivom {{ param }} je ažurirana",
+      "deleted": "Specifikacija pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Specifikacije pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete Specifikaciju pod nazivom {{ id }}?"
       },
       "detail": {
         "title": "Specifikacije"

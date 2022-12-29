@@ -4,15 +4,15 @@
       "home": {
         "title": "Postupci",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Postupci",
-        "createOrEditLabel": "Kreirajte ili izmenite Postupci",
-        "notFound": "No Postupcis found"
+        "createLabel": "Kreiraj novi Postupak",
+        "createOrEditLabel": "Kreirajte ili izmenite Postupak",
+        "notFound": "Nema postupka"
       },
-      "created": "Kreiran je novi Postupci pod nazivom {{ param }}",
-      "updated": "Postupci pod nazivom {{ param }} je ažuriran",
-      "deleted": "Postupci pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je novi Postupak pod nazivom {{ param }}",
+      "updated": "Postupak pod nazivom {{ param }} je ažuriran",
+      "deleted": "Postupak pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Postupci pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete Postupak pod nazivom {{ id }}?"
       },
       "detail": {
         "title": "Postupci"

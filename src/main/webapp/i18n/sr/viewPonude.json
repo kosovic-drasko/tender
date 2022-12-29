@@ -4,18 +4,18 @@
       "home": {
         "title": "Ponude",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi View Ponude",
-        "createOrEditLabel": "Kreirajte ili izmenite View Ponude",
+        "createLabel": "Kreiraj novu Ponudu",
+        "createOrEditLabel": "Kreirajte ili izmenite Ponudu",
         "notFound": "No View Ponudes found"
       },
-      "created": "Kreiran je novi View Ponude pod nazivom {{ param }}",
-      "updated": "View Ponude pod nazivom {{ param }} je ažuriran",
-      "deleted": "View Ponude pod nazivom {{ param }} je obrisan",
+      "created": "Kreirana je nova Ponuda pod nazivom {{ param }}",
+      "updated": "Ponuda pod nazivom {{ param }} je ažurirana",
+      "deleted": "Ponuda pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete View Ponude pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete  Ponudu pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "View Ponude"
+        "title": "Ponude"
       },
       "id": "ID",
       "sifraPostupka": "Sifra Postupka",

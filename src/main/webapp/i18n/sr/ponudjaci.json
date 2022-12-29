@@ -4,15 +4,15 @@
       "home": {
         "title": "Ponudjaci",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Ponudjaci",
-        "createOrEditLabel": "Kreirajte ili izmenite Ponudjaci",
-        "notFound": "No Ponudjacis found"
+        "createLabel": "Kreiraj novog Ponudjaca",
+        "createOrEditLabel": "Kreirajte ili izmenite Ponudjaca",
+        "notFound": "Nema Ponudjaca"
       },
       "created": "Kreiran je novi Ponudjaci pod nazivom {{ param }}",
-      "updated": "Ponudjaci pod nazivom {{ param }} je ažuriran",
-      "deleted": "Ponudjaci pod nazivom {{ param }} je obrisan",
+      "updated": "Ponudjac pod nazivom {{ param }} je ažuriran",
+      "deleted": "Ponudjac pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Ponudjaci pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete Ponudjaca pod nazivom {{ id }}?"
       },
       "detail": {
         "title": "Ponudjaci"
