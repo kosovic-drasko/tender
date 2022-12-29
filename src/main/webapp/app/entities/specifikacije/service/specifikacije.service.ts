@@ -15,7 +15,7 @@ export type EntityArrayResponseType = HttpResponse<ISpecifikacije[]>;
 @Injectable({ providedIn: 'root' })
 export class SpecifikacijeService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/specifikacijes');
-  public resourceUrlExcelUpload = SERVER_API_URL + '/api/specifikacije/file';
+  public resourceUrlExcelUpload = SERVER_API_URL + '/api/uploadfiles/specifikacije';
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(specifikacije: ISpecifikacije | (Omit<ISpecifikacije, 'id'> & { id: null })): Observable<EntityResponseType> {
