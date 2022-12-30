@@ -2,12 +2,12 @@
   <!--  <h1 jhiTranslate="login.title" data-cy="loginTitle">Prijava</h1>-->
   <div class="d-flex justify-content-center">
     <div class="col-lg-6 col-md-8 col-sm-10">
-      <div class="card jh-card" style="width: 25rem" class="d-flex justify-content-center">
+      <div class="card jh-card" style="width: 30rem" class="d-flex justify-content-center">
         <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication" data-cy="loginError">
           <strong>Prijava je neuspešna!</strong> Korisničko ime i/ili lozinka nisu ispavni.
         </div>
         <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
-        <div class="card-body">
+        <div class="card-body" class="shadow-lg p-3 mb-5 bg-body rounded">
           <h5 class="card-title" jhiTranslate="login.title" data-cy="loginTitle">Prijava</h5>
           <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
             <div class="mb-3">
