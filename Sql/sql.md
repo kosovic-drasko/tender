@@ -96,3 +96,7 @@ from `specifikacije`
 where `specifikacije`.`broj_partije` in
 (select `view_prvorangirani`.`broj_partije` from `view_prvorangirani`) is false;
 
+
+
+create view view_ponudjaci as select distinct ANY_VALUE(`ponude`.`id`) AS `id`,ANY_VALUE(`ponude`.`sifra_postupka`) AS `sifra_postupka`,ANY_VALUE(`ponudjaci`.`naziv_ponudjaca`) AS `naziv_ponudjaca` from (`ponudjaci` join `ponude` on((`ponude`.`sifra_ponudjaca` = `ponudjaci`.`id`)))
+GROUP BY ponude.sifra_ponudjaca
