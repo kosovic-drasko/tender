@@ -9,6 +9,10 @@
     {
       "fieldName": "sifraPostupka",
       "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sifraPonude",
+      "fieldType": "Integer"
     }
   ],
   "jpaMetamodelFiltering": true,

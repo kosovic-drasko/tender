@@ -27,6 +27,8 @@ public class ViewPonudjaciCriteria implements Serializable, Criteria {
 
     private IntegerFilter sifraPostupka;
 
+    private IntegerFilter sifraPonude;
+
     private Boolean distinct;
 
     public ViewPonudjaciCriteria() {}
@@ -35,6 +37,7 @@ public class ViewPonudjaciCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.nazivPonudjaca = other.nazivPonudjaca == null ? null : other.nazivPonudjaca.copy();
         this.sifraPostupka = other.sifraPostupka == null ? null : other.sifraPostupka.copy();
+        this.sifraPonude = other.sifraPonude == null ? null : other.sifraPonude.copy();
         this.distinct = other.distinct;
     }
 
@@ -88,6 +91,21 @@ public class ViewPonudjaciCriteria implements Serializable, Criteria {
         this.sifraPostupka = sifraPostupka;
     }
 
+    public IntegerFilter getSifraPonude() {
+        return sifraPonude;
+    }
+
+    public IntegerFilter sifraPonude() {
+        if (sifraPonude == null) {
+            sifraPonude = new IntegerFilter();
+        }
+        return sifraPonude;
+    }
+
+    public void setSifraPonude(IntegerFilter sifraPonude) {
+        this.sifraPonude = sifraPonude;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -109,13 +127,14 @@ public class ViewPonudjaciCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(nazivPonudjaca, that.nazivPonudjaca) &&
             Objects.equals(sifraPostupka, that.sifraPostupka) &&
+            Objects.equals(sifraPonude, that.sifraPonude) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nazivPonudjaca, sifraPostupka, distinct);
+        return Objects.hash(id, nazivPonudjaca, sifraPostupka, sifraPonude, distinct);
     }
 
     // prettier-ignore
@@ -125,6 +144,7 @@ public class ViewPonudjaciCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (nazivPonudjaca != null ? "nazivPonudjaca=" + nazivPonudjaca + ", " : "") +
             (sifraPostupka != null ? "sifraPostupka=" + sifraPostupka + ", " : "") +
+            (sifraPonude != null ? "sifraPonude=" + sifraPonude + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

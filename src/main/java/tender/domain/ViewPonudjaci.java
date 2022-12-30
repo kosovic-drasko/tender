@@ -27,6 +27,9 @@ public class ViewPonudjaci implements Serializable {
     @Column(name = "sifra_postupka")
     private Integer sifraPostupka;
 
+    @Column(name = "sifra_ponude")
+    private Integer sifraPonude;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -68,6 +71,19 @@ public class ViewPonudjaci implements Serializable {
         this.sifraPostupka = sifraPostupka;
     }
 
+    public Integer getSifraPonude() {
+        return this.sifraPonude;
+    }
+
+    public ViewPonudjaci sifraPonude(Integer sifraPonude) {
+        this.setSifraPonude(sifraPonude);
+        return this;
+    }
+
+    public void setSifraPonude(Integer sifraPonude) {
+        this.sifraPonude = sifraPonude;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -94,6 +110,7 @@ public class ViewPonudjaci implements Serializable {
             "id=" + getId() +
             ", nazivPonudjaca='" + getNazivPonudjaca() + "'" +
             ", sifraPostupka=" + getSifraPostupka() +
+            ", sifraPonude=" + getSifraPonude() +
             "}";
     }
 }

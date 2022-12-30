@@ -91,6 +91,9 @@ public class ViewPonudjaciQueryService extends QueryService<ViewPonudjaci> {
             if (criteria.getSifraPostupka() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getSifraPostupka(), ViewPonudjaci_.sifraPostupka));
             }
+            if (criteria.getSifraPonude() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getSifraPonude(), ViewPonudjaci_.sifraPonude));
+            }
         }
         return specification;
     }

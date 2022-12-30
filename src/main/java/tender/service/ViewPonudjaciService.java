@@ -65,6 +65,9 @@ public class ViewPonudjaciService {
                 if (viewPonudjaci.getSifraPostupka() != null) {
                     existingViewPonudjaci.setSifraPostupka(viewPonudjaci.getSifraPostupka());
                 }
+                if (viewPonudjaci.getSifraPonude() != null) {
+                    existingViewPonudjaci.setSifraPonude(viewPonudjaci.getSifraPonude());
+                }
 
                 return existingViewPonudjaci;
             })
