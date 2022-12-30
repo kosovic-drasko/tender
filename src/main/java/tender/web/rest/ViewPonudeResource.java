@@ -210,4 +210,10 @@ public class ViewPonudeResource {
         List<ViewPonude> viewPonude = viewPonudeRepository.findBySifraPostupkaPonudjaci(sifra);
         return (ResponseEntity<ViewPonude>) viewPonude;
     }
+
+    @GetMapping("/ponude-ponudjaci")
+    public ResponseEntity<ViewPonude> getPonudePonudjaciSvi() {
+        List<ViewPonude> viewPonude = viewPonudeRepository.findByPonudjaci();
+        return (ResponseEntity<ViewPonude>) viewPonude;
+    }
 }

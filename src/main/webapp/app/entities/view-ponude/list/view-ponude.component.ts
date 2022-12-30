@@ -49,7 +49,9 @@ export class ViewPonudeComponent implements OnInit {
     protected modalService: NgbModal,
     protected ponudeService: PonudeService,
     protected viewPonudjaciService: ViewPonudjaciService
-  ) {}
+  ) {
+    // this.loadSviPonudjaci();
+  }
 
   trackId = (_index: number, item: IViewPonude): number => this.viewPonudeService.getViewPonudeIdentifier(item);
 
@@ -62,6 +64,7 @@ export class ViewPonudeComponent implements OnInit {
       }
     });
   }
+  // ucitavanje
   load(): void {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
@@ -211,7 +214,7 @@ export class ViewPonudeComponent implements OnInit {
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
         this.ponudjaci = res.body ?? [];
-        console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
+        // console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
       },
     });
   }
@@ -253,16 +256,39 @@ export class ViewPonudeComponent implements OnInit {
     const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
     return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
+
+  loadPostupciPonudjaci(): void {
+    this.loadPonudjaciPostupak().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+        this.ponudjaci = res.body ?? [];
+        console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
+      },
+    });
+  }
+  protected loadPonudjaciPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupakPonudjaci(this.predicate, this.ascending))
+    );
+  }
+  protected queryBackendPostupakPonudjaci(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
+    return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
   ngOnInit(): void {
-    this.loadSviPonudjaci();
-    console.log('Ponudjaci je >>>>>>>>', this.ponudjaci);
+    // this.loadSviPonudjaci();
+    // console.log('Ponudjaci je >>>>>>>>', this.ponudjaci);
     // this.accountService.identity().subscribe(account => (this.currentAccount = account));
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
+      this.loadPostupciPonudjaci();
+      console.log('Ponudjaci postupci je >>>>>>>>', this.ponudjaci);
     } else {
-      this.load();
       this.loadSviPonudjaci();
-      console.log('Ponudjaci je >>>>>>>>', this.ponudjaci);
+      console.log('Ponudjaci je OnInit >>>>>>>>', this.ponudjaci);
+      this.load();
     }
   }
 }

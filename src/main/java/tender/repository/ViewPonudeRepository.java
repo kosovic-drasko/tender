@@ -13,12 +13,19 @@ import tender.domain.ViewPonude;
 @SuppressWarnings("unused")
 @Repository
 public interface ViewPonudeRepository extends JpaRepository<ViewPonude, Long>, JpaSpecificationExecutor<ViewPonude> {
-    @Query(
-        value = "select ANY_VALUE(view_ponude.id) as id,ANY_VALUE(view_ponude.broj_partije) as broj_partije, ANY_VALUE(view_ponude.naziv_ponudjaca) as naziv_ponudjaca\n" +
-        "from view_ponude\n" +
-        "where view_ponude.sifra_postupka=:sifra_postupka\n" +
-        "GROUP BY view_ponude.naziv_ponudjaca",
-        nativeQuery = true
-    )
-    List<ViewPonude> findBySifraPostupkaPonudjaci(@Param("sifra_postupka") Integer sifra_postupka);
+    //    @Query(
+    //        value = "select distinct ANY_VALUE(`ponude`.`id`) AS `id`,ANY_VALUE(`ponude`.`sifra_postupka`) AS `sifra_postupka`,ANY_VALUE(`ponude`.`sifra_ponude`) AS `sifra_ponude`,ANY_VALUE(`ponudjaci`.`naziv_ponudjaca`) AS `naziv_ponudjaca` from (`ponudjaci` join `ponude` on((`ponude`.`sifra_ponudjaca` = `ponudjaci`.`id`)))\n" +
+    //            "where ponude.sifra_postupka=:sifra_postupka GROUP BY ponude.sifra_ponude",
+    //        nativeQuery = true
+    //    )
+    //    List<ViewPonude> findBySifraPostupkaPonudjaci(@Param("sifra_postupka") Integer sifra_postupka);
+    //
+    //
+    //    @Query(
+    //        value = "select distinct ANY_VALUE(`ponude`.`id`) AS `id`,ANY_VALUE(`ponude`.`sifra_postupka`) AS `sifra_postupka`,ANY_VALUE(`ponude`.`sifra_ponude`) AS `sifra_ponude`,ANY_VALUE(`ponudjaci`.`naziv_ponudjaca`) AS `naziv_ponudjaca` from (`ponudjaci` join `ponude` on((`ponude`.`sifra_ponudjaca` = `ponudjaci`.`id`)))\n" +
+    //            " GROUP BY ponude.sifra_ponude",
+    //        nativeQuery = true
+    //    )
+    //    List<ViewPonude> findByPonudjaci() ;
+
 }

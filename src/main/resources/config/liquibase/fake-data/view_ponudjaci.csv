@@ -1,11 +1,11 @@
-id;naziv_ponudjaca;sifra_postupka
-1;IB Australian;30924
-2;Common Borders;72810
-3;Glen matrix;5171
-4;Steel Oregon collaboration;17167
-5;Pants Avon GB;91853
-6;Shirt Account Beauty;90617
-7;Sports Loan Branch;55788
-8;Handmade Compatible;78000
-9;Coves neural-net Table;13479
-10;Passage Incredible XML;47221
+id;naziv_ponudjaca;sifra_postupka;sifra_ponude
+1;IB Australian;30924;34490
+2;Unbranded Niue;63043;46970
+3;Handmade;99953;5171
+4;Steel Oregon collaboration;17167;68744
+5;olive;84415;48974
+6;exploit;8740;91853
+7;Shirt Account Beauty;90617;74101
+8;RAM;84775;34423
+9;Garden deposit;21736;25633
+10;neural;45266;12183
