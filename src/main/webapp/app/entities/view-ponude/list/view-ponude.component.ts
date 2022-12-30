@@ -16,6 +16,8 @@ import { PonudeService } from '../../ponude/service/ponude.service';
 import { PonudeDeleteDialogComponent } from '../../ponude/delete/ponude-delete-dialog.component';
 import { IPonude } from '../../ponude/ponude.model';
 import { ViewPonudjaciService } from '../../view-ponudjaci/service/view-ponudjaci.service';
+import { IViewPonudjaci } from '../../view-ponudjaci/view-ponudjaci.model';
+import { IPonudjaci } from '../../ponudjaci/ponudjaci.model';
 
 @Component({
   selector: 'jhi-view-ponude',
@@ -28,7 +30,7 @@ export class ViewPonudeComponent implements OnInit {
   predicate = 'id';
   ascending = true;
   brojObrazac?: number = 0;
-  ponudjaci?: [];
+  ponudjaci: IViewPonudjaci[] = [];
   ukupno_ponudjeno?: number;
   @Input() postupak: any;
   @ViewChild('fileInput') fileInput: any;
@@ -46,7 +48,7 @@ export class ViewPonudeComponent implements OnInit {
     public router: Router,
     protected modalService: NgbModal,
     protected ponudeService: PonudeService,
-    protected viewPonudjaci: ViewPonudjaciService
+    protected viewPonudjaciService: ViewPonudjaciService
   ) {}
 
   trackId = (_index: number, item: IViewPonude): number => this.viewPonudeService.getViewPonudeIdentifier(item);
@@ -204,10 +206,12 @@ export class ViewPonudeComponent implements OnInit {
       },
     });
   }
-  loadPostupakPonudjaci(): void {
+  loadSviPonudjaci(): void {
     this.loadPonudjaci().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        this.ponudjaci = res.body ?? [];
+        console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
       },
     });
   }
@@ -242,7 +246,7 @@ export class ViewPonudeComponent implements OnInit {
   protected queryBackendPonudjaci(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject = { sort: this.getSortQueryParam(predicate, ascending) };
-    return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
   protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
@@ -250,13 +254,15 @@ export class ViewPonudeComponent implements OnInit {
     return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
   ngOnInit(): void {
+    this.loadSviPonudjaci();
+    console.log('Ponudjaci je >>>>>>>>', this.ponudjaci);
     // this.accountService.identity().subscribe(account => (this.currentAccount = account));
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
     } else {
       this.load();
-      this.loadPonudjaci();
-      console.log('Postupak je >>>>>>>>', this.postupak);
+      this.loadSviPonudjaci();
+      console.log('Ponudjaci je >>>>>>>>', this.ponudjaci);
     }
   }
 }
