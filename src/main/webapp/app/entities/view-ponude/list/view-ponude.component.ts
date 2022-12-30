@@ -15,6 +15,7 @@ import { TableUtil } from '../../../tableUtil';
 import { PonudeService } from '../../ponude/service/ponude.service';
 import { PonudeDeleteDialogComponent } from '../../ponude/delete/ponude-delete-dialog.component';
 import { IPonude } from '../../ponude/ponude.model';
+import { ViewPonudjaciService } from '../../view-ponudjaci/service/view-ponudjaci.service';
 
 @Component({
   selector: 'jhi-view-ponude',
@@ -44,7 +45,8 @@ export class ViewPonudeComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal,
-    protected ponudeService: PonudeService
+    protected ponudeService: PonudeService,
+    protected viewPonudjaci: ViewPonudjaciService
   ) {}
 
   trackId = (_index: number, item: IViewPonude): number => this.viewPonudeService.getViewPonudeIdentifier(item);
@@ -62,6 +64,7 @@ export class ViewPonudeComponent implements OnInit {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        this.ukupno_ponudjeno = res.body?.reduce((acc, ponude) => acc + ponude.ponudjenaVrijednost!, 0);
       },
     });
   }
@@ -201,10 +204,23 @@ export class ViewPonudeComponent implements OnInit {
       },
     });
   }
+  loadPostupakPonudjaci(): void {
+    this.loadPonudjaci().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+      },
+    });
+  }
   protected loadPonude(): Observable<EntityArrayResponseType> {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
       tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
       switchMap(() => this.queryBackendPonude(this.predicate, this.ascending))
+    );
+  }
+  protected loadPonudjaci(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPonudjaci(this.predicate, this.ascending))
     );
   }
   protected loadPostupak(): Observable<EntityArrayResponseType> {
@@ -218,6 +234,16 @@ export class ViewPonudeComponent implements OnInit {
     const queryObject = { 'sifraPonude.in': this.sifraPonude, sort: this.getSortQueryParam(predicate, ascending) };
     return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
+  protected queryBackendPonudjaciPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
+    return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+  protected queryBackendPonudjaci(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { sort: this.getSortQueryParam(predicate, ascending) };
+    return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
   protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
@@ -229,6 +255,7 @@ export class ViewPonudeComponent implements OnInit {
       this.loadSifraPostupka();
     } else {
       this.load();
+      this.loadPonudjaci();
       console.log('Postupak je >>>>>>>>', this.postupak);
     }
   }
