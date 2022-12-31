@@ -3,7 +3,7 @@
     <span jhiTranslate="tenderApp.viewPonude.home.title">View Ponudes</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+      <button class="btn btn-info me-2" (click)="loadSifraPostupka()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="tenderApp.viewPonude.home.refreshListLabel">Refresh list</span>
       </button>
@@ -21,15 +21,17 @@
     </div>
   </h2>
   <select
+    *ngIf="postupak"
     class="form-control"
     id="field_sifraPonudjaca"
     data-cy="sifraPonudjaca"
     name="sifraPonudjaca"
+    placeholder="Unesite Ponudjaca"
     [(ngModel)]="sifraPonude"
     (change)="loadSifraPonude()"
     cl="loadPageSifraPonude()"
   >
-    <option [ngValue]="null">Izaberi ponudjaca</option>
+    <option [ngValue]="null">Vrati</option>
     <option id="ponudjac" [ngValue]="ponudjaciOption.sifraPonude" *ngFor="let ponudjaciOption of ponudjaci">
       {{ ponudjaciOption.nazivPonudjaca }}
     </option>

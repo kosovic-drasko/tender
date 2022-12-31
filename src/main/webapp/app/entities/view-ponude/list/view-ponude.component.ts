@@ -238,7 +238,11 @@ export class ViewPonudeComponent implements OnInit {
   }
   protected queryBackendPonude(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
-    const queryObject = { 'sifraPonude.in': this.sifraPonude, sort: this.getSortQueryParam(predicate, ascending) };
+    const queryObject = {
+      'sifraPonude.in': this.sifraPonude,
+      'sifraPostupka.in': this.postupak,
+      sort: this.getSortQueryParam(predicate, ascending),
+    };
     return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
   protected queryBackendPonudjaciPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
@@ -282,12 +286,13 @@ export class ViewPonudeComponent implements OnInit {
     // console.log('Ponudjaci je >>>>>>>>', this.ponudjaci);
     // this.accountService.identity().subscribe(account => (this.currentAccount = account));
     if (this.postupak !== undefined) {
-      this.loadSifraPostupka();
       this.loadPostupciPonudjaci();
+      this.loadSifraPostupka();
+
       console.log('Ponudjaci postupci je >>>>>>>>', this.ponudjaci);
     } else {
-      this.loadSviPonudjaci();
-      console.log('Ponudjaci je OnInit >>>>>>>>', this.ponudjaci);
+      // this.loadSviPonudjaci();
+      // console.log('Ponudjaci je OnInit >>>>>>>>', this.ponudjaci);
       this.load();
     }
   }
