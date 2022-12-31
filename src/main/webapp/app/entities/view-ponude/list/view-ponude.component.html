@@ -1,7 +1,12 @@
 <div>
   <h2 id="page-heading" data-cy="ViewPonudeHeading">
     <span jhiTranslate="tenderApp.viewPonude.home.title">View Ponudes</span>
-
+    <div class="mb-3">
+      <label for="formFile" (click)="fileInput.click()" class="form-label"><span></span></label>
+      <input #fileInput type="file" id="file" (input)="uploadFile()" class="form-control" type="file" id="formFile" />
+      <!--      <input hidden #fileInput type="file" id="file" />-->
+      <!--      <button type="button" class="btn btn-primary"  (click)="uploadFile()">Unesi</button>-->
+    </div>
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadSifraPostupka()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
@@ -13,11 +18,11 @@
           <span> Unesi Ponudu </span>
         </button>
         <button type="button" class="btn btn-primary" (click)="obrazacExcel()">Napravi</button>
-        <button type="button" class="btn btn-primary" (click)="fileInput.click()">Nadji</button>
+        <!--        <button type="button" class="btn btn-primary" (click)="fileInput.click()">Nadji</button>-->
         <button type="button" class="btn btn-primary" (click)="uploadFile()">Unesi</button>
         <button type="button" class="btn btn-primary" (click)="exportArray()">Excel</button>
       </div>
-      <input hidden #fileInput type="file" id="file1" />
+      <!--      <input hidden #fileInput type="file" id="file1" />-->
     </div>
   </h2>
   <select
