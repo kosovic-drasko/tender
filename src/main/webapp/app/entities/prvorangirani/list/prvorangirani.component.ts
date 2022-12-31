@@ -40,7 +40,7 @@ export class PrvorangiraniComponent implements OnInit {
   ngOnInit(): void {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
-      this.loadSifraPostupka();
+      this.loadPostupciPonudjaci();
     } else {
       this.load();
       console.log('Postupak je >>>>>>>>', this.postupak);
