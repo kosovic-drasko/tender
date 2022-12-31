@@ -4,8 +4,6 @@
     <div class="mb-3">
       <label for="formFile" (click)="fileInput.click()" class="form-label"><span></span></label>
       <input #fileInput type="file" id="file" (input)="uploadFile()" class="form-control" type="file" id="formFile" />
-      <!--      <input hidden #fileInput type="file" id="file" />-->
-      <!--      <button type="button" class="btn btn-primary"  (click)="uploadFile()">Unesi</button>-->
     </div>
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadSifraPostupka()" [disabled]="isLoading">
