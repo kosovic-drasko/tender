@@ -22,6 +22,7 @@ import { IPonudjaci } from '../../ponudjaci/ponudjaci.model';
 @Component({
   selector: 'jhi-view-ponude',
   templateUrl: './view-ponude.component.html',
+  styleUrls: ['./view-ponude.component.scss'],
 })
 export class ViewPonudeComponent implements OnInit {
   viewPonudes?: IViewPonude[];

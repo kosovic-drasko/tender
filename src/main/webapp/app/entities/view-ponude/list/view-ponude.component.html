@@ -3,6 +3,26 @@
     <span jhiTranslate="tenderApp.viewPonude.home.title">View Ponudes</span>
 
     <div class="d-flex justify-content-end">
+      <select
+        *ngIf="postupak"
+        class="form-control-sm"
+        id="field_sifraPonudjaca"
+        data-cy="sifraPonudjaca"
+        name="sifraPonudjaca"
+        placeholder="Unesite Ponudjaca"
+        placeholder=".form-control-sm"
+        [(ngModel)]="sifraPonude"
+        (change)="loadSifraPonude()"
+        cl="loadPageSifraPonude()"
+      >
+        <option [ngValue]="null">Vrati</option>
+        <option id="ponudjac" [ngValue]="ponudjaciOption.sifraPonude" *ngFor="let ponudjaciOption of ponudjaci">
+          {{ ponudjaciOption.nazivPonudjaca }}
+        </option>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">Button</button>
+        </div>
+      </select>
       <button class="btn btn-info me-2" (click)="loadSifraPostupka()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="tenderApp.viewPonude.home.refreshListLabel">Refresh list</span>
@@ -20,22 +40,7 @@
       <input hidden #fileInput type="file" id="file1" />
     </div>
   </h2>
-  <select
-    *ngIf="postupak"
-    class="form-control"
-    id="field_sifraPonudjaca"
-    data-cy="sifraPonudjaca"
-    name="sifraPonudjaca"
-    placeholder="Unesite Ponudjaca"
-    [(ngModel)]="sifraPonude"
-    (change)="loadSifraPonude()"
-    cl="loadPageSifraPonude()"
-  >
-    <option [ngValue]="null">Vrati</option>
-    <option id="ponudjac" [ngValue]="ponudjaciOption.sifraPonude" *ngFor="let ponudjaciOption of ponudjaci">
-      {{ ponudjaciOption.nazivPonudjaca }}
-    </option>
-  </select>
+
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
