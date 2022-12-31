@@ -10,15 +10,17 @@ import { ASC, DESC, SORT, DEFAULT_SORT_DATA } from 'app/config/navigation.consta
 import { EntityArrayResponseType, PrvorangiraniService } from '../service/prvorangirani.service';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
 import { TableUtil } from '../../../tableUtil';
+import { IViewPonudjaci } from '../../view-ponudjaci/view-ponudjaci.model';
 
 @Component({
   selector: 'jhi-prvorangirani',
   templateUrl: './prvorangirani.component.html',
+  styleUrls: ['./prvorangirani.content.scss'],
 })
 export class PrvorangiraniComponent implements OnInit {
   prvorangiranis?: IPrvorangirani[];
   isLoading = false;
-
+  sifraPonude?: number;
   predicate = 'id';
   ascending = true;
   filters: IFilterOptions = new FilterOptions();
@@ -28,6 +30,7 @@ export class PrvorangiraniComponent implements OnInit {
   page = 1;
   ukupno_procjenjeno?: number;
   ukupno_ponudjeno?: number;
+  ponudjaci: IViewPonudjaci[] = [];
   @Input() postupak: any;
 
   constructor(protected prvorangiraniService: PrvorangiraniService, protected activatedRoute: ActivatedRoute, public router: Router) {}
@@ -36,6 +39,7 @@ export class PrvorangiraniComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.postupak !== undefined) {
+      this.loadSifraPostupka();
       this.loadSifraPostupka();
     } else {
       this.load();
@@ -50,7 +54,55 @@ export class PrvorangiraniComponent implements OnInit {
       },
     });
   }
-
+  loadSifraPonude(): void {
+    this.loadPonude().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+        this.ukupno_ponudjeno = res.body?.reduce((acc, ponude) => acc + ponude.ponudjenaVrijednost!, 0);
+      },
+    });
+  }
+  protected loadPonude(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPonude(this.predicate, this.ascending))
+    );
+  }
+  protected loadPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupak(this.predicate, this.ascending))
+    );
+  }
+  loadPostupciPonudjaci(): void {
+    this.loadPonudjaciPostupak().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+        this.ponudjaci = res.body ?? [];
+        console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
+      },
+    });
+  }
+  protected loadPonudjaciPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupakPonudjaci(this.predicate, this.ascending))
+    );
+  }
+  protected queryBackendPostupakPonudjaci(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
+    return this.prvorangiraniService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+  protected queryBackendPonude(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = {
+      'sifraPonude.in': this.sifraPonude,
+      'sifraPostupka.in': this.postupak,
+      sort: this.getSortQueryParam(predicate, ascending),
+    };
+    return this.prvorangiraniService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
   navigateToWithComponentValues(): void {
     this.handleNavigation(this.page, this.predicate, this.ascending, this.filters.filterOptions);
   }

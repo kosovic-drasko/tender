@@ -3,6 +3,26 @@
     <span jhiTranslate="tenderApp.prvorangirani.home.title">Prvorangiranis</span>
 
     <div class="d-flex justify-content-end">
+      <select
+        *ngIf="postupak"
+        class="form-control-sm"
+        id="field_sifraPonudjaca"
+        data-cy="sifraPonudjaca"
+        name="sifraPonudjaca"
+        placeholder="Unesite Ponudjaca"
+        [(ngModel)]="sifraPonude"
+        (change)="loadSifraPonude()"
+        cl="loadPageSifraPonude()"
+      >
+        <option value="" selected disabled>Please select</option>
+        <!--        <option [ngValue]="null">Vrati</option>-->
+        <option id="ponudjac" [ngValue]="ponudjaciOption.sifraPonude" *ngFor="let ponudjaciOption of ponudjaci">
+          {{ ponudjaciOption.nazivPonudjaca }}
+        </option>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">Button</button>
+        </div>
+      </select>
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="tenderApp.prvorangirani.home.refreshListLabel">Refresh list</span>
@@ -151,19 +171,6 @@
           <td>{{ prvorangirani.bodCijena }}</td>
           <td>{{ prvorangirani.bodRok }}</td>
           <td>{{ prvorangirani.bodUkupno }}</td>
-          <!--          <td class="text-end">-->
-          <!--            <div class="btn-group">-->
-          <!--              <button-->
-          <!--                type="submit"-->
-          <!--                [routerLink]="['/prvorangirani', prvorangirani.id, 'view']"-->
-          <!--                class="btn btn-info btn-sm"-->
-          <!--                data-cy="entityDetailsButton"-->
-          <!--              >-->
-          <!--                <fa-icon icon="eye"></fa-icon>-->
-          <!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Pregled</span>-->
-          <!--              </button>-->
-          <!--            </div>-->
-          <!--          </td>-->
         </tr>
       </tbody>
       <tfoot>
