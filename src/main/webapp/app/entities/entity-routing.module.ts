@@ -30,6 +30,12 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./view-ponude/view-ponude.module').then(m => m.ViewPonudeModule),
       },
       {
+        path: 'pomoc',
+        data: { authorities: ['ROLE_MANAGER', 'ROLE_ADMIN'], pageTitle: 'tenderApp.pomoc.home.title' },
+        loadChildren: () => import('./pomoc/pomoc.module').then(m => m.PomocModule),
+      },
+
+      {
         path: 'specifikacije',
         data: { pageTitle: 'tenderApp.specifikacije.home.title' },
         loadChildren: () => import('./specifikacije/specifikacije.module').then(m => m.SpecifikacijeModule),

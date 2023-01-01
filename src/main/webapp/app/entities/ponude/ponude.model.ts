@@ -11,6 +11,10 @@ export interface IPonude {
   selected?: boolean | null;
   sifraPonudjaca?: number | null;
   karakteristika?: string | null;
+  createdBy?: string | null;
+  createdDate?: Date | null;
+  lastModifiedBy?: string | null;
+  lastModifiedDate?: string | null;
 }
 
 export type NewPonude = Omit<IPonude, 'id'> & { id: null };
