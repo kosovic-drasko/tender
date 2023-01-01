@@ -4,7 +4,7 @@
       "home": {
         "title": "Prvorangirani",
         "refreshListLabel": "Refresh list",
-        "notFound": "ije nadjen zapis Prvorangirani"
+        "notFound": "Nema zapisa za Prvorangirane"
       },
       "detail": {
         "title": "Prvorangirani"
