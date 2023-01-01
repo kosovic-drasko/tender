@@ -98,6 +98,7 @@ public class SecurityConfiguration {
             .antMatchers("/api/set").permitAll()
             .antMatchers("/api/upload").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.MANAGER)
             .and()
             .httpBasic()
             .and()
