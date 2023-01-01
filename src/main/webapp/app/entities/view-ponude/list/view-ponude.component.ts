@@ -187,6 +187,9 @@ export class ViewPonudeComponent implements OnInit {
   obrazacExcel(): void {
     window.location.href = `${this.resourceUrlExcelDownloadPostupak}/${this.brojObrazac}`;
   }
+  Excel(): void {
+    window.location.href = `${this.resourceUrlExcelDownloadPostupak}/${this.postupak}`;
+  }
   uploadFile(): any {
     const formData = new FormData();
     formData.append('files', this.fileInput.nativeElement.files[0]);

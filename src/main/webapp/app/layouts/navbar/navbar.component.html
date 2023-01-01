@@ -29,7 +29,7 @@
           </a>
         </li>
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a *jhiHasAnyAuthority="['ROLE_MANAGER']" class="nav-link" routerLink="pomoc">
+          <a *jhiHasAnyAuthority="['ROLE_ADMIN']" class="nav-link" routerLink="pomoc">
             <span>
               <fa-icon icon="th-list"></fa-icon>
               <span>Pomoc</span>
@@ -177,12 +177,7 @@
                 <span jhiTranslate="global.menu.account.settings">Settings</span>
               </a>
             </li>
-            <!--            <li *ngSwitchCase="true">-->
-            <!--              <a class="dropdown-item" routerLink="pomoc" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">-->
-            <!--                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>-->
-            <!--                <span>Pomoc</span>-->
-            <!--              </a>-->
-            <!--            </li>-->
+
             <li *ngSwitchCase="true">
               <a
                 class="dropdown-item"

@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ISpecifikacije, NewSpecifikacije } from '../specifikacije.model';
+import { environment } from '@ng-bootstrap/ng-bootstrap/environment';
 
 export type PartialUpdateSpecifikacije = Partial<ISpecifikacije> & Pick<ISpecifikacije, 'id'>;
 
@@ -16,6 +17,7 @@ export type EntityArrayResponseType = HttpResponse<ISpecifikacije[]>;
 export class SpecifikacijeService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/specifikacijes');
   public resourceUrlExcelUpload = SERVER_API_URL + '/api/uploadfiles/specifikacije';
+  public resourceUrlExcelDownload = SERVER_API_URL + '/api/uploadfiles/specifikacije/file';
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(specifikacije: ISpecifikacije | (Omit<ISpecifikacije, 'id'> & { id: null })): Observable<EntityResponseType> {
@@ -83,5 +85,17 @@ export class SpecifikacijeService {
       return [...specifikacijesToAdd, ...specifikacijeCollection];
     }
     return specifikacijeCollection;
+  }
+  // /api/specifikacije/file/{sifraPostupka}
+  //   download(sifraPostupka: string): Observable<Blob> {
+  //     return this.http.get(`${this.resourceUrlExcelDownload}/${sifraPostupka}`, {
+  //       responseType: 'blob'
+  //     });
+  //   }
+  download(): Observable<Blob> {
+    // `${environment.baseUrl}/files/${file}`
+    return this.http.get(`${this.resourceUrlExcelDownload}`, {
+      responseType: 'blob',
+    });
   }
 }
