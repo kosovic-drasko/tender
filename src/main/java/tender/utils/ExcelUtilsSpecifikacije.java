@@ -38,7 +38,7 @@ public class ExcelUtilsSpecifikacije {
 
             Font headerFont = workbook.createFont();
             headerFont.setBold(true);
-            headerFont.setColor(IndexedColors.BLUE.getIndex());
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
 
             CellStyle headerCellStyle = workbook.createCellStyle();
             headerCellStyle.setFont(headerFont);
