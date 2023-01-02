@@ -15,6 +15,7 @@ export type EntityArrayResponseType = HttpResponse<ISpecifikacije[]>;
 
 @Injectable({ providedIn: 'root' })
 export class SpecifikacijeService {
+  protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/specifikacije-sum');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/specifikacijes');
   public resourceUrlExcelUpload = SERVER_API_URL + '/api/uploadfiles/specifikacije';
   public resourceUrlExcelDownload = SERVER_API_URL + '/api/uploadfiles/specifikacije/file';
@@ -40,11 +41,18 @@ export class SpecifikacijeService {
     return this.http.get<ISpecifikacije>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  sum(sifraPostupka: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSum}/${sifraPostupka}`);
+  }
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ISpecifikacije[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  // querySum(sifraPostupka: number | undefined):any {
+  //
+  //   return this.http.get<ISpecifikacije[]>(`${this.resourceUrlSum}/${sifraPostupka}`);
+  // }
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

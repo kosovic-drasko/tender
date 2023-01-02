@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -25,7 +25,7 @@ export class SpecifikacijeComponent implements OnInit {
   ascending = true;
   filters: IFilterOptions = new FilterOptions();
   brojObrazac?: number = 0;
-  ukupno_procjenjeno?: number;
+  ukupno_procjenjeno?: any;
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
@@ -47,8 +47,6 @@ export class SpecifikacijeComponent implements OnInit {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
-        console.log('Ukupnp procijenjena je ------------------>', this.ukupno_procjenjeno);
       },
     });
   }
@@ -82,7 +80,7 @@ export class SpecifikacijeComponent implements OnInit {
     this.loadFromBackendWithRouteInformationsPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
+        // this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
       },
     });
   }
@@ -119,6 +117,8 @@ export class SpecifikacijeComponent implements OnInit {
   ngOnInit(): void {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
+      this.sum();
+      console.log('/////////', this.ukupno_procjenjeno);
       // setInterval((): void => {
       //   this.loadSifraPostupka();
       //   console.log('This will be displayed every 1000ms (1s).');
@@ -232,6 +232,14 @@ export class SpecifikacijeComponent implements OnInit {
     this.specifikacijeService.UploadExcel(formData).subscribe((result: { toString: () => string | undefined }) => {
       this.message = result.toString();
       this.load();
+    });
+  }
+  sum() {
+    this.specifikacijeService.sum(this.postupak).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_procjenjeno = res;
+        console.log('To je >>>>>>>>>>>>>>>>>>>>>>>', this.ukupno_procjenjeno);
+      },
     });
   }
 }
