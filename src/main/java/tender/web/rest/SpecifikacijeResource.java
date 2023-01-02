@@ -189,6 +189,11 @@ public class SpecifikacijeResource {
         return ResponseUtil.wrapOrNotFound(specifikacije);
     }
 
+    @GetMapping("/specifikacije-sum/{sifraPostupka}")
+    public Optional<Specifikacije> getSumSpecifikacije(@PathVariable Integer sifraPostupka) {
+        return specifikacijeRepository.sum(sifraPostupka);
+    }
+
     /**
      * {@code DELETE  /specifikacijes/:id} : delete the "id" specifikacije.
      *
