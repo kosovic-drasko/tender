@@ -47,10 +47,10 @@ export class SpecifikacijeComponent implements OnInit {
   ngOnInit(): void {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
-      this.loadSifraPostupka();
-      this.interval = setInterval(() => {
-        this.time++;
-      }, 1000);
+      // setInterval((): void => {
+      //   this.loadSifraPostupka();
+      //   console.log('This will be displayed every 1000ms (1s).');
+      // }, 1000);
     } else {
       this.load();
       console.log('Postupak je >>>>>>>>', this.postupak);
