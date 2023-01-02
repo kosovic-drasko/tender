@@ -6,7 +6,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,21 +55,21 @@ public class SecurityConfiguration {
             .disable()
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling()
-            .authenticationEntryPoint(problemSupport)
-            .accessDeniedHandler(problemSupport)
-            .and()
+                .authenticationEntryPoint(problemSupport)
+                .accessDeniedHandler(problemSupport)
+        .and()
             .headers()
-            .contentSecurityPolicy(jHipsterProperties.getSecurity().getContentSecurityPolicy())
+                .contentSecurityPolicy(jHipsterProperties.getSecurity().getContentSecurityPolicy())
             .and()
-            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
+                .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
             .and()
-            .permissionsPolicy().policy("camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()")
+                .permissionsPolicy().policy("camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()")
             .and()
-            .frameOptions().sameOrigin()
-            .and()
+                .frameOptions().sameOrigin()
+        .and()
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .antMatchers("/app/**/*.{js,html}").permitAll()
@@ -90,42 +89,13 @@ public class SecurityConfiguration {
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/api/ponude/file/**").permitAll()
-            .antMatchers("/api/specifikacije/file/**").permitAll()
-            .antMatchers("/api/testchat/**").permitAll()
-            .antMatchers("/testchat/**").permitAll()
-            .antMatchers("/api/uploadfiles/specifikacije").permitAll()
-            .antMatchers("/api/set").permitAll()
-            .antMatchers("/api/upload").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.MANAGER)
-            .and()
+        .and()
             .httpBasic()
-            .and()
+        .and()
             .apply(securityConfigurerAdapter());
         return http.build();
         // @formatter:on
-    }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web ->
-            web
-                .ignoring()
-                .antMatchers(HttpMethod.OPTIONS, "/**")
-                .antMatchers("/app/**/*.{js,html}")
-                .antMatchers("/i18n/**")
-                .antMatchers("/content/**")
-                .antMatchers("/swagger-ui/**")
-                .antMatchers("/api/ponude/file")
-                .antMatchers("/api/ponude/file/**")
-                .antMatchers("/api/specifikacije/file/**")
-                .antMatchers("/api/testchat/**")
-                .antMatchers("/testchat/**")
-                .antMatchers("/api/uploadfiles/specifikacije")
-                .antMatchers("/api/set")
-                .antMatchers("/api/upload")
-                .antMatchers("/test/**");
     }
 
     private JWTConfigurer securityConfigurerAdapter() {

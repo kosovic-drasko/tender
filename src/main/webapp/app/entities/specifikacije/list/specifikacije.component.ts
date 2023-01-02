@@ -3,7 +3,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { saveAs } from 'file-saver';
 import { ISpecifikacije } from '../specifikacije.model';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
@@ -218,9 +217,5 @@ export class SpecifikacijeComponent implements OnInit {
       this.message = result.toString();
       this.load();
     });
-  }
-
-  downloadFile(): void {
-    this.specifikacijeService.download().subscribe(blob => saveAs(blob));
   }
 }
