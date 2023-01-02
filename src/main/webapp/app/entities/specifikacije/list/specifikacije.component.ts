@@ -42,6 +42,79 @@ export class SpecifikacijeComponent implements OnInit {
   ) {}
 
   trackId = (_index: number, item: ISpecifikacije): number => this.specifikacijeService.getSpecifikacijeIdentifier(item);
+  //LOAD=================================================================
+  load(): void {
+    this.loadFromBackendWithRouteInformations().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+        this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
+        console.log('Ukupnp procijenjena je ------------------>', this.ukupno_procjenjeno);
+      },
+    });
+  }
+  protected loadFromBackendWithRouteInformations(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackend(this.page, this.predicate, this.ascending, this.filters.filterOptions))
+    );
+  }
+  protected queryBackend(
+    page?: number,
+    predicate?: string,
+    ascending?: boolean,
+    filterOptions?: IFilterOption[]
+  ): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const pageToLoad: number = page ?? 1;
+    const queryObject: any = {
+      page: pageToLoad - 1,
+      size: this.itemsPerPage,
+      sort: this.getSortQueryParam(predicate, ascending),
+    };
+    filterOptions?.forEach(filterOption => {
+      queryObject[filterOption.name] = filterOption.values;
+    });
+    return this.specifikacijeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+
+  ///////////////////////////POSTUPAK
+  loadSifraPostupka(): void {
+    this.loadFromBackendWithRouteInformationsPostupak().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+        this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
+      },
+    });
+  }
+
+  protected loadFromBackendWithRouteInformationsPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupak(this.page, this.predicate))
+    );
+  }
+
+  protected queryBackendPostupak(
+    page?: number,
+    predicate?: string,
+    ascending?: boolean,
+    filterOptions?: IFilterOption[]
+  ): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const pageToLoad: number = page ?? 1;
+    const queryObject: any = {
+      'sifraPostupka.in': this.postupak,
+      page: pageToLoad - 1,
+      size: this.itemsPerPage,
+      sort: this.getSortQueryParam(predicate, ascending),
+    };
+    filterOptions?.forEach(filterOption => {
+      queryObject[filterOption.name] = filterOption.values;
+    });
+    return this.specifikacijeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+
+  //////////////////////END LOADING
 
   ngOnInit(): void {
     if (this.postupak !== undefined) {
@@ -52,7 +125,6 @@ export class SpecifikacijeComponent implements OnInit {
       // }, 1000);
     } else {
       this.load();
-      console.log('Postupak je >>>>>>>>', this.postupak);
     }
   }
 
@@ -72,29 +144,12 @@ export class SpecifikacijeComponent implements OnInit {
       });
   }
 
-  load(): void {
-    this.loadFromBackendWithRouteInformations().subscribe({
-      next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
-        this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
-        console.log('Ukupnp procijenjena je ------------------>', this.ukupno_procjenjeno);
-      },
-    });
-  }
-
   navigateToWithComponentValues(): void {
     this.handleNavigation(this.page, this.predicate, this.ascending, this.filters.filterOptions);
   }
 
   navigateToPage(page = this.page): void {
     this.handleNavigation(page, this.predicate, this.ascending, this.filters.filterOptions);
-  }
-
-  protected loadFromBackendWithRouteInformations(): Observable<EntityArrayResponseType> {
-    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
-      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-      switchMap(() => this.queryBackend(this.page, this.predicate, this.ascending, this.filters.filterOptions))
-    );
   }
 
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
@@ -118,25 +173,6 @@ export class SpecifikacijeComponent implements OnInit {
 
   protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
     this.totalItems = Number(headers.get(TOTAL_COUNT_RESPONSE_HEADER));
-  }
-
-  protected queryBackend(
-    page?: number,
-    predicate?: string,
-    ascending?: boolean,
-    filterOptions?: IFilterOption[]
-  ): Observable<EntityArrayResponseType> {
-    this.isLoading = true;
-    const pageToLoad: number = page ?? 1;
-    const queryObject: any = {
-      page: pageToLoad - 1,
-      size: this.itemsPerPage,
-      sort: this.getSortQueryParam(predicate, ascending),
-    };
-    filterOptions?.forEach(filterOption => {
-      queryObject[filterOption.name] = filterOption.values;
-    });
-    return this.specifikacijeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean, filterOptions?: IFilterOption[]): void {
@@ -165,26 +201,6 @@ export class SpecifikacijeComponent implements OnInit {
     }
   }
 
-  loadSifraPostupka(): void {
-    this.loadFromBackendWithRouteInformationsPostupak().subscribe({
-      next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
-        this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
-      },
-    });
-  }
-
-  protected loadFromBackendWithRouteInformationsPostupak(): Observable<EntityArrayResponseType> {
-    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
-      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-      switchMap(() => this.queryBackendPostupak(this.predicate, this.ascending))
-    );
-  }
-  protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
-    this.isLoading = true;
-    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
-    return this.specifikacijeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
-  }
   obrazacExcel(): void {
     window.location.href = `${this.resourceUrlExcelDownload}/${this.brojObrazac}`;
   }
