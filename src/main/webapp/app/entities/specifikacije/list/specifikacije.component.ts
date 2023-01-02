@@ -238,7 +238,6 @@ export class SpecifikacijeComponent implements OnInit {
     this.specifikacijeService.sum(this.postupak).subscribe({
       next: (res: HttpResponse<any>) => {
         this.ukupno_procjenjeno = res;
-        console.log('To je >>>>>>>>>>>>>>>>>>>>>>>', this.ukupno_procjenjeno);
       },
     });
   }
