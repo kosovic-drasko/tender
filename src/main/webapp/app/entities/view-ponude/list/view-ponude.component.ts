@@ -33,6 +33,8 @@ export class ViewPonudeComponent implements OnInit {
   brojObrazac?: number = 0;
   ponudjaci: IViewPonudjaci[] = [];
   ukupno_ponudjeno?: number;
+  time: number = 0;
+  interval: any;
   @Input() postupak: any;
   @ViewChild('fileInput') fileInput: any;
   public resourceUrlExcelDownloadPostupak = SERVER_API_URL + 'api/ponude/file';
@@ -268,6 +270,10 @@ export class ViewPonudeComponent implements OnInit {
       this.loadPostupciPonudjaci();
       this.loadSifraPostupka();
 
+      this.loadSifraPostupka();
+      this.interval = setInterval(() => {
+        this.time++;
+      }, 1000);
       console.log('Ponudjaci postupci je >>>>>>>>', this.ponudjaci);
     } else {
       this.load();

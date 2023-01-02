@@ -18,13 +18,13 @@ public class ExcelUtilsPonude {
 
     public static ByteArrayInputStream customersToExcel(List<Ponude> ponude) throws IOException {
         String[] COLUMNs = {
-            "Sifra Postupka",
-            "Sifra Ponude",
-            "Rok Isporuke",
-            "Broj Partije",
-            "Sifra Ponudjaca",
-            "Jedinicna Cijena",
-            "Ponudjena Vrijednost",
+            "Sifra Postupka*",
+            "Sifra Ponude*",
+            "Rok Isporuke*",
+            "Broj Partije*",
+            "Sifra Ponudjaca*",
+            "Jedinicna Cijena*",
+            "Ponudjena Vrijednost*",
             "Naziv Proizvodjaca",
             "Zasticeni Naziv",
             "Karakteristike",

@@ -18,17 +18,17 @@ public class ExcelUtilsSpecifikacije {
 
     public static ByteArrayInputStream customersToExcel(List<Specifikacije> specifikacije) throws IOException {
         String[] COLUMNs = {
-            "Sifra Postupka",
-            "Broj Partije",
+            "Sifra Postupka*",
+            "Broj Partije*",
             "atc",
             "inn",
             "Farmaceutski Oblik",
             "Jacina Lijeka",
-            "Kolicina",
+            "Kolicina*",
             "Pakovanje",
             "Jedinica Mjere",
-            "Procijenjena",
-            "Jedinicna Cijena",
+            "Procijenjena*",
+            "Jedinicna Cijena*",
             "Karakteristike",
         };
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {

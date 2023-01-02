@@ -16,6 +16,7 @@ import { TableUtil } from '../../../tableUtil';
 @Component({
   selector: 'jhi-specifikacije',
   templateUrl: './specifikacije.component.html',
+  styleUrls: ['./specifikacije.scss'],
 })
 export class SpecifikacijeComponent implements OnInit {
   specifikacijes?: ISpecifikacije[];
@@ -29,6 +30,8 @@ export class SpecifikacijeComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  time: number = 0;
+  interval: any;
   @ViewChild('fileInput') fileInput: any;
   @Input() postupak?: number;
   public resourceUrlExcelDownload = SERVER_API_URL + 'api/specifikacije/file';
@@ -44,6 +47,10 @@ export class SpecifikacijeComponent implements OnInit {
   ngOnInit(): void {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
+      this.loadSifraPostupka();
+      this.interval = setInterval(() => {
+        this.time++;
+      }, 1000);
     } else {
       this.load();
       console.log('Postupak je >>>>>>>>', this.postupak);
@@ -71,6 +78,7 @@ export class SpecifikacijeComponent implements OnInit {
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
         this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
+        console.log('Ukupnp procijenjena je ------------------>', this.ukupno_procjenjeno);
       },
     });
   }
