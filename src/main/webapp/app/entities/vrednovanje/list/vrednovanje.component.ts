@@ -36,10 +36,12 @@ export class VrednovanjeComponent implements OnInit {
   ngOnInit(): void {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
-      this.sum();
+      this.sumPonudjena();
+      this.sumProcjenjena();
     } else {
       this.load();
-      this.sumAll();
+      this.sumAllPonudjana();
+      this.sumAllProcjenjena();
     }
   }
 
@@ -157,15 +159,29 @@ export class VrednovanjeComponent implements OnInit {
     TableUtil.exportTableToExcel('ExampleTable');
   }
 
-  sum() {
-    this.vrednovanjeService.sum(this.postupak).subscribe({
+  sumPonudjena() {
+    this.vrednovanjeService.sumPonudjana(this.postupak).subscribe({
       next: (res: HttpResponse<any>) => {
         this.ukupno_ponudjeno = res;
       },
     });
   }
-  sumAll() {
-    this.vrednovanjeService.sumAll().subscribe({
+  sumAllPonudjana() {
+    this.vrednovanjeService.sumAllPonudjena().subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
+  }
+  sumProcjenjena() {
+    this.vrednovanjeService.sumProcjenena(this.postupak).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
+  }
+  sumAllProcjenjena() {
+    this.vrednovanjeService.sumAllProcjenena().subscribe({
       next: (res: HttpResponse<any>) => {
         this.ukupno_ponudjeno = res;
       },
