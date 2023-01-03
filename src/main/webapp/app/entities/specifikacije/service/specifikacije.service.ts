@@ -15,8 +15,8 @@ export type EntityArrayResponseType = HttpResponse<ISpecifikacije[]>;
 
 @Injectable({ providedIn: 'root' })
 export class SpecifikacijeService {
-  protected resourceUrlSumAll = this.applicationConfigService.getEndpointFor('api/specifikacije-sum-all');
-  protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/specifikacije-sum');
+  protected resourceUrlSumAll = this.applicationConfigService.getEndpointFor('api/ponude-sum-all');
+  protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/ponude-sum');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/specifikacijes');
   public resourceUrlExcelUpload = SERVER_API_URL + '/api/uploadfiles/specifikacije';
   public resourceUrlExcelDownload = SERVER_API_URL + '/api/uploadfiles/specifikacije/file';

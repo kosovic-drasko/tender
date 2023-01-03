@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +32,7 @@ export class ViewPonudeComponent implements OnInit {
   ascending = true;
   brojObrazac?: number = 0;
   ponudjaci: IViewPonudjaci[] = [];
-  ukupno_ponudjeno?: number;
+  ukupno_ponudjeno?: HttpResponse<any>;
   time: number = 0;
   interval: any;
   @Input() postupak: any;
@@ -72,7 +72,6 @@ export class ViewPonudeComponent implements OnInit {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_ponudjeno = res.body?.reduce((acc, ponude) => acc + ponude.ponudjenaVrijednost!, 0);
       },
     });
   }
@@ -203,7 +202,6 @@ export class ViewPonudeComponent implements OnInit {
     this.loadPonude().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_ponudjeno = res.body?.reduce((acc, ponude) => acc + ponude.ponudjenaVrijednost!, 0);
       },
     });
   }
@@ -211,7 +209,6 @@ export class ViewPonudeComponent implements OnInit {
     this.loadPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_ponudjeno = res.body?.reduce((acc, ponude) => acc + ponude.ponudjenaVrijednost!, 0);
       },
     });
   }
@@ -269,6 +266,7 @@ export class ViewPonudeComponent implements OnInit {
     if (this.postupak !== undefined) {
       this.loadPostupciPonudjaci();
       this.loadSifraPostupka();
+      this.sum();
 
       this.loadSifraPostupka();
       this.interval = setInterval(() => {
@@ -277,6 +275,22 @@ export class ViewPonudeComponent implements OnInit {
       console.log('Ponudjaci postupci je >>>>>>>>', this.ponudjaci);
     } else {
       this.load();
+      this.sumAll();
     }
+  }
+
+  sum() {
+    this.viewPonudeService.sum(this.postupak).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
+  }
+  sumAll() {
+    this.viewPonudeService.sumAll().subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
   }
 }
