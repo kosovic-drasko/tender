@@ -3,7 +3,7 @@
     "postupci": {
       "home": {
         "title": "Postupci",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Učitaj ponovo",
         "createLabel": "Kreiraj novi Postupak",
         "createOrEditLabel": "Kreirajte ili izmenite Postupak",
         "notFound": "Nema postupka"

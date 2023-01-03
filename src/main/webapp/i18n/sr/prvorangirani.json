@@ -3,7 +3,7 @@
     "prvorangirani": {
       "home": {
         "title": "Prvorangirani",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Učitaj ponovo",
         "notFound": "Nema zapisa za Prvorangirane"
       },
       "detail": {

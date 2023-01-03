@@ -3,7 +3,7 @@
     "vrednovanje": {
       "home": {
         "title": "Vrednovanje",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Učitaj ponovo",
         "notFound": "Nije nadjen zapis vrednovanja"
       },
       "detail": {

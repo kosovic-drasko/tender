@@ -3,7 +3,7 @@
     "specifikacije": {
       "home": {
         "title": "Specifikacije",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Učitaj ponovo",
         "createLabel": "Kreiraj novu Specifikaciju",
         "createOrEditLabel": "Kreirajte ili izmenite Specifikacije",
         "notFound": "Nema Specifikacija"

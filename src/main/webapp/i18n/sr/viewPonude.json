@@ -3,7 +3,7 @@
     "viewPonude": {
       "home": {
         "title": "Ponude",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Učitaj ponovo",
         "createLabel": "Kreiraj novu Ponudu",
         "createOrEditLabel": "Kreirajte ili izmenite Ponudu",
         "notFound": "No View Ponudes found"

@@ -3,7 +3,7 @@
     "hvalePonude": {
       "home": {
         "title": "Hvale Ponude",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Učitaj ponovo",
         "notFound": "Nema zapisa"
       },
       "detail": {

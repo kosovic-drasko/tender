@@ -3,7 +3,7 @@
     "ponudjaci": {
       "home": {
         "title": "Ponudjaci",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Učitaj ponovo",
         "createLabel": "Kreiraj novog Ponudjaca",
         "createOrEditLabel": "Kreirajte ili izmenite Ponudjaca",
         "notFound": "Nema Ponudjaca"
