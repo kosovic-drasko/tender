@@ -18,4 +18,7 @@ public interface SpecifikacijeRepository extends JpaRepository<Specifikacije, Lo
 
     @Query("select sum(p.procijenjenaVrijednost)as ukupno from Specifikacije p where p.sifraPostupka=:sifraPostupka")
     Optional<Specifikacije> sum(@Param("sifraPostupka") Integer sifraPostupka);
+
+    @Query("select sum(p.procijenjenaVrijednost)as ukupno from Specifikacije p")
+    Optional<Specifikacije> sumAll();
 }

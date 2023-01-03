@@ -28,8 +28,8 @@ export class SpecifikacijeComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-  time: number = 0;
-  interval: any;
+  // time: number = 0;
+  // interval: any;
   @ViewChild('fileInput') fileInput: any;
   @Input() postupak?: number;
   public resourceUrlExcelDownload = SERVER_API_URL + 'api/specifikacije/file';
@@ -124,6 +124,7 @@ export class SpecifikacijeComponent implements OnInit {
       // }, 1000);
     } else {
       this.load();
+      this.sumAll();
     }
   }
 
@@ -235,6 +236,13 @@ export class SpecifikacijeComponent implements OnInit {
   }
   sum() {
     this.specifikacijeService.sum(this.postupak).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_procjenjeno = res;
+      },
+    });
+  }
+  sumAll() {
+    this.specifikacijeService.sumAll().subscribe({
       next: (res: HttpResponse<any>) => {
         this.ukupno_procjenjeno = res;
       },

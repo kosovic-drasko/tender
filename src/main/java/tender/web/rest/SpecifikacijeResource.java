@@ -194,6 +194,11 @@ public class SpecifikacijeResource {
         return specifikacijeRepository.sum(sifraPostupka);
     }
 
+    @GetMapping("/specifikacije-sum-all")
+    public Optional<Specifikacije> getSumAllSpecifikacije() {
+        return specifikacijeRepository.sumAll();
+    }
+
     /**
      * {@code DELETE  /specifikacijes/:id} : delete the "id" specifikacije.
      *
