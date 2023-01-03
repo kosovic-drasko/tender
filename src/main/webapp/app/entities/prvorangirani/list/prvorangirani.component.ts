@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Observable, switchMap, tap } from 'rxjs';
 
@@ -29,7 +29,7 @@ export class PrvorangiraniComponent implements OnInit {
   totalItems = 0;
   page = 1;
   ukupno_procjenjeno?: number;
-  ukupno_ponudjeno?: number;
+  ukupno_ponudjeno?: HttpResponse<any>;
   ponudjaci: IViewPonudjaci[] = [];
   @Input() postupak: any;
 
@@ -41,9 +41,10 @@ export class PrvorangiraniComponent implements OnInit {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
       this.loadPostupciPonudjaci();
+      this.sum();
     } else {
       this.load();
-      console.log('Postupak je >>>>>>>>', this.postupak);
+      this.sumAll();
     }
   }
 
@@ -58,7 +59,6 @@ export class PrvorangiraniComponent implements OnInit {
     this.loadPonude().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_ponudjeno = res.body?.reduce((acc, ponude) => acc + ponude.ponudjenaVrijednost!, 0);
       },
     });
   }
@@ -190,8 +190,6 @@ export class PrvorangiraniComponent implements OnInit {
     this.loadFromBackendWithRouteInformationsPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_procjenjeno = res.body?.reduce((acc, vrednovanje) => acc + vrednovanje.procijenjenaVrijednost!, 0);
-        this.ukupno_ponudjeno = res.body?.reduce((acc, vrednovanje) => acc + vrednovanje.ponudjenaVrijednost!, 0);
       },
     });
   }
@@ -209,5 +207,20 @@ export class PrvorangiraniComponent implements OnInit {
 
   exportTable() {
     TableUtil.exportTableToExcel('ExampleTable');
+  }
+
+  sum() {
+    this.prvorangiraniService.sum(this.postupak).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
+  }
+  sumAll() {
+    this.prvorangiraniService.sumAll().subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
   }
 }

@@ -14,6 +14,8 @@ export type EntityArrayResponseType = HttpResponse<IPrvorangirani[]>;
 
 @Injectable({ providedIn: 'root' })
 export class PrvorangiraniService {
+  protected resourceUrlSumAll = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum-all');
+  protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/prvorangiranis');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
@@ -55,5 +57,11 @@ export class PrvorangiraniService {
       return [...prvorangiranisToAdd, ...prvorangiraniCollection];
     }
     return prvorangiraniCollection;
+  }
+  sum(sifraPostupka: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSum}/${sifraPostupka}`);
+  }
+  sumAll(): Observable<any> {
+    return this.http.get(`${this.resourceUrlSumAll}`);
   }
 }
