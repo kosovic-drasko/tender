@@ -204,15 +204,14 @@ public class ViewPonudeResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
-    //    @GetMapping("/ponude-ponudjaci/{sifra}")
-    //    public ResponseEntity<ViewPonude> getPonudePonudjaci(@PathVariable Integer sifra) {
-    //        List<ViewPonude> viewPonude = viewPonudeRepository.findBySifraPostupkaPonudjaci(sifra);
-    //        return (ResponseEntity<ViewPonude>) viewPonude;
-    //    }
-    //
-    //    @GetMapping("/ponude-ponudjaci")
-    //    public ResponseEntity<ViewPonude> getPonudePonudjaciSvi() {
-    //        List<ViewPonude> viewPonude = viewPonudeRepository.findByPonudjaci();
-    //        return (ResponseEntity<ViewPonude>) viewPonude;
-    //    }
+
+    @GetMapping("/ponude-sum/{sifraPostupka}")
+    public Optional<ViewPonude> getSumSPonude(@PathVariable Integer sifraPostupka) {
+        return viewPonudeRepository.sum(sifraPostupka);
+    }
+
+    @GetMapping("/ponude-sum-all")
+    public Optional<ViewPonude> getSumAllPonude() {
+        return viewPonudeRepository.sumAll();
+    }
 }

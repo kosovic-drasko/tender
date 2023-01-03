@@ -1,20 +1,15 @@
 package tender.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import tender.domain.Vrednovanje;
@@ -22,7 +17,6 @@ import tender.repository.VrednovanjeRepository;
 import tender.service.VrednovanjeQueryService;
 import tender.service.VrednovanjeService;
 import tender.service.criteria.VrednovanjeCriteria;
-import tender.web.rest.errors.BadRequestAlertException;
 
 /**
  * REST controller for managing {@link tender.domain.Vrednovanje}.
@@ -90,5 +84,25 @@ public class VrednovanjeResource {
         log.debug("REST request to get Vrednovanje : {}", id);
         Optional<Vrednovanje> vrednovanje = vrednovanjeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(vrednovanje);
+    }
+
+    @GetMapping("/vrednovanje-sum-procijenjena/{sifraPostupka}")
+    public Optional<Vrednovanje> getSumVrenovanjeProcijenjena(@PathVariable Integer sifraPostupka) {
+        return vrednovanjeRepository.sumProcijenjena(sifraPostupka);
+    }
+
+    @GetMapping("/specifikacije-sum-all-ponudjena")
+    public Optional<Vrednovanje> getSumAllVrednovanjeAll() {
+        return vrednovanjeRepository.sumAllPonudjena();
+    }
+
+    @GetMapping("/vrednovanje-sum-ponudjena/{sifraPostupka}")
+    public Optional<Vrednovanje> getSumVrenovanjePonudjena(@PathVariable Integer sifraPostupka) {
+        return vrednovanjeRepository.sumPonudjena(sifraPostupka);
+    }
+
+    @GetMapping("/specifikacije-sum-all-procijenjena")
+    public Optional<Vrednovanje> getSumAllSpecifikacije() {
+        return vrednovanjeRepository.sumAllProcijenjena();
     }
 }

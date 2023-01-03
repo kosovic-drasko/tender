@@ -1,10 +1,12 @@
 package tender.repository;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tender.domain.Ponude;
+import tender.domain.ViewPonude;
 import tender.domain.ViewPonude;
 
 /**
@@ -28,4 +30,9 @@ public interface ViewPonudeRepository extends JpaRepository<ViewPonude, Long>, J
     //    )
     //    List<ViewPonude> findByPonudjaci() ;
 
+    @Query("select sum(p.ponudjenaVrijednost)as ukupno from ViewPonude p where p.sifraPostupka=:sifraPostupka")
+    Optional<ViewPonude> sum(@Param("sifraPostupka") Integer sifraPostupka);
+
+    @Query("select sum(p.ponudjenaVrijednost)as ukupno from ViewPonude p")
+    Optional<ViewPonude> sumAll();
 }
