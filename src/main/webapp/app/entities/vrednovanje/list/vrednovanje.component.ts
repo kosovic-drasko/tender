@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Observable, switchMap, tap } from 'rxjs';
 
@@ -18,7 +18,7 @@ import { TableUtil } from '../../../tableUtil';
 export class VrednovanjeComponent implements OnInit {
   vrednovanjes?: IVrednovanje[];
   ukupno_procjenjeno?: number;
-  ukupno_ponudjeno?: number;
+  ukupno_ponudjeno?: HttpResponse<any>;
   isLoading = false;
 
   predicate = 'id';
@@ -36,9 +36,10 @@ export class VrednovanjeComponent implements OnInit {
   ngOnInit(): void {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
+      this.sum();
     } else {
       this.load();
-      console.log('Postupak je >>>>>>>>', this.postupak);
+      this.sumAll();
     }
   }
 
@@ -137,8 +138,6 @@ export class VrednovanjeComponent implements OnInit {
     this.loadFromBackendWithRouteInformationsPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_procjenjeno = res.body?.reduce((acc, vrednovanje) => acc + vrednovanje.procijenjenaVrijednost!, 0);
-        this.ukupno_ponudjeno = res.body?.reduce((acc, vrednovanje) => acc + vrednovanje.ponudjenaVrijednost!, 0);
       },
     });
   }
@@ -156,5 +155,20 @@ export class VrednovanjeComponent implements OnInit {
 
   exportTable() {
     TableUtil.exportTableToExcel('ExampleTable');
+  }
+
+  sum() {
+    this.vrednovanjeService.sum(this.postupak).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
+  }
+  sumAll() {
+    this.vrednovanjeService.sumAll().subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
   }
 }
