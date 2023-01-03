@@ -16,6 +16,15 @@ export type EntityArrayResponseType = HttpResponse<IPrvorangirani[]>;
 export class PrvorangiraniService {
   protected resourceUrlSumAll = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum-all');
   protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum');
+
+  // protected resourceUrlSumAllPonudjana = this.applicationConfigService.getEndpointFor('api/specifikacije-sum-all-ponudjena');
+  // protected resourceUrlSumPonudjana = this.applicationConfigService.getEndpointFor('api/vvrednovanje-sum-ponudjena');
+  //
+  // protected resourceUrlSumAllProcjenjena = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-all-procijenjena');
+  // protected resourceUrlSumProcjenjena = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-procijenjena-sum');
+  //
+  //
+
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/prvorangiranis');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
