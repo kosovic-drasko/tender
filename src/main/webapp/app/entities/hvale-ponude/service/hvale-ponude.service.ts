@@ -14,6 +14,8 @@ export type EntityArrayResponseType = HttpResponse<IHvalePonude[]>;
 
 @Injectable({ providedIn: 'root' })
 export class HvalePonudeService {
+  protected resourceUrlSumAll = this.applicationConfigService.getEndpointFor('api/hvale-sum-all');
+  protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/hvale-sum');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/hvale-ponudes');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
@@ -55,5 +57,11 @@ export class HvalePonudeService {
       return [...hvalePonudesToAdd, ...hvalePonudeCollection];
     }
     return hvalePonudeCollection;
+  }
+  sum(sifraPostupka: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSum}/${sifraPostupka}`);
+  }
+  sumAll(): Observable<any> {
+    return this.http.get(`${this.resourceUrlSumAll}`);
   }
 }

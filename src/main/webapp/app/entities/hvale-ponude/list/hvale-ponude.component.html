@@ -24,12 +24,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="id">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span jhiTranslate="global.field.id">ID</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
           <th scope="col" jhiSortBy="sifraPostupka">
             <div class="d-flex">
               <span jhiTranslate="tenderApp.hvalePonude.sifraPostupka">Sifra Postupka</span>
@@ -77,9 +77,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let hvalePonude of hvalePonudes; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/hvale-ponude', hvalePonude.id, 'view']">{{ hvalePonude.id }}</a>
-          </td>
+          <!--          <td>-->
+          <!--            <a [routerLink]="['/hvale-ponude', hvalePonude.id, 'view']">{{ hvalePonude.id }}</a>-->
+          <!--          </td>-->
           <td>{{ hvalePonude.sifraPostupka }}</td>
           <td>{{ hvalePonude.brojPartije }}</td>
           <td>{{ hvalePonude.inn }}</td>
@@ -102,6 +102,17 @@
           <!--          </td>-->
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Ukupno procjenjeno:</td>
+          <td>{{ ukupno_procjenjeno }}</td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 

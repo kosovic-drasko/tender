@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Observable, switchMap, tap } from 'rxjs';
 
@@ -17,7 +17,7 @@ import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/
 export class HvalePonudeComponent implements OnInit {
   hvalePonudes?: IHvalePonude[];
   isLoading = false;
-  ukupno_procjenjeno?: number;
+  ukupno_procjenjeno?: HttpResponse<any>;
   predicate = 'id';
   ascending = true;
   filters: IFilterOptions = new FilterOptions();
@@ -33,9 +33,10 @@ export class HvalePonudeComponent implements OnInit {
   ngOnInit(): void {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
+      this.sum();
     } else {
       this.load();
-      console.log('Postupak je >>>>>>>>', this.postupak);
+      this.sumAll();
     }
   }
 
@@ -133,7 +134,6 @@ export class HvalePonudeComponent implements OnInit {
     this.loadFromBackendWithRouteInformationsPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
-        this.ukupno_procjenjeno = res.body?.reduce((acc, specifikacije) => acc + specifikacije.procijenjenaVrijednost!, 0);
       },
     });
   }
@@ -147,5 +147,20 @@ export class HvalePonudeComponent implements OnInit {
     this.isLoading = true;
     const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
     return this.hvalePonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+
+  sum() {
+    this.hvalePonudeService.sum(this.postupak).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_procjenjeno = res;
+      },
+    });
+  }
+  sumAll() {
+    this.hvalePonudeService.sumAll().subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_procjenjeno = res;
+      },
+    });
   }
 }
