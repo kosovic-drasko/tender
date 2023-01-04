@@ -5,25 +5,14 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IPrvorangirani, NewPrvorangirani } from '../prvorangirani.model';
-
-export type PartialUpdatePrvorangirani = Partial<IPrvorangirani> & Pick<IPrvorangirani, 'id'>;
-
+import { IPrvorangirani } from '../prvorangirani.model';
 export type EntityResponseType = HttpResponse<IPrvorangirani>;
 export type EntityArrayResponseType = HttpResponse<IPrvorangirani[]>;
 
 @Injectable({ providedIn: 'root' })
 export class PrvorangiraniService {
-  protected resourceUrlSumAll = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum-all');
-  protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum');
-
-  // protected resourceUrlSumAllPonudjana = this.applicationConfigService.getEndpointFor('api/specifikacije-sum-all-ponudjena');
-  // protected resourceUrlSumPonudjana = this.applicationConfigService.getEndpointFor('api/vvrednovanje-sum-ponudjena');
-  //
-  // protected resourceUrlSumAllProcjenjena = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-all-procijenjena');
-  // protected resourceUrlSumProcjenjena = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-procijenjena-sum');
-  //
-  //
+  protected resourceUrlSumPonudjena = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum-ponudjena');
+  protected resourceUrlSumProcjenjena = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum-procijenjena');
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/prvorangiranis');
 
@@ -67,10 +56,10 @@ export class PrvorangiraniService {
     }
     return prvorangiraniCollection;
   }
-  sum(sifraPostupka: number | undefined): Observable<any> {
-    return this.http.get(`${this.resourceUrlSum}/${sifraPostupka}`);
+  sumPonudjena(sifraPostupka: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSumPonudjena}/${sifraPostupka}`);
   }
-  sumAll(): Observable<any> {
-    return this.http.get(`${this.resourceUrlSumAll}`);
+  sumProcjenjena(sifraPostupka: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSumProcjenjena}/${sifraPostupka}`);
   }
 }

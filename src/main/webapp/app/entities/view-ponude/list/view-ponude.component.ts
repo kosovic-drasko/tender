@@ -159,32 +159,32 @@ export class ViewPonudeComponent implements OnInit {
     }
   }
 
-  exportArray() {
-    // @ts-ignore
-    const onlyNameAndSymbolArr: {
-      'naziv proizvodjaca': string | null | undefined;
-      'jedinicna cijena': number | null | undefined;
-      'ponudjana vrijednost': number | null | undefined;
-      'rok isporuke': number | null | undefined;
-      'naziv ponudjaca': string | null | undefined;
-      'sifra ponude': number | null | undefined;
-      'sifra postupka': number | null | undefined;
-      'zasticeni naziv': string | null | undefined;
-      'broj partije': number | null | undefined;
-    }[] = this.viewPonudes?.map(x => ({
-      'sifra postupka': x.sifraPostupka,
-      'broj partije': x.brojPartije,
-      'sifra ponude': x.sifraPonude,
-      'zasticeni naziv': x.zasticeniNaziv,
-      'naziv proizvodjaca': x.nazivProizvodjaca,
-      'naziv ponudjaca': x.nazivPonudjaca,
-      'ponudjana vrijednost': x.ponudjenaVrijednost,
-      'jedinicna cijena': x.jedinicnaCijena,
-      'rok isporuke': x.rokIsporuke,
-      'karakteristike ponude': x.karakteristika,
-    }));
-    TableUtil.exportArrayToExcel(onlyNameAndSymbolArr, 'Ponude');
-  }
+  // exportArray() {
+  //   // @ts-ignore
+  //   const onlyNameAndSymbolArr: {
+  //     'naziv proizvodjaca': string | null | undefined;
+  //     'jedinicna cijena': number | null | undefined;
+  //     'ponudjana vrijednost': number | null | undefined;
+  //     'rok isporuke': number | null | undefined;
+  //     'naziv ponudjaca': string | null | undefined;
+  //     'sifra ponude': number | null | undefined;
+  //     'sifra postupka': number | null | undefined;
+  //     'zasticeni naziv': string | null | undefined;
+  //     'broj partije': number | null | undefined;
+  //   }[] = this.viewPonudes?.map(x => ({
+  //     'sifra postupka': x.sifraPostupka,
+  //     'broj partije': x.brojPartije,
+  //     'sifra ponude': x.sifraPonude,
+  //     'zasticeni naziv': x.zasticeniNaziv,
+  //     'naziv proizvodjaca': x.nazivProizvodjaca,
+  //     'naziv ponudjaca': x.nazivPonudjaca,
+  //     'ponudjana vrijednost': x.ponudjenaVrijednost,
+  //     'jedinicna cijena': x.jedinicnaCijena,
+  //     'rok isporuke': x.rokIsporuke,
+  //     'karakteristike ponude': x.karakteristika,
+  //   }));
+  //   TableUtil.exportArrayToExcel(onlyNameAndSymbolArr, 'Ponude');
+  // }
   obrazacExcel(): void {
     window.location.href = `${this.resourceUrlExcelDownloadPostupak}/${this.brojObrazac}`;
   }

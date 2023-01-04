@@ -28,7 +28,7 @@ export class PrvorangiraniComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-  ukupno_procjenjeno?: number;
+  ukupno_procjenjeno?: HttpResponse<any>;
   ukupno_ponudjeno?: HttpResponse<any>;
   ponudjaci: IViewPonudjaci[] = [];
   @Input() postupak: any;
@@ -41,10 +41,10 @@ export class PrvorangiraniComponent implements OnInit {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
       this.loadPostupciPonudjaci();
-      this.sum();
+      this.sumProcjenjeno();
+      this.sumPonudjeno();
     } else {
       this.load();
-      this.sumAll();
     }
   }
 
@@ -209,17 +209,17 @@ export class PrvorangiraniComponent implements OnInit {
     TableUtil.exportTableToExcel('ExampleTable');
   }
 
-  sum() {
-    this.prvorangiraniService.sum(this.postupak).subscribe({
+  sumPonudjeno() {
+    this.prvorangiraniService.sumPonudjena(this.postupak).subscribe({
       next: (res: HttpResponse<any>) => {
         this.ukupno_ponudjeno = res;
       },
     });
   }
-  sumAll() {
-    this.prvorangiraniService.sumAll().subscribe({
+  sumProcjenjeno() {
+    this.prvorangiraniService.sumProcjenjena(this.postupak).subscribe({
       next: (res: HttpResponse<any>) => {
-        this.ukupno_ponudjeno = res;
+        this.ukupno_procjenjeno = res;
       },
     });
   }

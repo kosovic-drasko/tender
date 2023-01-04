@@ -92,18 +92,17 @@ public class PrvorangiraniResource {
         return prvorangiraniRepository.sumProcijenjena(sifraPostupka);
     }
 
-    @GetMapping("/prvorangirani-sum-all-ponudjena")
-    public Optional<Prvorangirani> getSumAllPrvoraniraniAll() {
-        return prvorangiraniRepository.sumAllPonudjena();
-    }
+    //    @GetMapping("/prvorangirani-sum-all-ponudjena")
+    //    public Optional<Prvorangirani> getSumAllPrvoraniraniAll() {
+    //        return prvorangiraniRepository.sumAllPonudjena();
+    //    }
 
     @GetMapping("/prvorangirani-sum-ponudjena/{sifraPostupka}")
     public Optional<Prvorangirani> getSumPrvorangiraniPonudjena(@PathVariable Integer sifraPostupka) {
         return prvorangiraniRepository.sumPonudjena(sifraPostupka);
     }
-
-    @GetMapping("/prvorangirani-sum-all-procijenjena")
-    public Optional<Prvorangirani> getSumAllPrvorangirani() {
-        return prvorangiraniRepository.sumAllProcijenjena();
-    }
+    //    @GetMapping("/prvorangirani-sum-all-procijenjena")
+    //    public Optional<Prvorangirani> getSumAllPrvorangirani() {
+    //        return prvorangiraniRepository.sumAllProcijenjena();
+    //    }
 }

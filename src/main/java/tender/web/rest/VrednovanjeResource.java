@@ -91,15 +91,16 @@ public class VrednovanjeResource {
         return vrednovanjeRepository.sumProcijenjena(sifraPostupka);
     }
 
-    @GetMapping("/vrednovanje-sum-all-procijenjena")
-    public Optional<Vrednovanje> getSumAllSpecifikacije() {
-        return vrednovanjeRepository.sumAllProcijenjena();
-    }
-
-    @GetMapping("/specifikacije-sum-all-ponudjena")
-    public Optional<Vrednovanje> getSumAllVrednovanjeAll() {
-        return vrednovanjeRepository.sumAllPonudjena();
-    }
+    //
+    //    @GetMapping("/vrednovanje-sum-all-procijenjena")
+    //    public Optional<Vrednovanje> getSumAllSpecifikacije() {
+    //        return vrednovanjeRepository.sumAllProcijenjena();
+    //    }
+    //
+    //    @GetMapping("/specifikacije-sum-all-ponudjena")
+    //    public Optional<Vrednovanje> getSumAllVrednovanjeAll() {
+    //        return vrednovanjeRepository.sumAllPonudjena();
+    //    }
 
     @GetMapping("/vrednovanje-sum-ponudjena/{sifraPostupka}")
     public Optional<Vrednovanje> getSumVrenovanjePonudjena(@PathVariable Integer sifraPostupka) {

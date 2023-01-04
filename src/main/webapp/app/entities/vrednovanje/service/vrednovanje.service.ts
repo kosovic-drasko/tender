@@ -14,11 +14,9 @@ export type EntityArrayResponseType = HttpResponse<IVrednovanje[]>;
 
 @Injectable({ providedIn: 'root' })
 export class VrednovanjeService {
-  protected resourceUrlSumAllPonudjana = this.applicationConfigService.getEndpointFor('api/specifikacije-sum-all-ponudjena');
-  protected resourceUrlSumPonudjana = this.applicationConfigService.getEndpointFor('api/vvrednovanje-sum-ponudjena');
+  protected resourceUrlSumPonudjana = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-ponudjena');
 
-  protected resourceUrlSumAllProcjenjena = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-all-procijenjena');
-  protected resourceUrlSumProcjenjena = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-procijenjena-sum');
+  protected resourceUrlSumProcjenjena = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-procijenjena');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/vrednovanjes');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
@@ -65,13 +63,8 @@ export class VrednovanjeService {
   sumPonudjana(sifraPostupka: number | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumPonudjana}/${sifraPostupka}`);
   }
-  sumAllPonudjena(): Observable<any> {
-    return this.http.get(`${this.resourceUrlSumAllPonudjana}`);
-  }
+
   sumProcjenena(sifraPostupka: number | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumProcjenjena}/${sifraPostupka}`);
-  }
-  sumAllProcjenena(): Observable<any> {
-    return this.http.get(`${this.resourceUrlSumAllProcjenjena}`);
   }
 }

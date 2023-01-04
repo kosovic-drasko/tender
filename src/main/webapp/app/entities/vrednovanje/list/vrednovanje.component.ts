@@ -17,7 +17,7 @@ import { TableUtil } from '../../../tableUtil';
 })
 export class VrednovanjeComponent implements OnInit {
   vrednovanjes?: IVrednovanje[];
-  ukupno_procjenjeno?: number;
+  ukupno_procjenjeno?: HttpResponse<any>;
   ukupno_ponudjeno?: HttpResponse<any>;
   isLoading = false;
 
@@ -38,10 +38,10 @@ export class VrednovanjeComponent implements OnInit {
       this.loadSifraPostupka();
       this.sumPonudjena();
       this.sumProcjenjena();
+
+      console.log('>>>>>>>>>>>>>>>>>', this.ukupno_procjenjeno);
     } else {
       this.load();
-      this.sumAllPonudjana();
-      this.sumAllProcjenjena();
     }
   }
 
@@ -166,24 +166,11 @@ export class VrednovanjeComponent implements OnInit {
       },
     });
   }
-  sumAllPonudjana() {
-    this.vrednovanjeService.sumAllPonudjena().subscribe({
-      next: (res: HttpResponse<any>) => {
-        this.ukupno_ponudjeno = res;
-      },
-    });
-  }
+
   sumProcjenjena() {
     this.vrednovanjeService.sumProcjenena(this.postupak).subscribe({
       next: (res: HttpResponse<any>) => {
-        this.ukupno_ponudjeno = res;
-      },
-    });
-  }
-  sumAllProcjenjena() {
-    this.vrednovanjeService.sumAllProcjenena().subscribe({
-      next: (res: HttpResponse<any>) => {
-        this.ukupno_ponudjeno = res;
+        this.ukupno_procjenjeno = res;
       },
     });
   }
