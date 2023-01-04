@@ -124,7 +124,6 @@ export class SpecifikacijeComponent implements OnInit {
       // }, 1000);
     } else {
       this.load();
-      this.sumAll();
     }
   }
 
@@ -236,13 +235,6 @@ export class SpecifikacijeComponent implements OnInit {
   }
   sum() {
     this.specifikacijeService.sum(this.postupak).subscribe({
-      next: (res: HttpResponse<any>) => {
-        this.ukupno_procjenjeno = res;
-      },
-    });
-  }
-  sumAll() {
-    this.specifikacijeService.sumAll().subscribe({
       next: (res: HttpResponse<any>) => {
         this.ukupno_procjenjeno = res;
       },
