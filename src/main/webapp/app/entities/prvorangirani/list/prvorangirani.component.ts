@@ -34,7 +34,7 @@ export class PrvorangiraniComponent implements OnInit {
   @Input() postupak: any;
 
   constructor(protected prvorangiraniService: PrvorangiraniService, protected activatedRoute: ActivatedRoute, public router: Router) {}
-
+  public resourceUrlExcelDownload = SERVER_API_URL + 'api/prvorangirani/file';
   trackId = (_index: number, item: IPrvorangirani): number => this.prvorangiraniService.getPrvorangiraniIdentifier(item);
 
   ngOnInit(): void {
@@ -222,5 +222,9 @@ export class PrvorangiraniComponent implements OnInit {
         this.ukupno_procjenjeno = res;
       },
     });
+  }
+
+  Excel(): void {
+    window.location.href = `${this.resourceUrlExcelDownload}/${this.postupak}`;
   }
 }

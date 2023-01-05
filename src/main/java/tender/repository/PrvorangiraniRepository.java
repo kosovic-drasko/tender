@@ -1,5 +1,6 @@
 package tender.repository;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +26,6 @@ public interface PrvorangiraniRepository extends JpaRepository<Prvorangirani, Lo
 
     @Query("select sum(p.ponudjenaVrijednost)as ukupno from Prvorangirani p")
     Optional<Prvorangirani> sumAllPonudjena();
+
+    List<Prvorangirani> findBySifraPostupka(@Param("sifraPostupka") Integer sifra);
 }
