@@ -27,9 +27,9 @@ public class ExcelUtilsVrednovanje {
             "Rok Isporuka",
             "Jedinicna Cijena",
             "Karakteristike Ponude",
-            "Karakteristike Specifikacije",
-            "atc",
             "Naziv Ponudjaca",
+            "atc",
+            "Karakteristike Specifikacije",
             "Kolicina",
             "Procijenjena Vrijednost",
             "Vrsta Postupka",
@@ -77,9 +77,9 @@ public class ExcelUtilsVrednovanje {
                 row.createCell(6).setCellValue(vrednovanjes.getRokIsporuke());
                 row.createCell(7).setCellValue(vrednovanjes.getJedinicnaCijena());
                 row.createCell(8).setCellValue(vrednovanjes.getKarakteristikaPonude());
-                row.createCell(9).setCellValue(vrednovanjes.getKarakteristikaSpecifikacije());
-                row.createCell(10).setCellValue(vrednovanjes.getNazivPonudjaca());
-                row.createCell(11).setCellValue(vrednovanjes.getAtc());
+                row.createCell(9).setCellValue(vrednovanjes.getNazivPonudjaca());
+                row.createCell(10).setCellValue(vrednovanjes.getAtc());
+                row.createCell(11).setCellValue(vrednovanjes.getKarakteristikaSpecifikacije());
                 row.createCell(12).setCellValue(vrednovanjes.getTrazenaKolicina());
                 row.createCell(13).setCellValue(vrednovanjes.getProcijenjenaVrijednost());
                 row.createCell(14).setCellValue(vrednovanjes.getVrstaPostupka());
@@ -152,10 +152,11 @@ public class ExcelUtilsVrednovanje {
                             vrednovanje.setKarakteristikaPonude(currentCell.getStringCellValue());
                             break;
                         case 9:
-                            vrednovanje.setKarakteristikaSpecifikacije(currentCell.getStringCellValue());
+                            vrednovanje.setNazivPonudjaca(currentCell.getStringCellValue());
+
                             break;
                         case 10:
-                            vrednovanje.setNazivPonudjaca(currentCell.getStringCellValue());
+                            vrednovanje.setKarakteristikaSpecifikacije(currentCell.getStringCellValue());
                             break;
                         case 11:
                             vrednovanje.setAtc(currentCell.getStringCellValue());

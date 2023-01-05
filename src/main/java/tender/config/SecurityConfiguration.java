@@ -115,6 +115,8 @@ public class SecurityConfiguration {
                 .antMatchers("/api/testchat/**")
                 .antMatchers("/testchat/**")
                 .antMatchers("/api/uploadfiles/specifikacije")
+                .antMatchers("/api/vrednovanje/file/**")
+                .antMatchers("/api/prvorangirani/file/**")
                 .antMatchers("/api/set")
                 .antMatchers("/api/upload")
                 .antMatchers("/test/**");

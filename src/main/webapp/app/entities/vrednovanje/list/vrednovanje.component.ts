@@ -30,7 +30,7 @@ export class VrednovanjeComponent implements OnInit {
   page = 1;
   @Input() postupak: any;
   constructor(protected vrednovanjeService: VrednovanjeService, protected activatedRoute: ActivatedRoute, public router: Router) {}
-
+  public resourceUrlExcelDownload = SERVER_API_URL + 'api/vrednovanje/file';
   trackId = (_index: number, item: IVrednovanje): number => this.vrednovanjeService.getVrednovanjeIdentifier(item);
 
   ngOnInit(): void {
@@ -173,5 +173,9 @@ export class VrednovanjeComponent implements OnInit {
         this.ukupno_procjenjeno = res;
       },
     });
+  }
+
+  Excel(): void {
+    window.location.href = `${this.resourceUrlExcelDownload}/${this.postupak}`;
   }
 }
