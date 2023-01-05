@@ -1,9 +1,11 @@
 package tender.repository;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import tender.domain.Specifikacije;
 import tender.domain.Vrednovanje;
 import tender.domain.Vrednovanje;
 
@@ -24,4 +26,6 @@ public interface VrednovanjeRepository extends JpaRepository<Vrednovanje, Long>,
 
     @Query("select sum(p.ponudjenaVrijednost)as ukupno from Vrednovanje p")
     Optional<Vrednovanje> sumAllPonudjena();
+
+    List<Vrednovanje> findBySifraPostupka(@Param("sifraPostupka") Integer sifra);
 }
