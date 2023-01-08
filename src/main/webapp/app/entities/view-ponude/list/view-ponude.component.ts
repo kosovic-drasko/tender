@@ -27,7 +27,7 @@ import { IPonudjaci } from '../../ponudjaci/ponudjaci.model';
 export class ViewPonudeComponent implements OnInit {
   viewPonudes?: IViewPonude[];
   isLoading = false;
-  sifraPonude?: number;
+  sifraPonude?: number = 200;
   predicate = 'id';
   ascending = true;
   brojObrazac?: number = 0;
@@ -268,6 +268,7 @@ export class ViewPonudeComponent implements OnInit {
     // if (this.postupak !== undefined) {
     this.loadPostupciPonudjaci();
     this.loadSifraPostupka();
+    // this.sumPostupciPonude();
     this.sum();
 
     //
@@ -293,6 +294,7 @@ export class ViewPonudeComponent implements OnInit {
     this.viewPonudeService.sumPostupciPonude(this.postupak, this.sifraPonude).subscribe({
       next: (res: HttpResponse<any>) => {
         this.ukupno_ponudjeno = res;
+        console.log('ukupno', this.ukupno_ponudjeno);
       },
     });
   }
