@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tender.domain.Prvorangirani;
 import tender.domain.Prvorangirani;
+import tender.domain.ViewPonude;
 import tender.domain.Vrednovanje;
 
 /**
@@ -28,4 +29,9 @@ public interface PrvorangiraniRepository extends JpaRepository<Prvorangirani, Lo
     Optional<Prvorangirani> sumAllPonudjena();
 
     List<Prvorangirani> findBySifraPostupka(@Param("sifraPostupka") Integer sifra);
+
+    @Query(
+        "select sum(p.ponudjenaVrijednost)as ukupno from ViewPonude p where p.sifraPostupka=:sifraPostupka and p.sifraPonude=:sifraPonude"
+    )
+    Optional<Prvorangirani> sumPostupkaPonude(@Param("sifraPostupka") Integer sifraPostupka, @Param("sifraPonude") Integer sifraPonude);
 }

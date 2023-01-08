@@ -263,20 +263,21 @@ export class ViewPonudeComponent implements OnInit {
     return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
   ngOnInit(): void {
-    if (this.postupak !== undefined) {
-      this.loadPostupciPonudjaci();
-      this.loadSifraPostupka();
-      this.sum();
+    // if (this.postupak !== undefined) {
+    this.loadPostupciPonudjaci();
+    this.loadSifraPostupka();
+    // this.sum();
+    this.sumPostupciPonude();
 
-      this.loadSifraPostupka();
-      this.interval = setInterval(() => {
-        this.time++;
-      }, 1000);
-      console.log('Ponudjaci postupci je >>>>>>>>', this.ponudjaci);
-    } else {
-      this.load();
-      this.sumAll();
-    }
+    this.loadSifraPostupka();
+    //   this.interval = setInterval(() => {
+    //     this.time++;
+    //   }, 1000);
+    //   console.log('Ponudjaci postupci je >>>>>>>>', this.ponudjaci);
+    // } else {
+    //   this.load();
+    //
+    // }
   }
 
   sum() {
@@ -286,11 +287,15 @@ export class ViewPonudeComponent implements OnInit {
       },
     });
   }
-  sumAll() {
-    this.viewPonudeService.sumAll().subscribe({
-      next: (res: HttpResponse<any>) => {
-        this.ukupno_ponudjeno = res;
-      },
-    });
+  sumPostupciPonude() {
+    if (this.sifraPonude !== undefined) {
+      this.viewPonudeService.sumPostupciPonude(this.postupak, this.sifraPonude).subscribe({
+        next: (res: HttpResponse<any>) => {
+          this.ukupno_ponudjeno = res;
+        },
+      });
+    } else {
+      this.sum();
+    }
   }
 }

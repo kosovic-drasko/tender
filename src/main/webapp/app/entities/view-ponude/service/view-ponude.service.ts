@@ -14,10 +14,9 @@ export type EntityArrayResponseType = HttpResponse<IViewPonude[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ViewPonudeService {
-  protected resourceUrlSumAll = this.applicationConfigService.getEndpointFor('api/ponude-sum-all');
-  protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/ponude-sum');
+  protected resourceUrlSumPostupciPonude = this.applicationConfigService.getEndpointFor('api/ponude-sum-postupak-ponude');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/view-ponudes');
-
+  protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/ponude-sum');
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(viewPonude: NewViewPonude): Observable<EntityResponseType> {
@@ -80,7 +79,7 @@ export class ViewPonudeService {
   sum(sifraPostupka: number | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSum}/${sifraPostupka}`);
   }
-  sumAll(): Observable<any> {
-    return this.http.get(`${this.resourceUrlSumAll}`);
+  sumPostupciPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSumPostupciPonude}`);
   }
 }

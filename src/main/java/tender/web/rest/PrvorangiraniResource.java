@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import tender.domain.Prvorangirani;
+import tender.domain.ViewPonude;
 import tender.domain.Vrednovanje;
 import tender.repository.PrvorangiraniRepository;
 import tender.service.PrvorangiraniQueryService;
@@ -101,8 +102,12 @@ public class PrvorangiraniResource {
     public Optional<Prvorangirani> getSumPrvorangiraniPonudjena(@PathVariable Integer sifraPostupka) {
         return prvorangiraniRepository.sumPonudjena(sifraPostupka);
     }
-    //    @GetMapping("/prvorangirani-sum-all-procijenjena")
-    //    public Optional<Prvorangirani> getSumAllPrvorangirani() {
-    //        return prvorangiraniRepository.sumAllProcijenjena();
-    //    }
+
+    @GetMapping("/prvorangirani-sum-postupak-ponude/{sifraPostupka}/{sifraPonude}")
+    public Optional<Prvorangirani> getSumPostupakPonudePrvorangirani(
+        @PathVariable Integer sifraPostupka,
+        @PathVariable Integer sifraPonude
+    ) {
+        return prvorangiraniRepository.sumPostupkaPonude(sifraPostupka, sifraPonude);
+    }
 }
