@@ -247,7 +247,9 @@ export class ViewPonudeComponent implements OnInit {
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
         this.ponudjaci = res.body ?? [];
+        this.sumPostupciPonude();
         console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
+        console.log('Ukupno je ..............', this.ukupno_ponudjeno);
       },
     });
   }
@@ -267,9 +269,9 @@ export class ViewPonudeComponent implements OnInit {
     this.loadPostupciPonudjaci();
     this.loadSifraPostupka();
     this.sum();
-    this.sumPostupciPonude();
 
-    this.loadSifraPostupka();
+    //
+    // this.loadSifraPostupka();
     //   this.interval = setInterval(() => {
     //     this.time++;
     //   }, 1000);
@@ -288,11 +290,10 @@ export class ViewPonudeComponent implements OnInit {
     });
   }
   sumPostupciPonude() {
-    if (this.sifraPonude !== undefined)
-      this.viewPonudeService.sumPostupciPonude(this.postupak, this.sifraPonude).subscribe({
-        next: (res: HttpResponse<any>) => {
-          this.ukupno_ponudjeno = res;
-        },
-      });
+    this.viewPonudeService.sumPostupciPonude(this.postupak, this.sifraPonude).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+      },
+    });
   }
 }
