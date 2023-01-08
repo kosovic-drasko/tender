@@ -266,7 +266,7 @@ export class ViewPonudeComponent implements OnInit {
     // if (this.postupak !== undefined) {
     this.loadPostupciPonudjaci();
     this.loadSifraPostupka();
-    // this.sum();
+    this.sum();
     this.sumPostupciPonude();
 
     this.loadSifraPostupka();
@@ -288,14 +288,11 @@ export class ViewPonudeComponent implements OnInit {
     });
   }
   sumPostupciPonude() {
-    if (this.sifraPonude !== undefined) {
+    if (this.sifraPonude !== undefined)
       this.viewPonudeService.sumPostupciPonude(this.postupak, this.sifraPonude).subscribe({
         next: (res: HttpResponse<any>) => {
           this.ukupno_ponudjeno = res;
         },
       });
-    } else {
-      this.sum();
-    }
   }
 }
