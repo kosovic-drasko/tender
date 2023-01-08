@@ -33,6 +33,11 @@ public interface ViewPonudeRepository extends JpaRepository<ViewPonude, Long>, J
     @Query("select sum(p.ponudjenaVrijednost)as ukupno from ViewPonude p where p.sifraPostupka=:sifraPostupka")
     Optional<ViewPonude> sum(@Param("sifraPostupka") Integer sifraPostupka);
 
+    @Query(
+        "select sum(p.ponudjenaVrijednost)as ukupno from ViewPonude p where p.sifraPostupka=:sifraPostupka and p.sifraPonude=:sifraPonude"
+    )
+    Optional<ViewPonude> sumPostupkaPonude(@Param("sifraPostupka") Integer sifraPostupka, @Param("sifraPonude") Integer sifraPonude);
+
     @Query("select sum(p.ponudjenaVrijednost)as ukupno from ViewPonude p")
     Optional<ViewPonude> sumAll();
 }

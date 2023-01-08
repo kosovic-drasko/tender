@@ -210,8 +210,8 @@ public class ViewPonudeResource {
         return viewPonudeRepository.sum(sifraPostupka);
     }
 
-    @GetMapping("/ponude-sum-all")
-    public Optional<ViewPonude> getSumAllPonude() {
-        return viewPonudeRepository.sumAll();
+    @GetMapping("/ponude-sum-postupak-ponude/{sifraPostupka}/{sifraPonude}")
+    public Optional<ViewPonude> getSumPostupakPonude(@PathVariable Integer sifraPostupka, @PathVariable Integer sifraPonude) {
+        return viewPonudeRepository.sumPostupkaPonude(sifraPostupka, sifraPonude);
     }
 }
