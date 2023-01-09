@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
@@ -24,7 +24,7 @@ import { IPonudjaci } from '../../ponudjaci/ponudjaci.model';
   templateUrl: './view-ponude.component.html',
   styleUrls: ['./view-ponude.component.scss'],
 })
-export class ViewPonudeComponent implements OnInit {
+export class ViewPonudeComponent implements OnInit, OnChanges {
   viewPonudes?: IViewPonude[];
   isLoading = false;
   sifraPonude?: number;
@@ -188,6 +188,7 @@ export class ViewPonudeComponent implements OnInit {
     this.loadPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        this.sum();
       },
     });
   }
@@ -264,7 +265,7 @@ export class ViewPonudeComponent implements OnInit {
         this.ponudjaci = res.body ?? [];
         // this.sumPostupciPonude();
         console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
-        console.log('Ukupno je ..............', this.ukupno_ponudjeno);
+        // console.log('Ukupno je ..............', this.ukupno_ponudjeno);
       },
     });
   }
@@ -277,5 +278,9 @@ export class ViewPonudeComponent implements OnInit {
   protected queryBackendPostupakPonudjaci(): Observable<EntityArrayResponseType> {
     const queryObject = { 'sifraPostupka.in': this.postupak };
     return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+
+  ngOnChanges(): void {
+    console.log('Promjena');
   }
 }
