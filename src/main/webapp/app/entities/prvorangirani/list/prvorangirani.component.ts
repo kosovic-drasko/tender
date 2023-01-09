@@ -11,6 +11,7 @@ import { EntityArrayResponseType, PrvorangiraniService } from '../service/prvora
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
 import { TableUtil } from '../../../tableUtil';
 import { IViewPonudjaci } from '../../view-ponudjaci/view-ponudjaci.model';
+import { ViewPonudjaciService } from '../../view-ponudjaci/service/view-ponudjaci.service';
 
 @Component({
   selector: 'jhi-prvorangirani',
@@ -33,7 +34,14 @@ export class PrvorangiraniComponent implements OnInit {
   ponudjaci: IViewPonudjaci[] = [];
   @Input() postupak: any;
 
-  constructor(protected prvorangiraniService: PrvorangiraniService, protected activatedRoute: ActivatedRoute, public router: Router) {}
+  constructor(
+    protected prvorangiraniService: PrvorangiraniService,
+    protected activatedRoute: ActivatedRoute,
+    public router: Router,
+    protected viewPonudjaciService: ViewPonudjaciService
+  ) {
+    this.loadPostupciPonudjaci();
+  }
   public resourceUrlExcelDownload = SERVER_API_URL + 'api/prvorangirani/file';
   trackId = (_index: number, item: IPrvorangirani): number => this.prvorangiraniService.getPrvorangiraniIdentifier(item);
 
@@ -77,7 +85,7 @@ export class PrvorangiraniComponent implements OnInit {
   loadPostupciPonudjaci(): void {
     this.loadPonudjaciPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
+        this.onResponseSuccessPonudjaci(res);
         this.ponudjaci = res.body ?? [];
         console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
       },
@@ -131,6 +139,12 @@ export class PrvorangiraniComponent implements OnInit {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
     this.prvorangiranis = dataFromBody;
+  }
+
+  protected onResponseSuccessPonudjaci(response: EntityArrayResponseType): void {
+    this.fillComponentAttributesFromResponseHeader(response.headers);
+    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
+    this.ponudjaci = dataFromBody;
   }
 
   protected fillComponentAttributesFromResponseBody(data: IPrvorangirani[] | null): IPrvorangirani[] {

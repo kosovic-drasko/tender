@@ -10,6 +10,28 @@
       <button type="button" class="btn btn-primary" (click)="Excel()">Excel</button>
     </div>
   </h2>
+  <select
+    *ngIf="postupak"
+    class="form-control"
+    id="field_sifraPonudjaca"
+    data-cy="sifraPonudjaca"
+    name="sifraPonudjaca"
+    placeholder="Unesite Ponudjaca"
+    placeholder=".form-control-sm"
+    [(ngModel)]="sifraPonude"
+    (change)="loadSifraPonude()"
+  >
+    <!--    (change)="sumPostupciPonude()"-->
+    cl="loadPageSifraPonude()" >
+    <option value="" selected disabled>Please select</option>
+    <!--        <option [ngValue]="null">Vrati</option>-->
+    <option id="ponudjac" [ngValue]="ponudjaciOption.sifraPonude" *ngFor="let ponudjaciOption of ponudjaci">
+      {{ ponudjaciOption.nazivPonudjaca }}
+    </option>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button">Button</button>
+    </div>
+  </select>
 
   <jhi-alert-error></jhi-alert-error>
 
@@ -25,12 +47,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <!--          <th scope="col" jhiSortBy="id">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span jhiTranslate="global.field.id">ID</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
           <th scope="col" jhiSortBy="sifraPostupka">
             <div class="d-flex">
               <span jhiTranslate="tenderApp.vrednovanje.sifraPostupka">Sifra Postupka</span>

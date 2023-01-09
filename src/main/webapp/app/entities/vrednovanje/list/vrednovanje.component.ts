@@ -10,6 +10,8 @@ import { ASC, DESC, SORT, DEFAULT_SORT_DATA } from 'app/config/navigation.consta
 import { EntityArrayResponseType, VrednovanjeService } from '../service/vrednovanje.service';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
 import { TableUtil } from '../../../tableUtil';
+import { IViewPonudjaci } from '../../view-ponudjaci/view-ponudjaci.model';
+import { ViewPonudjaciService } from '../../view-ponudjaci/service/view-ponudjaci.service';
 
 @Component({
   selector: 'jhi-vrednovanje',
@@ -20,7 +22,8 @@ export class VrednovanjeComponent implements OnInit {
   ukupno_procjenjeno?: HttpResponse<any>;
   ukupno_ponudjeno?: HttpResponse<any>;
   isLoading = false;
-
+  sifraPonude?: number;
+  ponudjaci: IViewPonudjaci[] = [];
   predicate = 'id';
   ascending = true;
   filters: IFilterOptions = new FilterOptions();
@@ -29,20 +32,28 @@ export class VrednovanjeComponent implements OnInit {
   totalItems = 0;
   page = 1;
   @Input() postupak: any;
-  constructor(protected vrednovanjeService: VrednovanjeService, protected activatedRoute: ActivatedRoute, public router: Router) {}
+  constructor(
+    protected vrednovanjeService: VrednovanjeService,
+    protected activatedRoute: ActivatedRoute,
+    public router: Router,
+    protected viewPonudjaciService: ViewPonudjaciService
+  ) {
+    this.loadPostupciPonudjaci();
+  }
   public resourceUrlExcelDownload = SERVER_API_URL + 'api/vrednovanje/file';
   trackId = (_index: number, item: IVrednovanje): number => this.vrednovanjeService.getVrednovanjeIdentifier(item);
 
   ngOnInit(): void {
-    if (this.postupak !== undefined) {
-      this.loadSifraPostupka();
-      this.sumPonudjena();
-      this.sumProcjenjena();
+    // if (this.postupak !== undefined) {
+    //   this.loadSifraPostupka();
+    //   this.sumPonudjena();
+    //   this.sumProcjenjena();
+    //
+    // } else {
+    //   this.load();
+    // }
 
-      console.log('>>>>>>>>>>>>>>>>>', this.ukupno_procjenjeno);
-    } else {
-      this.load();
-    }
+    this.loadSifraPostupka();
   }
 
   load(): void {
@@ -177,5 +188,58 @@ export class VrednovanjeComponent implements OnInit {
 
   Excel(): void {
     window.location.href = `${this.resourceUrlExcelDownload}/${this.postupak}`;
+  }
+
+  protected onResponseSuccessPonudjaci(response: EntityArrayResponseType): void {
+    this.fillComponentAttributesFromResponseHeader(response.headers);
+    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
+    this.ponudjaci = dataFromBody;
+  }
+
+  loadPostupciPonudjaci(): void {
+    this.loadPonudjaciPostupak().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccessPonudjaci(res);
+        this.ponudjaci = res.body ?? [];
+        // this.sumPostupciPonude();
+        console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
+        // console.log('Ukupno je ..............', this.ukupno_ponudjeno);
+      },
+    });
+  }
+  protected loadPonudjaciPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupakPonudjaci())
+    );
+  }
+  protected queryBackendPostupakPonudjaci(): Observable<EntityArrayResponseType> {
+    const queryObject = { 'sifraPostupka.in': this.postupak };
+    return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+
+  loadSifraPonude(): void {
+    this.loadPonude().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+      },
+    });
+  }
+
+  protected loadPonude(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPonude(this.predicate, this.ascending))
+    );
+  }
+
+  protected queryBackendPonude(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = {
+      'sifraPonude.in': this.sifraPonude,
+      'sifraPostupka.in': this.postupak,
+      sort: this.getSortQueryParam(predicate, ascending),
+    };
+    return this.vrednovanjeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 }
