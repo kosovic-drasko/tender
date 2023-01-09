@@ -16,6 +16,7 @@ export type EntityArrayResponseType = HttpResponse<IViewPonude[]>;
 export class ViewPonudeService {
   protected resourceUrlSumPostupciPonude = this.applicationConfigService.getEndpointFor('api/ponude-sum-postupak-ponude');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/view-ponudes');
+
   protected resourceUrlSum = this.applicationConfigService.getEndpointFor('api/ponude-sum');
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 

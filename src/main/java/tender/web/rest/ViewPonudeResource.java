@@ -214,4 +214,9 @@ public class ViewPonudeResource {
     public Optional<ViewPonude> getSumPostupakPonude(@PathVariable Integer sifraPostupka, @PathVariable Integer sifraPonude) {
         return viewPonudeRepository.sumPostupkaPonude(sifraPostupka, sifraPonude);
     }
+
+    @GetMapping("/ponude-ponudjaci/{sifraPostupka}")
+    public Optional<ViewPonude> getPonudePonudjaci(@PathVariable Integer sifraPostupka) {
+        return viewPonudeRepository.ponudePonudjaci(sifraPostupka);
+    }
 }

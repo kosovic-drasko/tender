@@ -27,7 +27,7 @@ import { IPonudjaci } from '../../ponudjaci/ponudjaci.model';
 export class ViewPonudeComponent implements OnInit {
   viewPonudes?: IViewPonude[];
   isLoading = false;
-  sifraPonude?: number = 200;
+  sifraPonude?: number;
   predicate = 'id';
   ascending = true;
   brojObrazac?: number = 0;
@@ -53,7 +53,7 @@ export class ViewPonudeComponent implements OnInit {
     protected ponudeService: PonudeService,
     protected viewPonudjaciService: ViewPonudjaciService
   ) {
-    // this.loadSviPonudjaci();
+    this.loadPostupciPonudjaci();
   }
 
   trackId = (_index: number, item: IViewPonude): number => this.viewPonudeService.getViewPonudeIdentifier(item);
@@ -104,6 +104,11 @@ export class ViewPonudeComponent implements OnInit {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
     this.viewPonudes = dataFromBody;
+  }
+  protected onResponseSuccessPonudjaci(response: EntityArrayResponseType): void {
+    this.fillComponentAttributesFromResponseHeader(response.headers);
+    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
+    this.ponudjaci = dataFromBody;
   }
 
   protected fillComponentAttributesFromResponseBody(data: IViewPonude[] | null): IViewPonude[] {
@@ -159,32 +164,6 @@ export class ViewPonudeComponent implements OnInit {
     }
   }
 
-  // exportArray() {
-  //   // @ts-ignore
-  //   const onlyNameAndSymbolArr: {
-  //     'naziv proizvodjaca': string | null | undefined;
-  //     'jedinicna cijena': number | null | undefined;
-  //     'ponudjana vrijednost': number | null | undefined;
-  //     'rok isporuke': number | null | undefined;
-  //     'naziv ponudjaca': string | null | undefined;
-  //     'sifra ponude': number | null | undefined;
-  //     'sifra postupka': number | null | undefined;
-  //     'zasticeni naziv': string | null | undefined;
-  //     'broj partije': number | null | undefined;
-  //   }[] = this.viewPonudes?.map(x => ({
-  //     'sifra postupka': x.sifraPostupka,
-  //     'broj partije': x.brojPartije,
-  //     'sifra ponude': x.sifraPonude,
-  //     'zasticeni naziv': x.zasticeniNaziv,
-  //     'naziv proizvodjaca': x.nazivProizvodjaca,
-  //     'naziv ponudjaca': x.nazivPonudjaca,
-  //     'ponudjana vrijednost': x.ponudjenaVrijednost,
-  //     'jedinicna cijena': x.jedinicnaCijena,
-  //     'rok isporuke': x.rokIsporuke,
-  //     'karakteristike ponude': x.karakteristika,
-  //   }));
-  //   TableUtil.exportArrayToExcel(onlyNameAndSymbolArr, 'Ponude');
-  // }
   obrazacExcel(): void {
     window.location.href = `${this.resourceUrlExcelDownloadPostupak}/${this.brojObrazac}`;
   }
@@ -226,6 +205,12 @@ export class ViewPonudeComponent implements OnInit {
       switchMap(() => this.queryBackendPostupak(this.predicate, this.ascending))
     );
   }
+
+  protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
+    return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
   protected queryBackendPonude(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject = {
@@ -236,39 +221,12 @@ export class ViewPonudeComponent implements OnInit {
     return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
-  protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
-    this.isLoading = true;
-    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
-    return this.viewPonudeService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
-  }
-
-  loadPostupciPonudjaci(): void {
-    this.loadPonudjaciPostupak().subscribe({
-      next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
-        this.ponudjaci = res.body ?? [];
-        this.sumPostupciPonude();
-        console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
-        console.log('Ukupno je ..............', this.ukupno_ponudjeno);
-      },
-    });
-  }
-  protected loadPonudjaciPostupak(): Observable<EntityArrayResponseType> {
-    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
-      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-      switchMap(() => this.queryBackendPostupakPonudjaci(this.predicate, this.ascending))
-    );
-  }
-  protected queryBackendPostupakPonudjaci(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
-    this.isLoading = true;
-    const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
-    return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
-  }
   ngOnInit(): void {
     // if (this.postupak !== undefined) {
-    this.loadPostupciPonudjaci();
+
     this.loadSifraPostupka();
-    // this.sumPostupciPonude();
+    // this.loadPostupciPonudjaci();
+    // // this.sumPostupciPonude();
     this.sum();
 
     //
@@ -294,8 +252,30 @@ export class ViewPonudeComponent implements OnInit {
     this.viewPonudeService.sumPostupciPonude(this.postupak, this.sifraPonude).subscribe({
       next: (res: HttpResponse<any>) => {
         this.ukupno_ponudjeno = res;
-        console.log('ukupno', this.ukupno_ponudjeno);
+        console.log('ukupno po ponudjacima', this.ukupno_ponudjeno);
       },
     });
+  }
+
+  loadPostupciPonudjaci(): void {
+    this.loadPonudjaciPostupak().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccessPonudjaci(res);
+        this.ponudjaci = res.body ?? [];
+        // this.sumPostupciPonude();
+        console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
+        console.log('Ukupno je ..............', this.ukupno_ponudjeno);
+      },
+    });
+  }
+  protected loadPonudjaciPostupak(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => this.queryBackendPostupakPonudjaci())
+    );
+  }
+  protected queryBackendPostupakPonudjaci(): Observable<EntityArrayResponseType> {
+    const queryObject = { 'sifraPostupka.in': this.postupak };
+    return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 }
