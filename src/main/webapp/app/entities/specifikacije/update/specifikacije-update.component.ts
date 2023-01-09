@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -21,7 +21,8 @@ export class SpecifikacijeUpdateComponent implements OnInit {
   constructor(
     protected specifikacijeService: SpecifikacijeService,
     protected specifikacijeFormService: SpecifikacijeFormService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +35,7 @@ export class SpecifikacijeUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    this.router.navigate(['/specifikacije']);
   }
 
   save(): void {
