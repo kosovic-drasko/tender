@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
@@ -19,8 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import tender.IntegrationTest;
 import tender.domain.ViewVrednovanje;
-import tender.repository.ViewVrednovanjeRepository;
-import tender.service.criteria.ViewVrednovanjeCriteria;
 
 /**
  * Integration tests for the {@link ViewVrednovanjeResource} REST controller.

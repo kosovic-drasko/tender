@@ -228,7 +228,7 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
     this.loadSifraPostupka();
     // this.loadPostupciPonudjaci();
     // // this.sumPostupciPonude();
-    this.sum();
+    // this.sum();
 
     //
     // this.loadSifraPostupka();
