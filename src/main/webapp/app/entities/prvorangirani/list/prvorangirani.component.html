@@ -19,6 +19,8 @@
     placeholder="Unesite Ponudjaca"
     [(ngModel)]="sifraPonude"
     (change)="loadSifraPonude()"
+    (change)="sumPostupciPonudePonudjeno()"
+    (change)="sumPostupciPonudeProcijenjeno()"
     cl="loadPageSifraPonude()"
   >
     <option value="" selected disabled>Please select</option>

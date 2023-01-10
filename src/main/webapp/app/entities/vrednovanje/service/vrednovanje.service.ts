@@ -63,18 +63,18 @@ export class VrednovanjeService {
     return vrednovanjeCollection;
   }
 
-  sumPostupciPonudjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
-    return this.http.get(`${this.resourceUrlSumPonudjanaPonude}/${sifraPostupka}/${sifraPonude}`);
-  }
-  sumPostupciProcijenjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
-    return this.http.get(`${this.resourceUrlSumPonudjanaPonude}/${sifraPostupka}/${sifraPonude}`);
-  }
-
-  sumPonudjana(sifraPostupka: number | undefined): Observable<any> {
-    return this.http.get(`${this.resourceUrlSumPonudjana}/${sifraPostupka}`);
-  }
-
-  sumProcjenena(sifraPostupka: number | undefined): Observable<any> {
-    return this.http.get(`${this.resourceUrlSumProcjenjena}/${sifraPostupka}`);
-  }
+  // sumPostupciPonudjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+  //   return this.http.get(`${this.resourceUrlSumPonudjanaPonude}/${sifraPostupka}/${sifraPonude}`);
+  // }
+  // sumPostupciProcijenjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+  //   return this.http.get(`${this.resourceUrlSumPonudjanaPonude}/${sifraPostupka}/${sifraPonude}`);
 }
+
+// sumPonudjana(sifraPostupka: number | undefined): Observable<any> {
+//   return this.http.get(`${this.resourceUrlSumPonudjana}/${sifraPostupka}`);
+// }
+//
+// sumProcjenena(sifraPostupka: number | undefined): Observable<any> {
+//   return this.http.get(`${this.resourceUrlSumProcjenjena}/${sifraPostupka}`);
+// }
+// }

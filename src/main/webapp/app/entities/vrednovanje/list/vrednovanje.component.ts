@@ -170,22 +170,6 @@ export class VrednovanjeComponent implements OnInit {
     TableUtil.exportTableToExcel('ExampleTable');
   }
 
-  sumPonudjena() {
-    this.vrednovanjeService.sumPonudjana(this.postupak).subscribe({
-      next: (res: HttpResponse<any>) => {
-        this.ukupno_ponudjeno = res;
-      },
-    });
-  }
-
-  sumProcjenjena() {
-    this.vrednovanjeService.sumProcjenena(this.postupak).subscribe({
-      next: (res: HttpResponse<any>) => {
-        this.ukupno_procjenjeno = res;
-      },
-    });
-  }
-
   Excel(): void {
     window.location.href = `${this.resourceUrlExcelDownload}/${this.postupak}`;
   }

@@ -14,6 +14,14 @@ export class PrvorangiraniService {
   protected resourceUrlSumPonudjena = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum-ponudjena');
   protected resourceUrlSumProcjenjena = this.applicationConfigService.getEndpointFor('api/prvorangirani-sum-procijenjena');
 
+  protected resourceUrlSumPonudjanaPrvorangirani = this.applicationConfigService.getEndpointFor(
+    'api/prvorangirani-sum-postupak-ponude-ponudjena'
+  );
+
+  protected resourceUrlSumProcijenjenaPrvorangirani = this.applicationConfigService.getEndpointFor(
+    'api/prvorangirani-sum-postupak-ponude-procijenjena'
+  );
+
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/prvorangiranis');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
@@ -56,10 +64,20 @@ export class PrvorangiraniService {
     }
     return prvorangiraniCollection;
   }
+
   sumPonudjena(sifraPostupka: number | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumPonudjena}/${sifraPostupka}`);
   }
+
   sumProcjenjena(sifraPostupka: number | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumProcjenjena}/${sifraPostupka}`);
+  }
+
+  sumPostupciPonudjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSumPonudjanaPrvorangirani}/${sifraPostupka}/${sifraPonude}`);
+  }
+
+  sumPostupciProcijenjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSumProcijenjenaPrvorangirani}/${sifraPostupka}/${sifraPonude}`);
   }
 }

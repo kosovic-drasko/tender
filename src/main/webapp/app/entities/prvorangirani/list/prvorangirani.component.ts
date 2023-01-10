@@ -42,6 +42,7 @@ export class PrvorangiraniComponent implements OnInit {
   ) {
     this.loadPostupciPonudjaci();
   }
+
   public resourceUrlExcelDownload = SERVER_API_URL + 'api/prvorangirani/file';
   trackId = (_index: number, item: IPrvorangirani): number => this.prvorangiraniService.getPrvorangiraniIdentifier(item);
 
@@ -63,6 +64,7 @@ export class PrvorangiraniComponent implements OnInit {
       },
     });
   }
+
   loadSifraPonude(): void {
     this.loadPonude().subscribe({
       next: (res: EntityArrayResponseType) => {
@@ -70,18 +72,21 @@ export class PrvorangiraniComponent implements OnInit {
       },
     });
   }
+
   protected loadPonude(): Observable<EntityArrayResponseType> {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
       tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
       switchMap(() => this.queryBackendPonude(this.predicate, this.ascending))
     );
   }
+
   protected loadPostupak(): Observable<EntityArrayResponseType> {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
       tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
       switchMap(() => this.queryBackendPostupak(this.predicate, this.ascending))
     );
   }
+
   loadPostupciPonudjaci(): void {
     this.loadPonudjaciPostupak().subscribe({
       next: (res: EntityArrayResponseType) => {
@@ -91,17 +96,20 @@ export class PrvorangiraniComponent implements OnInit {
       },
     });
   }
+
   protected loadPonudjaciPostupak(): Observable<EntityArrayResponseType> {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
       tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
       switchMap(() => this.queryBackendPostupakPonudjaci(this.predicate, this.ascending))
     );
   }
+
   protected queryBackendPostupakPonudjaci(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
     return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
+
   protected queryBackendPonude(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject = {
@@ -111,6 +119,7 @@ export class PrvorangiraniComponent implements OnInit {
     };
     return this.prvorangiraniService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
+
   navigateToWithComponentValues(): void {
     this.handleNavigation(this.page, this.predicate, this.ascending, this.filters.filterOptions);
   }
@@ -207,12 +216,14 @@ export class PrvorangiraniComponent implements OnInit {
       },
     });
   }
+
   protected loadFromBackendWithRouteInformationsPostupak(): Observable<EntityArrayResponseType> {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
       tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
       switchMap(() => this.queryBackendPostupak(this.predicate, this.ascending))
     );
   }
+
   protected queryBackendPostupak(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
@@ -230,6 +241,7 @@ export class PrvorangiraniComponent implements OnInit {
       },
     });
   }
+
   sumProcjenjeno() {
     this.prvorangiraniService.sumProcjenjena(this.postupak).subscribe({
       next: (res: HttpResponse<any>) => {
@@ -240,5 +252,23 @@ export class PrvorangiraniComponent implements OnInit {
 
   Excel(): void {
     window.location.href = `${this.resourceUrlExcelDownload}/${this.postupak}`;
+  }
+
+  sumPostupciPonudePonudjeno() {
+    this.prvorangiraniService.sumPostupciPonudjenaPonude(this.postupak, this.sifraPonude).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_ponudjeno = res;
+        console.log('ukupno po ponudjacima ponudjeno', this.ukupno_ponudjeno);
+      },
+    });
+  }
+
+  sumPostupciPonudeProcijenjeno() {
+    this.prvorangiraniService.sumPostupciProcijenjenaPonude(this.postupak, this.sifraPonude).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.ukupno_procjenjeno = res;
+        console.log('ukupno po ponudjacima procijenjeno', this.ukupno_procjenjeno);
+      },
+    });
   }
 }

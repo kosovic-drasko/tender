@@ -226,20 +226,6 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
     // if (this.postupak !== undefined) {
 
     this.loadSifraPostupka();
-    // this.loadPostupciPonudjaci();
-    // // this.sumPostupciPonude();
-    // this.sum();
-
-    //
-    // this.loadSifraPostupka();
-    //   this.interval = setInterval(() => {
-    //     this.time++;
-    //   }, 1000);
-    //   console.log('Ponudjaci postupci je >>>>>>>>', this.ponudjaci);
-    // } else {
-    //   this.load();
-    //
-    // }
   }
 
   sum() {
