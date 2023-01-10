@@ -90,24 +90,27 @@ public class PrvorangiraniResource {
 
     @GetMapping("/prvorangirani-sum-procijenjena/{sifraPostupka}")
     public Optional<Prvorangirani> getSumPrvorangiraniProcijenjena(@PathVariable Integer sifraPostupka) {
-        return prvorangiraniRepository.sumProcijenjena(sifraPostupka);
+        return prvorangiraniRepository.sumProcijenjenaPrvorangorani(sifraPostupka);
     }
-
-    //    @GetMapping("/prvorangirani-sum-all-ponudjena")
-    //    public Optional<Prvorangirani> getSumAllPrvoraniraniAll() {
-    //        return prvorangiraniRepository.sumAllPonudjena();
-    //    }
 
     @GetMapping("/prvorangirani-sum-ponudjena/{sifraPostupka}")
     public Optional<Prvorangirani> getSumPrvorangiraniPonudjena(@PathVariable Integer sifraPostupka) {
-        return prvorangiraniRepository.sumPonudjena(sifraPostupka);
+        return prvorangiraniRepository.sumPonudjenaPrvorangorani(sifraPostupka);
     }
 
-    @GetMapping("/prvorangirani-sum-postupak-ponude/{sifraPostupka}/{sifraPonude}")
-    public Optional<Prvorangirani> getSumPostupakPonudePrvorangirani(
+    @GetMapping("/prvorangirani-sum-postupak-ponude-ponudjena/{sifraPostupka}/{sifraPonude}")
+    public Optional<Prvorangirani> getSumPostupakPrvorangiraniPonudjena(
         @PathVariable Integer sifraPostupka,
         @PathVariable Integer sifraPonude
     ) {
-        return prvorangiraniRepository.sumPostupkaPonude(sifraPostupka, sifraPonude);
+        return prvorangiraniRepository.sumPostupkaPonudePrvorangiraniPonudjena(sifraPostupka, sifraPonude);
+    }
+
+    @GetMapping("/prvorangirani-sum-postupak-ponude-procijenjena/{sifraPostupka}/{sifraPonude}")
+    public Optional<Prvorangirani> getSumPostupakPrvorangiraniProcijenjena(
+        @PathVariable Integer sifraPostupka,
+        @PathVariable Integer sifraPonude
+    ) {
+        return prvorangiraniRepository.sumPostupkaPonudePrvorangiraniProcijenjena(sifraPostupka, sifraPonude);
     }
 }
