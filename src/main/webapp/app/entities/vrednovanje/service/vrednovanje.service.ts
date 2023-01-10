@@ -15,6 +15,7 @@ export type EntityArrayResponseType = HttpResponse<IVrednovanje[]>;
 @Injectable({ providedIn: 'root' })
 export class VrednovanjeService {
   protected resourceUrlSumPonudjana = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-ponudjena');
+  protected resourceUrlSumPonudjanaPonude = this.applicationConfigService.getEndpointFor('api/verednovanje-sum-postupak-ponude');
 
   protected resourceUrlSumProcjenjena = this.applicationConfigService.getEndpointFor('api/vrednovanje-sum-procijenjena');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/vrednovanjes');
@@ -58,6 +59,10 @@ export class VrednovanjeService {
       return [...vrednovanjesToAdd, ...vrednovanjeCollection];
     }
     return vrednovanjeCollection;
+  }
+
+  sumPostupciPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+    return this.http.get(`${this.resourceUrlSumPonudjanaPonude}/${sifraPostupka}/${sifraPonude}`);
   }
 
   sumPonudjana(sifraPostupka: number | undefined): Observable<any> {
