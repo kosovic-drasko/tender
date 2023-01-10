@@ -100,3 +100,18 @@ where `specifikacije`.`broj_partije` in
 
 create view view_ponudjaci as select distinct ANY_VALUE(`ponude`.`id`) AS `id`,ANY_VALUE(`ponude`.`sifra_postupka`) AS `sifra_postupka`,ANY_VALUE(`ponude`.`sifra_ponude`) AS `sifra_ponude`,ANY_VALUE(`ponudjaci`.`naziv_ponudjaca`) AS `naziv_ponudjaca` from (`ponudjaci` join `ponude` on((`ponude`.`sifra_ponudjaca` = `ponudjaci`.`id`)))
 GROUP BY ponude.sifra_ponude
+
+
+create or replace
+algorithm = UNDEFINED view `view_ponudjaci_prvorangirani` as
+select
+distinct any_value(`view_prvorangirani`.`id`) as `id`,
+any_value(`view_prvorangirani`.`sifra_postupka`) as `sifra_postupka`,
+any_value(`view_prvorangirani`.`sifra_ponude`) as `sifra_view_vrednovanje`,
+any_value(`ponudjaci`.`naziv_ponudjaca`) as `naziv_ponudjaca`
+from
+(`ponudjaci`
+join `view_prvorangirani` on
+((`view_prvorangirani`.`naziv_ponudjaca` = `ponudjaci`.`naziv_ponudjaca`)))
+group by
+`view_prvorangirani`.`sifra_ponude`;
