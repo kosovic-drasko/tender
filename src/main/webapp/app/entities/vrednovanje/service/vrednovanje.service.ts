@@ -61,7 +61,7 @@ export class VrednovanjeService {
     return vrednovanjeCollection;
   }
 
-  sumPostupciPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+  sumPostupciPonudjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumPonudjanaPonude}/${sifraPostupka}/${sifraPonude}`);
   }
 
