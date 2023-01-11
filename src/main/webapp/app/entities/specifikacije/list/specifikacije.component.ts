@@ -15,6 +15,7 @@ import { TableUtil } from '../../../tableUtil';
 @Component({
   selector: 'jhi-specifikacije',
   templateUrl: './specifikacije.component.html',
+  styleUrls: ['./specifikacije.scss'],
 })
 export class SpecifikacijeComponent implements OnInit {
   specifikacijes?: ISpecifikacije[];

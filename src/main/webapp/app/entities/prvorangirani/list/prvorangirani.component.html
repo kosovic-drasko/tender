@@ -23,7 +23,7 @@
     (change)="sumPostupciPonudeProcijenjeno()"
     cl="loadPageSifraPonude()"
   >
-    <option value="" selected disabled>Please select</option>
+    <option value="" selected disabled>Izaberite ponudjaca</option>
     <!--        <option [ngValue]="null">Vrati</option>-->
     <option id="ponudjac" [ngValue]="ponudjaciOption.sifraPonude" *ngFor="let ponudjaciOption of ponudjaci">
       {{ ponudjaciOption.nazivPonudjaca }}

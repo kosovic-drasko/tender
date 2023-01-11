@@ -33,7 +33,7 @@
     <span jhiTranslate="tenderApp.specifikacije.home.notFound">No Specifikacijes found</span>
   </div>
 
-  <div class="table table-responsive w-100 d-block d-md-table" id="entities" *ngIf="specifikacijes && specifikacijes.length > 0">
+  <div class="table-responsive table-entities" id="entities" *ngIf="specifikacijes && specifikacijes.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">

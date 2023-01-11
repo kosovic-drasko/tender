@@ -36,7 +36,7 @@
     (change)="sumPostupciPonude()"
     cl="loadPageSifraPonude()"
   >
-    <option value="" selected disabled>Please select</option>
+    <option value="" selected disabled>Izaberite ponudjaca</option>
     <!--        <option [ngValue]="null">Vrati</option>-->
     <option id="ponudjac" [ngValue]="ponudjaciOption.sifraPonude" *ngFor="let ponudjaciOption of ponudjaci">
       {{ ponudjaciOption.nazivPonudjaca }}
@@ -107,12 +107,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="selected">
-            <div class="d-flex">
-              <span jhiTranslate="tenderApp.viewPonude.selected">Selected</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+
           <th scope="col" jhiSortBy="nazivPonudjaca">
             <div class="d-flex">
               <span jhiTranslate="tenderApp.viewPonude.nazivPonudjaca">Naziv Ponudjaca</span>
@@ -125,7 +120,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col"></th>
+          <th>
+            <fa-icon type="submit" icon="times"></fa-icon>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -141,9 +138,9 @@
           <td>{{ viewPonude.ponudjenaVrijednost }}</td>
           <td>{{ viewPonude.rokIsporuke }}</td>
           <td>{{ viewPonude.jedinicnaCijena }}</td>
-          <td>{{ viewPonude.selected }}</td>
           <td>{{ viewPonude.nazivPonudjaca }}</td>
           <td>{{ viewPonude.karakteristika }}</td>
+          <td><input type="checkbox" /></td>
           <td class="text-end">
             <div class="btn-group">
               <button

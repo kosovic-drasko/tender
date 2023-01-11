@@ -6,7 +6,7 @@
         "refreshListLabel": "Učitaj ponovo",
         "createLabel": "Kreiraj novu Ponudu",
         "createOrEditLabel": "Kreirajte ili izmenite Ponudu",
-        "notFound": "No View Ponudes found"
+        "notFound": "Nema zapisa Ponuda"
       },
       "created": "Kreirana je nova Ponuda pod nazivom {{ param }}",
       "updated": "Ponuda pod nazivom {{ param }} je ažurirana",

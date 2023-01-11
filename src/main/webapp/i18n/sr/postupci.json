@@ -6,7 +6,7 @@
         "refreshListLabel": "Učitaj ponovo",
         "createLabel": "Kreiraj novi Postupak",
         "createOrEditLabel": "Kreirajte ili izmenite Postupak",
-        "notFound": "Nema postupka"
+        "notFound": "Nema zapisa Postupaka"
       },
       "created": "Kreiran je novi Postupak pod nazivom {{ param }}",
       "updated": "Postupak pod nazivom {{ param }} je ažuriran",

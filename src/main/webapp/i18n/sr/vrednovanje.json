@@ -4,7 +4,7 @@
       "home": {
         "title": "Vrednovanje",
         "refreshListLabel": "Učitaj ponovo",
-        "notFound": "Nije nadjen zapis vrednovanja"
+        "notFound": "Nema zapisa Vrednovanja"
       },
       "detail": {
         "title": "Vrednovanje"

@@ -6,7 +6,7 @@
         "refreshListLabel": "Učitaj ponovo",
         "createLabel": "Kreiraj novog Ponudjaca",
         "createOrEditLabel": "Kreirajte ili izmenite Ponudjaca",
-        "notFound": "Nema Ponudjaca"
+        "notFound": "Nema zapisa Ponudjaca"
       },
       "created": "Kreiran je novi Ponudjaci pod nazivom {{ param }}",
       "updated": "Ponudjac pod nazivom {{ param }} je ažuriran",
