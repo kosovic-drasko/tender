@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
-import tender.domain.ViewPonude;
 import tender.domain.Vrednovanje;
 import tender.repository.VrednovanjeRepository;
 import tender.service.VrednovanjeQueryService;
@@ -111,5 +110,10 @@ public class VrednovanjeResource {
     @GetMapping("/verednovanje-sum-postupak-ponude/{sifraPostupka}/{sifraPonude}")
     public Optional<Vrednovanje> getSumPostupakPonudeVrednovanje(@PathVariable Integer sifraPostupka, @PathVariable Integer sifraPonude) {
         return vrednovanjeRepository.sumPostupkaPonude(sifraPostupka, sifraPonude);
+    }
+
+    @GetMapping("/ponudjaci/{sifraPostupka}")
+    public List<Vrednovanje> ponudjaciVrednovanje(@PathVariable Integer sifraPostupka) {
+        return vrednovanjeRepository.ponudjaci(sifraPostupka);
     }
 }

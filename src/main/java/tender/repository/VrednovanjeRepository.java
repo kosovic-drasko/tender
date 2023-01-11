@@ -32,4 +32,6 @@ public interface VrednovanjeRepository extends JpaRepository<Vrednovanje, Long>,
         "select sum(p.ponudjenaVrijednost)as ukupno from ViewPonude p where p.sifraPostupka=:sifraPostupka and p.sifraPonude=:sifraPonude"
     )
     Optional<Vrednovanje> sumPostupkaPonude(@Param("sifraPostupka") Integer sifraPostupka, @Param("sifraPonude") Integer sifraPonude);
+    //    @Query(value = "select distinct any_value(`view_prvorangirani`.`id`) as `id`,any_value(`view_prvorangirani`.`bod_cijena`) as `bod_cijena`,any_value(`view_prvorangirani`.`atc`) as `atc`,any_value(`view_prvorangirani`.`sifra_postupka`) as `sifra_postupka`,any_value(`view_prvorangirani`.`sifra_ponude`) as `sifra_view_vrednovanje`,any_value(`ponudjaci`.`naziv_ponudjaca`) as `naziv_ponudjaca`from(`ponudjaci`join `view_prvorangirani` on((`view_prvorangirani`.`naziv_ponudjaca` = `ponudjaci`.`naziv_ponudjaca`))) where view_prvorangirani.sifra_postupka=:sifraPostupka group by`view_prvorangirani`.`sifra_ponude`",nativeQuery = true)
+    //    List<Vrednovanje> ponudjaci(@Param("sifraPostupka") Integer sifra);
 }
