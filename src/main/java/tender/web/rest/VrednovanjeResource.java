@@ -111,9 +111,8 @@ public class VrednovanjeResource {
     public Optional<Vrednovanje> getSumPostupakPonudeVrednovanje(@PathVariable Integer sifraPostupka, @PathVariable Integer sifraPonude) {
         return vrednovanjeRepository.sumPostupkaPonude(sifraPostupka, sifraPonude);
     }
-
-    @GetMapping("/ponudjaci/{sifraPostupka}")
-    public List<Vrednovanje> ponudjaciVrednovanje(@PathVariable Integer sifraPostupka) {
-        return vrednovanjeRepository.ponudjaci(sifraPostupka);
-    }
+    //    @GetMapping("/ponudjaci/{sifraPostupka}")
+    //    public List<Vrednovanje> ponudjaciVrednovanje(@PathVariable Integer sifraPostupka) {
+    //        return vrednovanjeRepository.ponudjaci(sifraPostupka);
+    //    }
 }

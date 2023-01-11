@@ -13,8 +13,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import tender.domain.Prvorangirani;
-import tender.domain.ViewPonude;
-import tender.domain.Vrednovanje;
 import tender.repository.PrvorangiraniRepository;
 import tender.service.PrvorangiraniQueryService;
 import tender.service.PrvorangiraniService;
@@ -112,5 +110,10 @@ public class PrvorangiraniResource {
         @PathVariable Integer sifraPonude
     ) {
         return prvorangiraniRepository.sumPostupkaPonudePrvorangiraniProcijenjena(sifraPostupka, sifraPonude);
+    }
+
+    @GetMapping("/ponude-ponudjaci-prvorangirani")
+    public List<Prvorangirani> getPonudePonudjaci() {
+        return prvorangiraniRepository.ponudjaciPrvorangirani();
     }
 }
