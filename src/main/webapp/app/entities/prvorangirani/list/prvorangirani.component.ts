@@ -107,7 +107,7 @@ export class PrvorangiraniComponent implements OnInit {
   protected queryBackendPostupakPonudjaci(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject = { 'sifraPostupka.in': this.postupak, sort: this.getSortQueryParam(predicate, ascending) };
-    return this.viewPonudjaciService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.prvorangiraniService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected queryBackendPonude(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {

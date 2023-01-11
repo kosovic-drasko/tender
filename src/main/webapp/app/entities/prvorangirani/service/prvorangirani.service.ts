@@ -23,6 +23,7 @@ export class PrvorangiraniService {
   );
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/prvorangiranis');
+  protected resourceUrlPonudjaci = this.applicationConfigService.getEndpointFor('api/ponude-ponudjaci-prvorangirani');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -79,5 +80,9 @@ export class PrvorangiraniService {
 
   sumPostupciProcijenjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumProcijenjenaPrvorangirani}/${sifraPostupka}/${sifraPonude}`);
+  }
+
+  ponudjaciPrvorangirani(): Observable<EntityArrayResponseType> {
+    return this.http.get<IPrvorangirani[]>(this.resourceUrlPonudjaci, { observe: 'response' });
   }
 }
