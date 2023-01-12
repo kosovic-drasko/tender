@@ -27,7 +27,7 @@ import { IPonudjaci } from '../../ponudjaci/ponudjaci.model';
 export class ViewPonudeComponent implements OnInit, OnChanges {
   viewPonudes?: IViewPonude[];
   isLoading = false;
-  sifraPonude?: number;
+  sifraPonude?: null;
   predicate = 'id';
   ascending = true;
   brojObrazac?: number = 0;
@@ -293,5 +293,9 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
 
   open(contentBrisiSelect: any): any {
     this.modalService.open(contentBrisiSelect, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  brisiSifruPonude(): void {
+    this.sifraPonude = null;
   }
 }

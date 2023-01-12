@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="tenderApp.prvorangirani.home.refreshListLabel">Refresh list</span>
+        <span (click)="brisiSifruPonude()" jhiTranslate="tenderApp.prvorangirani.home.refreshListLabel">Refresh list</span>
       </button>
       <button type="button" class="btn btn-primary" (click)="Excel()">Excel</button>
     </div>

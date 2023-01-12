@@ -21,7 +21,7 @@ import { ViewPonudjaciService } from '../../view-ponudjaci/service/view-ponudjac
 export class PrvorangiraniComponent implements OnInit {
   prvorangiranis?: IPrvorangirani[];
   isLoading = false;
-  sifraPonude?: number;
+  sifraPonude?: null;
   predicate = 'id';
   ascending = true;
   filters: IFilterOptions = new FilterOptions();
@@ -39,9 +39,7 @@ export class PrvorangiraniComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected viewPonudjaciService: ViewPonudjaciService
-  ) {
-    // this.prvorangiraniPonudjaci();
-  }
+  ) {}
 
   public resourceUrlExcelDownload = SERVER_API_URL + 'api/prvorangirani/file';
   trackId = (_index: number, item: IPrvorangirani): number => this.prvorangiraniService.getPrvorangiraniIdentifier(item);
@@ -280,5 +278,9 @@ export class PrvorangiraniComponent implements OnInit {
         console.log('Postupak je  .....', this.postupak);
       },
     });
+  }
+
+  brisiSifruPonude(): void {
+    this.sifraPonude = null;
   }
 }

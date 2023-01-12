@@ -74,11 +74,11 @@ export class PrvorangiraniService {
     return this.http.get(`${this.resourceUrlSumProcjenjena}/${sifraPostupka}`);
   }
 
-  sumPostupciPonudjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+  sumPostupciPonudjenaPonude(sifraPostupka: number | undefined, sifraPonude: null | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumPonudjanaPrvorangirani}/${sifraPostupka}/${sifraPonude}`);
   }
 
-  sumPostupciProcijenjenaPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+  sumPostupciProcijenjenaPonude(sifraPostupka: number | undefined, sifraPonude: null | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumProcijenjenaPrvorangirani}/${sifraPostupka}/${sifraPonude}`);
   }
 

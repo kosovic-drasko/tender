@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="tenderApp.viewPonudjaci.home.refreshListLabel">Refresh list</span>
+        <span (click)="brisiSifruPonude()" jhiTranslate="tenderApp.viewPonudjaci.home.refreshListLabel">Refresh list</span>
       </button>
     </div>
   </h2>

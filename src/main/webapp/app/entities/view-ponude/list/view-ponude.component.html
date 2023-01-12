@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadSifraPostupka()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="tenderApp.viewPonude.home.refreshListLabel">Refresh list</span>
+        <span (click)="brisiSifruPonude()" jhiTranslate="tenderApp.viewPonude.home.refreshListLabel">Refresh list</span>
       </button>
       <div class="btn-group" role="group" aria-label="Basic example">
         <button class="btn btn-primary" [routerLink]="['/ponude/new']">

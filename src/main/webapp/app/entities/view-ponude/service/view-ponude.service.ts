@@ -80,7 +80,8 @@ export class ViewPonudeService {
   sum(sifraPostupka: number | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSum}/${sifraPostupka}`);
   }
-  sumPostupciPonude(sifraPostupka: number | undefined, sifraPonude: number | undefined): Observable<any> {
+
+  sumPostupciPonude(sifraPostupka: number | undefined, sifraPonude: null | undefined): Observable<any> {
     return this.http.get(`${this.resourceUrlSumPostupciPonude}/${sifraPostupka}/${sifraPonude}`);
   }
 }
