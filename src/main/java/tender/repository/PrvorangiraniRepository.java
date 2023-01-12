@@ -45,9 +45,9 @@ public interface PrvorangiraniRepository extends JpaRepository<Prvorangirani, Lo
     Optional<Prvorangirani> sumPostupkaPonude(@Param("sifraPostupka") Integer sifraPostupka, @Param("sifraPonude") Integer sifraPonude);
 
     @Query(
-        value = "select distinct `id` AS `id`,\n" +
+        value = "select distinct ANY_VALUE(`id`)AS `id`,\n" +
         "                       ANY_VALUE(`sifra_postupka`)AS `sifra_postupka`,\n" +
-        "                       ANY_VALUE(`sifra_ponude`) AS `sifra_ponude`,\n" +
+        "                       (`sifra_ponude`) AS `sifra_ponude`,\n" +
         "                       ANY_VALUE(`broj_partije`) AS `broj_partije`,\n" +
         "                       ANY_VALUE(`naziv_proizvodjaca`) AS `naziv_proizvodjaca`,\n" +
         "                       ANY_VALUE(`zasticeni_naziv`) AS `zasticeni_naziv`,\n" +
