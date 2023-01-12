@@ -82,7 +82,7 @@ export class PrvorangiraniService {
     return this.http.get(`${this.resourceUrlSumProcijenjenaPrvorangirani}/${sifraPostupka}/${sifraPonude}`);
   }
 
-  ponudjaciPrvorangirani(): Observable<EntityArrayResponseType> {
-    return this.http.get<IPrvorangirani[]>(this.resourceUrlPonudjaci, { observe: 'response' });
+  ponudjaciPrvorangirani(): Observable<any> {
+    return this.http.get<IPrvorangirani[]>(this.resourceUrlPonudjaci);
   }
 }

@@ -45,27 +45,27 @@ public interface PrvorangiraniRepository extends JpaRepository<Prvorangirani, Lo
     Optional<Prvorangirani> sumPostupkaPonude(@Param("sifraPostupka") Integer sifraPostupka, @Param("sifraPonude") Integer sifraPonude);
 
     @Query(
-        value = "select distinct `ponude`.`id` AS `id`,\n" +
-        "                ANY_VALUE(`ponude`.`sifra_postupka`)AS `sifra_postupka`,\n" +
-        "                ANY_VALUE(`ponude`.`sifra_ponude`) AS `sifra_ponude`,\n" +
-        "                ANY_VALUE(`ponude`.`broj_partije`) AS `broj_partije`,\n" +
-        "                ANY_VALUE(`ponude`.`naziv_proizvodjaca`) AS `naziv_proizvodjaca`,\n" +
-        "                ANY_VALUE(`ponude`.`zasticeni_naziv`) AS `zasticeni_naziv`,\n" +
-        "                ANY_VALUE(`ponude`.`ponudjena_vrijednost`) AS `ponudjena_vrijednost`,\n" +
-        "                ANY_VALUE(`ponude`.`rok_isporuke`) AS `rok_isporuke`,\n" +
-        "                ANY_VALUE(`ponude`.`jedinicna_cijena`) AS `jedinicna_cijena`,\n" +
-        "                ANY_VALUE(`ponude`.`karakteristika`) AS `karakteristika_ponude`,\n" +
-        "                ANY_VALUE(`ponudjaci`.`naziv_ponudjaca`) AS `naziv_ponudjaca`,\n" +
-        "                ANY_VALUE(`specifikacije`.`atc`) AS `atc`,\n" +
-        "                ANY_VALUE(`specifikacije`.`karakteristika`) AS `karakteristika_specifikacije`,\n" +
-        "                ANY_VALUE(`specifikacije`.`trazena_kolicina`) AS `trazena_kolicina`,\n" +
-        "                ANY_VALUE(`specifikacije`.`procijenjena_vrijednost`) AS `procijenjena_vrijednost`,\n" +
-        "                ANY_VALUE(`postupci`.`vrsta_postupka`) AS `vrsta_postupka`,\n" +
-        "                ANY_VALUE((`postupci`.`kriterijum_cijena` * min(`ponude`.`ponudjena_vrijednost`) OVER (PARTITION BY `ponude`.`broj_partije`,`ponude`.`sifra_postupka` ) ) / `ponude`.`ponudjena_vrijednost`) AS `bod_cijena`,\n" +
-        "                ANY_VALUE((`postupci`.`drugi_kriterijum` * min(`ponude`.`rok_isporuke`) OVER (PARTITION BY `ponude`.`broj_partije`,`ponude`.`sifra_postupka` ) ) / `ponude`.`rok_isporuke`) AS `bod_rok`,\n" +
-        "                ANY_VALUE(((`postupci`.`kriterijum_cijena` * min(`ponude`.`ponudjena_vrijednost`) OVER (PARTITION BY `ponude`.`broj_partije`,`ponude`.`sifra_postupka` ) ) / `ponude`.`ponudjena_vrijednost`) + ((`postupci`.`drugi_kriterijum` * min(`ponude`.`rok_isporuke`) OVER (PARTITION BY `ponude`.`broj_partije`,`ponude`.`sifra_postupka` ) ) / `ponude`.`rok_isporuke`)) AS `bod_ukupno`\n" +
-        "from (((`ponude` join `postupci` on((`ponude`.`sifra_postupka` = `postupci`.`sifra_postupka`))) join `ponudjaci` on((`ponude`.`sifra_ponudjaca` = `ponudjaci`.`id`))) join `specifikacije` on(((`ponude`.`sifra_postupka` = `specifikacije`.`sifra_postupka`) and (`ponude`.`broj_partije` = `specifikacije`.`broj_partije`))))\n" +
-        " group by`ponude`.`sifra_ponude` ",
+        value = "select distinct `id` AS `id`,\n" +
+        "                       ANY_VALUE(`sifra_postupka`)AS `sifra_postupka`,\n" +
+        "                       ANY_VALUE(`sifra_ponude`) AS `sifra_ponude`,\n" +
+        "                       ANY_VALUE(`broj_partije`) AS `broj_partije`,\n" +
+        "                       ANY_VALUE(`naziv_proizvodjaca`) AS `naziv_proizvodjaca`,\n" +
+        "                       ANY_VALUE(`zasticeni_naziv`) AS `zasticeni_naziv`,\n" +
+        "                       ANY_VALUE(`ponudjena_vrijednost`) AS `ponudjena_vrijednost`,\n" +
+        "                       ANY_VALUE(`rok_isporuke`) AS `rok_isporuke`,\n" +
+        "                       ANY_VALUE(`jedinicna_cijena`) AS `jedinicna_cijena`,\n" +
+        "                       ANY_VALUE(`karakteristika_ponude`) AS `karakteristika_ponude`,\n" +
+        "                       ANY_VALUE(`naziv_ponudjaca`) AS `naziv_ponudjaca`,\n" +
+        "                       ANY_VALUE(`atc`) AS `atc`,\n" +
+        "                       ANY_VALUE(`karakteristika_specifikacije`) AS `karakteristika_specifikacije`,\n" +
+        "                       ANY_VALUE(`trazena_kolicina`) AS `trazena_kolicina`,\n" +
+        "                       ANY_VALUE(`procijenjena_vrijednost`) AS `procijenjena_vrijednost`,\n" +
+        "                       ANY_VALUE(`vrsta_postupka`) AS `vrsta_postupka`,\n" +
+        "                       ANY_VALUE(`bod_cijena`) AS `bod_cijena`,\n" +
+        "                       ANY_VALUE(`bod_rok`) AS `bod_rok`,\n" +
+        "                       ANY_VALUE(`bod_ukupno`) AS `bod_ukupno`\n" +
+        "\t\t\t\t\t\t\t\t\t\t\t from view_prvorangirani\n" +
+        "\t\t\t\t\t\t\t\t\t\t\t GROUP BY sifra_ponude",
         nativeQuery = true
     )
     List<Prvorangirani> ponudjaciPrvorangirani();

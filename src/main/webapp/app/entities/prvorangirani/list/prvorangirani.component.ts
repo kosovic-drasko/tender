@@ -31,7 +31,7 @@ export class PrvorangiraniComponent implements OnInit {
   page = 1;
   ukupno_procjenjeno?: HttpResponse<any>;
   ukupno_ponudjeno?: HttpResponse<any>;
-  ponudjaci: IViewPonudjaci[] = [];
+  ponudjaci?: any;
   @Input() postupak: any;
 
   constructor(
@@ -40,7 +40,7 @@ export class PrvorangiraniComponent implements OnInit {
     public router: Router,
     protected viewPonudjaciService: ViewPonudjaciService
   ) {
-    this.loadPostupciPonudjaci();
+    this.prvorangiraniPonudjaci();
   }
 
   public resourceUrlExcelDownload = SERVER_API_URL + 'api/prvorangirani/file';
@@ -49,7 +49,7 @@ export class PrvorangiraniComponent implements OnInit {
   ngOnInit(): void {
     if (this.postupak !== undefined) {
       this.loadSifraPostupka();
-      this.loadPostupciPonudjaci();
+      this.prvorangiraniPonudjaci();
       this.sumProcjenjeno();
       this.sumPonudjeno();
     } else {
@@ -87,15 +87,15 @@ export class PrvorangiraniComponent implements OnInit {
     );
   }
 
-  loadPostupciPonudjaci(): void {
-    this.loadPonudjaciPostupak().subscribe({
-      next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccessPonudjaci(res);
-        this.ponudjaci = res.body ?? [];
-        console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
-      },
-    });
-  }
+  // loadPostupciPonudjaci(): void {
+  //   this.loadPonudjaciPostupak().subscribe({
+  //     next: (res: EntityArrayResponseType) => {
+  //       this.onResponseSuccessPonudjaci(res);
+  //       this.ponudjaci = res.body ?? [];
+  //       console.log('To su Ponudjaci iz loadPonudjaci:----------->', this.ponudjaci);
+  //     },
+  //   });
+  // }
 
   protected loadPonudjaciPostupak(): Observable<EntityArrayResponseType> {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
@@ -150,11 +150,11 @@ export class PrvorangiraniComponent implements OnInit {
     this.prvorangiranis = dataFromBody;
   }
 
-  protected onResponseSuccessPonudjaci(response: EntityArrayResponseType): void {
-    this.fillComponentAttributesFromResponseHeader(response.headers);
-    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.ponudjaci = dataFromBody;
-  }
+  // protected onResponseSuccessPonudjaci(response: EntityArrayResponseType): void {
+  //   this.fillComponentAttributesFromResponseHeader(response.headers);
+  //   const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
+  //   this.ponudjaci = dataFromBody;
+  // }
 
   protected fillComponentAttributesFromResponseBody(data: IPrvorangirani[] | null): IPrvorangirani[] {
     return data ?? [];
@@ -268,6 +268,15 @@ export class PrvorangiraniComponent implements OnInit {
       next: (res: HttpResponse<any>) => {
         this.ukupno_procjenjeno = res;
         console.log('ukupno po ponudjacima procijenjeno', this.ukupno_procjenjeno);
+      },
+    });
+  }
+
+  prvorangiraniPonudjaci() {
+    this.prvorangiraniService.ponudjaciPrvorangirani().subscribe({
+      next: (res: any) => {
+        this.ponudjaci = res;
+        console.log('Ponudjaci su iz kraja .....', this.ponudjaci);
       },
     });
   }
