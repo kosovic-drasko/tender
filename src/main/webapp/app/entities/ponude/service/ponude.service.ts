@@ -16,7 +16,9 @@ export type EntityArrayResponseType = HttpResponse<IPonude[]>;
 export class PonudeService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/ponudes');
   public resourceUrlExcelUpload = SERVER_API_URL + 'api/upload';
-
+  public urlDeleSeleced = this.applicationConfigService.getEndpointFor('api/ponude/delete/selected');
+  public urlUpdateSeleced = this.applicationConfigService.getEndpointFor('api/ponude/update/selected');
+  public resourceUrlSifraPonudeDelete = this.applicationConfigService.getEndpointFor('api/ponude-delete');
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(ponude: IPonude | (Omit<IPonude, 'id'> & { id: null })): Observable<EntityResponseType> {
@@ -25,6 +27,10 @@ export class PonudeService {
 
   update(ponude: IPonude): Observable<EntityResponseType> {
     return this.http.put<IPonude>(`${this.resourceUrl}/${this.getPonudeIdentifier(ponude)}`, ponude, { observe: 'response' });
+  }
+
+  updateSelected(id: number): any {
+    return this.http.put<IPonude>(`${this.urlUpdateSeleced}/${id}`, { observe: 'response' });
   }
 
   partialUpdate(ponude: PartialUpdatePonude): Observable<EntityResponseType> {
@@ -78,5 +84,13 @@ export class PonudeService {
     headers.append('Accept', 'application/json');
 
     return this.http.post(this.resourceUrlExcelUpload, formData, { headers });
+  }
+
+  deleteSifraPonude(sifraPonude: number): any {
+    return this.http.delete(`${this.resourceUrlSifraPonudeDelete}/${sifraPonude}`);
+  }
+
+  deleteSelected(): void {
+    this.http.delete(`${this.urlDeleSeleced}`).subscribe();
   }
 }

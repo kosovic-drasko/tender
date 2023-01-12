@@ -121,7 +121,7 @@
             </div>
           </th>
           <th>
-            <fa-icon type="submit" icon="times"></fa-icon>
+            <fa-icon type="submit" icon="times" (click)="open(contentBrisiSelect)"></fa-icon>
           </th>
         </tr>
       </thead>
@@ -140,7 +140,7 @@
           <td>{{ viewPonude.jedinicnaCijena }}</td>
           <td>{{ viewPonude.nazivPonudjaca }}</td>
           <td>{{ viewPonude.karakteristika }}</td>
-          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" (click)="updateSelected(viewPonude.id)" /></td>
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -206,4 +206,35 @@
       ></ngb-pagination>
     </div>
   </div>
+  <ng-template #contentBrisiSelect let-modal>
+    <div class="modal-body">
+      <p>Dali ste sigurni da zeliet izbrisete selektovane partije</p>
+    </div>
+    <!--    <div class="modal-footer">-->
+    <!--&lt;!&ndash;      <button mat-button color="primary" (click)="modal.close('Save click')">NE</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;      <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="modal.close('Save click')">NE</button>&ndash;&gt;-->
+    <!--      <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="modal.close('Save click')">&times;</button>-->
+    <!--      <button id="jhi-confirm-delete-viewPonude" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger" (click)="modal.close('Save click')">-->
+    <!--&lt;!&ndash;      <button mat-button color="warn"  (click)="modal.close('Save click')">&ndash;&gt;-->
+    <!--        DA-->
+    <!--      </button>-->
+    <!--    </div>-->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Otkaži</span>
+      </button>
+
+      <button
+        id="jhi-confirm-delete-viewPonude"
+        data-cy="entityConfirmDeleteButton"
+        type="submit"
+        class="btn btn-danger"
+        (click)="modal.close('Save click')"
+      >
+        <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete" (click)="deleteSelected()" (keyup)="loadPostupak()"
+          >Obriši</span
+        >
+      </button>
+    </div>
+  </ng-template>
 </div>

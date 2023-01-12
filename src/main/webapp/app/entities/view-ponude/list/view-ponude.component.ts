@@ -58,6 +58,15 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
 
   trackId = (_index: number, item: IViewPonude): number => this.viewPonudeService.getViewPonudeIdentifier(item);
 
+  // deleteSelected(): void {
+  //   const modalRef = this.modalService.open(PonudeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+  //
+  //   modalRef.closed.subscribe(reason => {
+  //     if (reason === 'deleted') {
+  //       this.loadPostupak();
+  //     }
+  //   });
+  // }
   delete(ponude: IPonude): void {
     const modalRef = this.modalService.open(PonudeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.ponude = ponude;
@@ -268,5 +277,21 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     console.log('Promjena');
+  }
+
+  deleteSelected(): void {
+    this.ponudeService.deleteSelected();
+    this.loadPostupak();
+  }
+  updateSelected(id: number): void {
+    this.ponudeService.updateSelected(id).subscribe({
+      next: (res: any) => {
+        console.log('Dodato True');
+      },
+    });
+  }
+
+  open(contentBrisiSelect: any): any {
+    this.modalService.open(contentBrisiSelect, { ariaLabelledBy: 'modal-basic-title' });
   }
 }
