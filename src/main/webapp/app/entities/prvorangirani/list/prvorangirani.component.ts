@@ -40,7 +40,7 @@ export class PrvorangiraniComponent implements OnInit {
     public router: Router,
     protected viewPonudjaciService: ViewPonudjaciService
   ) {
-    this.prvorangiraniPonudjaci();
+    // this.prvorangiraniPonudjaci();
   }
 
   public resourceUrlExcelDownload = SERVER_API_URL + 'api/prvorangirani/file';
