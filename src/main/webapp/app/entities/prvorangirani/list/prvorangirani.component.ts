@@ -273,10 +273,11 @@ export class PrvorangiraniComponent implements OnInit {
   }
 
   prvorangiraniPonudjaci() {
-    this.prvorangiraniService.ponudjaciPrvorangirani().subscribe({
+    this.prvorangiraniService.ponudjaciPrvorangirani(this.postupak).subscribe({
       next: (res: any) => {
         this.ponudjaci = res;
         console.log('Ponudjaci su iz kraja .....', this.ponudjaci);
+        console.log('Postupak je  .....', this.postupak);
       },
     });
   }

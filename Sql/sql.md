@@ -115,3 +115,25 @@ join `view_prvorangirani` on
 ((`view_prvorangirani`.`naziv_ponudjaca` = `ponudjaci`.`naziv_ponudjaca`)))
 group by
 `view_prvorangirani`.`sifra_ponude`;
+
+
+select distinct  ANY_VALUE(`id`) AS `id`,
+ANY_VALUE(`sifra_postupka`)AS `sifra_postupka`,
+ANY_VALUE(`sifra_ponude`) AS `sifra_ponude`,
+ANY_VALUE(`broj_partije`) AS `broj_partije`,
+ANY_VALUE(`naziv_proizvodjaca`) AS `naziv_proizvodjaca`,
+ANY_VALUE(`zasticeni_naziv`) AS `zasticeni_naziv`,
+ANY_VALUE(`ponudjena_vrijednost`) AS `ponudjena_vrijednost`,
+ANY_VALUE(`rok_isporuke`) AS `rok_isporuke`,
+ANY_VALUE(`jedinicna_cijena`) AS `jedinicna_cijena`,
+ANY_VALUE(`karakteristika_ponude`) AS `karakteristika_ponude`,
+ANY_VALUE(`naziv_ponudjaca`) AS `naziv_ponudjaca`,
+ANY_VALUE(`atc`) AS `atc`,
+ANY_VALUE(`karakteristika_specifikacije`) AS `karakteristika_specifikacije`,
+ANY_VALUE(`trazena_kolicina`) AS `trazena_kolicina`,
+ANY_VALUE(`procijenjena_vrijednost`) AS `procijenjena_vrijednost`,
+ANY_VALUE(`vrsta_postupka`) AS `vrsta_postupka`
+from view_prvorangirani
+
+
+											 GROUP BY sifra_ponude

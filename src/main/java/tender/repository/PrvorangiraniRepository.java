@@ -65,8 +65,9 @@ public interface PrvorangiraniRepository extends JpaRepository<Prvorangirani, Lo
         "                       ANY_VALUE(`bod_rok`) AS `bod_rok`,\n" +
         "                       ANY_VALUE(`bod_ukupno`) AS `bod_ukupno`\n" +
         "\t\t\t\t\t\t\t\t\t\t\t from view_prvorangirani\n" +
+        "WHERE sifra_postupka=:sifraPostupka\n" +
         "\t\t\t\t\t\t\t\t\t\t\t GROUP BY sifra_ponude",
         nativeQuery = true
     )
-    List<Prvorangirani> ponudjaciPrvorangirani();
+    List<Prvorangirani> ponudjaciPrvorangirani(@Param("sifraPostupka") Integer sifraPostupka);
 }

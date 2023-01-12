@@ -112,8 +112,8 @@ public class PrvorangiraniResource {
         return prvorangiraniRepository.sumPostupkaPonudePrvorangiraniProcijenjena(sifraPostupka, sifraPonude);
     }
 
-    @GetMapping("/ponude-ponudjaci-prvorangirani")
-    public List<Prvorangirani> getPonudePonudjaci() {
-        return prvorangiraniRepository.ponudjaciPrvorangirani();
+    @GetMapping("/ponude-ponudjaci-prvorangirani/{sifraPostupka}")
+    public List<Prvorangirani> getPonudePonudjaci(@PathVariable Integer sifraPostupka) {
+        return prvorangiraniRepository.ponudjaciPrvorangirani(sifraPostupka);
     }
 }
