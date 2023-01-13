@@ -17,7 +17,7 @@
         </button>
         <button type="button" class="btn btn-primary" (click)="obrazacExcel()">Napravi</button>
         <!--        <button type="button" class="btn btn-primary" (click)="fileInput.click()">Nadji</button>-->
-        <!--        <button type="button" class="btn btn-primary" (click)="uploadFile()">Unesi</button>-->
+        <button type="button" class="btn btn-primary" (click)="open(contentBrisiPoSifriPonude)">Ukloni cijelu ponudu</button>
         <button *ngIf="postupak" type="button" class="btn btn-primary" (click)="Excel()">Excel</button>
       </div>
       <!--      <input hidden #fileInput type="file" id="file1" />-->
@@ -210,15 +210,7 @@
     <div class="modal-body">
       <p>Dali ste sigurni da zeliet izbrisete selektovane partije</p>
     </div>
-    <!--    <div class="modal-footer">-->
-    <!--&lt;!&ndash;      <button mat-button color="primary" (click)="modal.close('Save click')">NE</button>&ndash;&gt;-->
-    <!--&lt;!&ndash;      <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="modal.close('Save click')">NE</button>&ndash;&gt;-->
-    <!--      <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="modal.close('Save click')">&times;</button>-->
-    <!--      <button id="jhi-confirm-delete-viewPonude" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger" (click)="modal.close('Save click')">-->
-    <!--&lt;!&ndash;      <button mat-button color="warn"  (click)="modal.close('Save click')">&ndash;&gt;-->
-    <!--        DA-->
-    <!--      </button>-->
-    <!--    </div>-->
+
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')">
         <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Otkaži</span>
@@ -232,6 +224,38 @@
         (click)="modal.close('Save click')"
       >
         <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete" (click)="deleteSelected()" (keyup)="loadPostupak()"
+          >Obriši</span
+        >
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template #contentBrisiPoSifriPonude let-modal>
+    <div class="modal-body">
+      <h4>Dali ste sigurni da zelite izbrisete cijelu ponudu</h4>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Otkaži</span>
+      </button>
+      <!--      <button-->
+      <!--        mat-button-->
+      <!--        color="warn"-->
+      <!--        (click)="deleteSifra()"-->
+      <!--        (click)="loadAll()"-->
+      <!--        (click)="sifraPonudeNull()"-->
+      <!--        (click)="modal.close('Save click')"-->
+      <!--      >-->
+      <!--        DA-->
+      <!--      </button>-->
+      <button
+        id="jhi-confirm-delete-viewPonude1"
+        data-cy="entityConfirmDeleteButton"
+        type="submit"
+        class="btn btn-danger"
+        (click)="modal.close('Save click')"
+      >
+        <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete" (click)="deleteSifra()" (keyup)="loadPostupak()"
           >Obriši</span
         >
       </button>

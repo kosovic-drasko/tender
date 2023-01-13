@@ -298,4 +298,13 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
   brisiSifruPonude(): void {
     this.sifraPonude = null;
   }
+
+  deleteSifra(): void {
+    this.ponudeService.deleteSifraPonude(this.sifraPonude).subscribe();
+    this.loadPostupak();
+  }
+
+  openDeleteSifraPonude(contentBrisiPoSifriPonude: any): any {
+    this.modalService.open(contentBrisiPoSifriPonude, { ariaLabelledBy: 'modal-basic-title' });
+  }
 }

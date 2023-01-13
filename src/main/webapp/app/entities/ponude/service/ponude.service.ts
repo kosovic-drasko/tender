@@ -86,7 +86,7 @@ export class PonudeService {
     return this.http.post(this.resourceUrlExcelUpload, formData, { headers });
   }
 
-  deleteSifraPonude(sifraPonude: number): any {
+  deleteSifraPonude(sifraPonude: null | undefined): any {
     return this.http.delete(`${this.resourceUrlSifraPonudeDelete}/${sifraPonude}`);
   }
 
