@@ -174,7 +174,9 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
     const formData = new FormData();
     formData.append('files', this.fileInput.nativeElement.files[0]);
     this.ponudeService.UploadExcel(formData).subscribe(() => {
-      this.load();
+      setTimeout(() => {
+        this.loadSifraPostupka();
+      }, 1000);
     });
   }
   loadSifraPonude(): void {
@@ -272,7 +274,9 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
 
   deleteSelected(): void {
     this.ponudeService.deleteSelected();
-    this.loadSifraPostupka();
+    setTimeout(() => {
+      this.loadSifraPostupka();
+    }, 1000);
   }
   updateSelected(id: number): void {
     this.ponudeService.updateSelected(id).subscribe({
@@ -299,5 +303,11 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
 
   openDeleteSifraPonude(contentBrisiPoSifriPonude: any): any {
     this.modalService.open(contentBrisiPoSifriPonude, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  clearInputFile() {
+    setTimeout(() => {
+      this.loadSifraPostupka();
+    }, 1000);
   }
 }
