@@ -35,7 +35,8 @@ export class SpecifikacijeUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    this.router.navigate(['/specifikacije']);
+    // this.router.navigate(['/specifikacije']);
+    window.history.back();
   }
 
   save(): void {

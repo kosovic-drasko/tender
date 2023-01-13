@@ -17,7 +17,9 @@
         </button>
         <button type="button" class="btn btn-primary" (click)="obrazacExcel()">Napravi</button>
         <!--        <button type="button" class="btn btn-primary" (click)="fileInput.click()">Nadji</button>-->
-        <button type="button" class="btn btn-primary" (click)="open(contentBrisiPoSifriPonude)">Ukloni cijelu ponudu</button>
+        <button type="button" class="btn btn-primary" (click)="openDeleteSifraPonude(contentBrisiPoSifriPonude)">
+          Ukloni cijelu ponudu
+        </button>
         <button *ngIf="postupak" type="button" class="btn btn-primary" (click)="Excel()">Excel</button>
       </div>
       <!--      <input hidden #fileInput type="file" id="file1" />-->
@@ -223,7 +225,10 @@
         class="btn btn-danger"
         (click)="modal.close('Save click')"
       >
-        <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete" (click)="deleteSelected()" (keyup)="loadPostupak()"
+        <fa-icon icon="times"></fa-icon>&nbsp;<span
+          jhiTranslate="entity.action.delete"
+          (click)="deleteSelected()"
+          (keyup)="loadSifraPostupka()"
           >Obriši</span
         >
       </button>
@@ -255,7 +260,11 @@
         class="btn btn-danger"
         (click)="modal.close('Save click')"
       >
-        <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete" (click)="deleteSifra()" (keyup)="loadPostupak()"
+        <fa-icon icon="times"></fa-icon>&nbsp;<span
+          jhiTranslate="entity.action.delete"
+          (click)="deleteSifra()"
+          (keyup)="loadSifraPostupka()"
+          (click)="brisiSifruPonude()"
           >Obriši</span
         >
       </button>

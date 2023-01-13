@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -24,6 +24,7 @@ export class PonudeUpdateComponent implements OnInit {
     protected ponudeService: PonudeService,
     protected ponudeFormService: PonudeFormService,
     protected activatedRoute: ActivatedRoute,
+    public router: Router,
     protected ponudjaciService: PonudjaciService
   ) {}
 
@@ -45,6 +46,7 @@ export class PonudeUpdateComponent implements OnInit {
     });
   }
   previousState(): void {
+    // this.router.navigate(['/view-ponude']);
     window.history.back();
   }
 

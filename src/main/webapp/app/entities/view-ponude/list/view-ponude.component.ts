@@ -58,15 +58,6 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
 
   trackId = (_index: number, item: IViewPonude): number => this.viewPonudeService.getViewPonudeIdentifier(item);
 
-  // deleteSelected(): void {
-  //   const modalRef = this.modalService.open(PonudeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-  //
-  //   modalRef.closed.subscribe(reason => {
-  //     if (reason === 'deleted') {
-  //       this.loadPostupak();
-  //     }
-  //   });
-  // }
   delete(ponude: IPonude): void {
     const modalRef = this.modalService.open(PonudeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.ponude = ponude;
@@ -281,7 +272,7 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
 
   deleteSelected(): void {
     this.ponudeService.deleteSelected();
-    this.loadPostupak();
+    this.loadSifraPostupka();
   }
   updateSelected(id: number): void {
     this.ponudeService.updateSelected(id).subscribe({
@@ -301,7 +292,9 @@ export class ViewPonudeComponent implements OnInit, OnChanges {
 
   deleteSifra(): void {
     this.ponudeService.deleteSifraPonude(this.sifraPonude).subscribe();
-    this.loadPostupak();
+    setTimeout(() => {
+      this.loadSifraPostupka();
+    }, 1000);
   }
 
   openDeleteSifraPonude(contentBrisiPoSifriPonude: any): any {
