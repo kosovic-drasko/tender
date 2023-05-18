@@ -2,23 +2,26 @@ import { IPonudjaci, NewPonudjaci } from './ponudjaci.model';
 
 export const sampleWithRequiredData: IPonudjaci = {
   id: 58649,
+  nazivPonudjaca: 'system-worthy withdrawal',
 };
 
 export const sampleWithPartialData: IPonudjaci = {
-  id: 65119,
-  adresaPonudjaca: 'leading-edge',
-  bankaRacun: 'Monaco compressing utilize',
+  id: 54097,
+  nazivPonudjaca: 'gold withdrawal',
+  adresaPonudjaca: 'distributed up Intelligent',
+  bankaRacun: 'monetize',
 };
 
 export const sampleWithFullData: IPonudjaci = {
-  id: 35117,
-  nazivPonudjaca: 'next-generation back',
-  odgovornoLice: 'Senior',
-  adresaPonudjaca: 'complexity Berkshire',
-  bankaRacun: 'Planner',
+  id: 63886,
+  nazivPonudjaca: 'Valley Planner',
+  odgovornoLice: 'green Loan Technician',
+  adresaPonudjaca: 'Table',
+  bankaRacun: 'Sleek Libyan Chair',
 };
 
 export const sampleWithNewData: NewPonudjaci = {
+  nazivPonudjaca: 'overriding Enhanced Unions',
   id: null,
 };
 

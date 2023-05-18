@@ -15,7 +15,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="naziv_ponudjaca" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="odgovorno_lice" type="varchar(255)">
                 <constraints nullable="true" />

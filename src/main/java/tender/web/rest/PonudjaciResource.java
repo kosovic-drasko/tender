@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,7 +64,7 @@ public class PonudjaciResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/ponudjacis")
-    public ResponseEntity<Ponudjaci> createPonudjaci(@RequestBody Ponudjaci ponudjaci) throws URISyntaxException {
+    public ResponseEntity<Ponudjaci> createPonudjaci(@Valid @RequestBody Ponudjaci ponudjaci) throws URISyntaxException {
         log.debug("REST request to save Ponudjaci : {}", ponudjaci);
         if (ponudjaci.getId() != null) {
             throw new BadRequestAlertException("A new ponudjaci cannot already have an ID", ENTITY_NAME, "idexists");
@@ -87,7 +89,7 @@ public class PonudjaciResource {
     @PutMapping("/ponudjacis/{id}")
     public ResponseEntity<Ponudjaci> updatePonudjaci(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Ponudjaci ponudjaci
+        @Valid @RequestBody Ponudjaci ponudjaci
     ) throws URISyntaxException {
         log.debug("REST request to update Ponudjaci : {}, {}", id, ponudjaci);
         if (ponudjaci.getId() == null) {
@@ -122,7 +124,7 @@ public class PonudjaciResource {
     @PatchMapping(value = "/ponudjacis/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Ponudjaci> partialUpdatePonudjaci(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Ponudjaci ponudjaci
+        @NotNull @RequestBody Ponudjaci ponudjaci
     ) throws URISyntaxException {
         log.debug("REST request to partial update Ponudjaci partially : {}, {}", id, ponudjaci);
         if (ponudjaci.getId() == null) {

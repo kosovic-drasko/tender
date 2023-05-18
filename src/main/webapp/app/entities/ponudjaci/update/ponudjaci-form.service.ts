@@ -41,7 +41,9 @@ export class PonudjaciFormService {
           validators: [Validators.required],
         }
       ),
-      nazivPonudjaca: new FormControl(ponudjaciRawValue.nazivPonudjaca),
+      nazivPonudjaca: new FormControl(ponudjaciRawValue.nazivPonudjaca, {
+        validators: [Validators.required],
+      }),
       odgovornoLice: new FormControl(ponudjaciRawValue.odgovornoLice),
       adresaPonudjaca: new FormControl(ponudjaciRawValue.adresaPonudjaca),
       bankaRacun: new FormControl(ponudjaciRawValue.bankaRacun),

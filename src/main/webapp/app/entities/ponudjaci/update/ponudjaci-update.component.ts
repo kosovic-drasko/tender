@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -11,7 +11,6 @@ import { PonudjaciService } from '../service/ponudjaci.service';
 @Component({
   selector: 'jhi-ponudjaci-update',
   templateUrl: './ponudjaci-update.component.html',
-  styleUrls: ['./ponudjaci.scss'],
 })
 export class PonudjaciUpdateComponent implements OnInit {
   isSaving = false;
@@ -22,8 +21,7 @@ export class PonudjaciUpdateComponent implements OnInit {
   constructor(
     protected ponudjaciService: PonudjaciService,
     protected ponudjaciFormService: PonudjaciFormService,
-    protected activatedRoute: ActivatedRoute,
-    public router: Router
+    protected activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +34,7 @@ export class PonudjaciUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    // window.history.back();
-    this.router.navigate(['/ponudjaci']);
+    window.history.back();
   }
 
   save(): void {

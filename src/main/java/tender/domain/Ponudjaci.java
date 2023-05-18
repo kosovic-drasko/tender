@@ -2,6 +2,7 @@ package tender.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +22,8 @@ public class Ponudjaci implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "naziv_ponudjaca")
+    @NotNull
+    @Column(name = "naziv_ponudjaca", nullable = false)
     private String nazivPonudjaca;
 
     @Column(name = "odgovorno_lice")
