@@ -7,7 +7,8 @@
   "fields": [
     {
       "fieldName": "nazivPonudjaca",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "odgovornoLice",
