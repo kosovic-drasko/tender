@@ -3,7 +3,7 @@
     <span jhiTranslate="tenderApp.specifikacije.home.title">Specifikacijes</span>
     <div class="mb-3">
       <label (click)="fileInput.click()" class="form-label"><span></span></label>
-      <input #fileInput type="file" id="file" (input)="uploadFile()" class="form-control" />
+      <input #fileInput type="file" id="formFile" (input)="uploadFile()" class="form-control" />
     </div>
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">

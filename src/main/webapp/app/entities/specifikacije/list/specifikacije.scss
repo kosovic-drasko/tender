@@ -1,9 +1,16 @@
-//input[type="file"] {
-//  display: none;
-//}
-//.custom-file-upload {
-//  border: 1px solid #ccc;
-//  display: inline-block;
-//  padding: 6px 12px;
-//  cursor: pointer;
-//}
+// @import "bootstrap/functions";
+
+// $custom-file-text: (
+//   en: "Browse",
+//   es: "Elegir"
+// );
+
+// @import "bootstrap";
+#formFile::before {
+  content: 'Izaberi fajl';
+  position: absolute;
+  z-index: 2;
+  display: block;
+  background-color: #eee;
+  width: 100px;
+}
