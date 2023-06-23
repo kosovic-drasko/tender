@@ -8,7 +8,7 @@
 // @import "bootstrap";
 #formFile::before {
   content: ' ';
-  background: url('http://phpfileuploader.com/images/upload.png') no-repeat;
+  background: url('./folder_search.ico') no-repeat;
   position: absolute;
   z-index: 2;
   display: block;

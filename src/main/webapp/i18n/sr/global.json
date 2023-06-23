@@ -98,7 +98,7 @@
     "ribbon": {
       "dev": "Razvojno okruženje"
     },
-    "item-count": "Showing {{first}} - {{second}} of {{total}} items."
+    "item-count": "Prikazi {{first}} - {{second}} of {{total}} strana."
   },
   "entity": {
     "action": {
