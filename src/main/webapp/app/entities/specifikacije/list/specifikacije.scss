@@ -7,13 +7,14 @@
 
 // @import "bootstrap";
 #formFile::before {
-  content: 'Izaberi fajl';
+  content: ' ';
+  background: url('http://phpfileuploader.com/images/upload.png') no-repeat;
   position: absolute;
   z-index: 2;
   display: block;
   background-color: #eee;
   width: 100px;
 }
-.custom-file-label::before {
-  content: 'Charger';
-}
+// .custom-file-label::before {
+//   content: 'Charger';
+// }
