@@ -6,15 +6,15 @@
 // );
 
 // @import "bootstrap";
-#formFile::before {
-  content: ' ';
-  background: url('./folder_search.ico') no-repeat;
-  position: absolute;
-  z-index: 2;
-  display: block;
-  background-color: #eee;
-  width: 100px;
-}
+// #formFile::before {
+//   content: ' ';
+//   background: url('./search_icon.svg') no-repeat;
+//   position: absolute;
+//   z-index: 2;
+//   display: block;
+//   background-color: #eee;
+//   width: 100px;
+// }
 // .custom-file-label::before {
 //   content: 'Charger';
 // }
