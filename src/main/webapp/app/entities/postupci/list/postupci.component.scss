@@ -1,10 +1,14 @@
-.hovers:hover {
-  background-color: #2196f3;
+.hovers hover {
+  //  color: aliceblue;
+  background: #4582ec;
+}
+.slova:hover {
+  background: #4582ec;
   color: white;
 }
 
-.crveno {
-  background: red;
+.crveno:hover {
+  background-color: #4582ec;
   color: white;
 }
 tr {

@@ -34,12 +34,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
+          <!-- <th scope="col" jhiSortBy="id">
             <div class="d-flex">
               <span jhiTranslate="global.field.id">ID</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" jhiSortBy="sifraPostupka">
             <div class="d-flex">
               <span jhiTranslate="tenderApp.postupci.sifraPostupka">Sifra Postupka</span>
@@ -93,9 +93,9 @@
       </thead>
       <tbody>
         <tr class="hovers" *ngFor="let postupci of postupcis; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/postupci', postupci.id, 'view']">{{ postupci.id }}</a>
-          </td>
+          </td> -->
           <td [routerLink]="['/tenderi-home']" [queryParams]="{ sifra: postupci.sifraPostupka }">{{ postupci.sifraPostupka }}</td>
           <td [routerLink]="['/tenderi-home']" [queryParams]="{ sifra: postupci.sifraPostupka }">{{ postupci.brojTendera }}</td>
           <td [routerLink]="['/tenderi-home']" [queryParams]="{ sifra: postupci.sifraPostupka }">{{ postupci.opisPostupka }}</td>
